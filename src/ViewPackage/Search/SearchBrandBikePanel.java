@@ -1,5 +1,9 @@
 package ViewPackage.Search;
 
+import ControllerPackage.Controller;
+import ExceptionsPackage.ConnectionException;
+import ModelsPackage.BikeModel;
+import ModelsPackage.BrandModel;
 import ViewPackage.WelcomePanel;
 
 import javax.swing.*;
@@ -9,7 +13,12 @@ import java.awt.event.ActionListener;
 import java.util.Vector;
 
 public class SearchBrandBikePanel extends JPanel{
-    public SearchBrandBikePanel(Container contentContainer) {
+    private Controller controller;
+
+    public SearchBrandBikePanel(Container contentContainer, Controller controller) {
+        this.controller = controller;
+
+        // All the elements
         JPanel titlePanel = new JPanel();
         JPanel inputPanel = new JPanel();
         JPanel ButtonPanel = new JPanel();
@@ -23,7 +32,7 @@ public class SearchBrandBikePanel extends JPanel{
         titlePanel.add(new JLabel("Veuillez choisir la marque de vélo qui vous intéresse."));
         add(titlePanel);
 
-        inputPanel.add(new JList<>(new String[]{"B1", "B2"}));
+        inputPanel.add(getBrandList());
         add(inputPanel);
 
         ButtonPanel.add(confirmButton);
@@ -37,9 +46,13 @@ public class SearchBrandBikePanel extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 outputPanel.removeAll();
-                outputPanel.add(getTable());
-                outputPanel.repaint();
-                outputPanel.revalidate();
+                try {
+                    outputPanel.add(getUpdatedOutputPane("test"));
+                    outputPanel.repaint();
+                    outputPanel.revalidate();
+                } catch (ConnectionException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         returnButton.addActionListener(new ActionListener() {
@@ -53,7 +66,7 @@ public class SearchBrandBikePanel extends JPanel{
         });
     }
 
-    private JScrollPane getTable() {
+    private JScrollPane getUpdatedOutputPane(String brandName) throws ConnectionException {
         Vector<String> columnNames = new Vector<>();
         columnNames.add("Serial Number");
         columnNames.add("Is Electric");
@@ -63,7 +76,27 @@ public class SearchBrandBikePanel extends JPanel{
         columnNames.add("Postal Code");
         columnNames.add("Locality");
 
-        Vector<Vector<String>> infos = new Vector<>();
-        return new JScrollPane(new JTable(infos, columnNames));
+        Vector<Vector<String>> bikeInfos = new Vector<>();
+
+        Vector<BikeModel> bikes = controller.getBikes(brandName);
+        for (BikeModel bike: bikes) {
+            Vector<String> row = new Vector<>();
+
+            row.add(Integer.toString(bike.getSerialNumber()));
+            row.add(Boolean.toString(bike.isElectric()));
+//             row.add(Station)
+//             row.add(StreetName)
+//             row.add(StreetNum)
+//             row.add(Postal Code)
+//             row.add(Locality)
+
+            bikeInfos.add(row);
+        }
+
+        return new JScrollPane(new JTable(bikeInfos, columnNames));
+    }
+
+    private JList<String> getBrandList() {
+        return new JList<>(new String[]{"B1", "B2"});
     }
 }

@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class BikeModel {
     private int serialNumber;
-    private boolean isElectric;
+    private boolean electric;
     private Date buyingDate;
     private int batteryLevel;
     private int nbKilometers;
@@ -12,7 +12,7 @@ public class BikeModel {
 
     public BikeModel(int serialNumber, boolean isElectric, Date buyingDate, int batteryLevel, int nbKilometers, BrandModel brand) {
         setSerialNumber(serialNumber);
-        setIsElectric(isElectric);
+        setElectric(isElectric);
         setBuyingDate(buyingDate);
         setBatteryLevel(batteryLevel);
         setNbKilometers(nbKilometers);
@@ -24,11 +24,11 @@ public class BikeModel {
     public void setSerialNumber(int serialNumber) {
         this.serialNumber = serialNumber;
     }
-    public boolean isIsElectric() {
-        return isElectric;
+    public boolean isElectric() {
+        return electric;
     }
-    public void setIsElectric(boolean isElectric) {
-        this.isElectric = isElectric;
+    public void setElectric(boolean electric) {
+        this.electric = electric;
     }
     public Date getBuyingDate() {
         return buyingDate;
