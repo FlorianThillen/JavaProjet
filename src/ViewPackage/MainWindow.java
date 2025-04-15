@@ -4,6 +4,7 @@ import ControllerPackage.Controller;
 //import ViewPackage.CRUD.*;
 //import ViewPackage.Job.*;
 import ViewPackage.Search.SearchBrandBikePanel;
+import ViewPackage.Search.SearchRentalDatePanel;
 //import ViewPackage.Search.SearchFamilyPanel;
 //import ViewPackage.Search.SearchSubscriptionPanel;
 
@@ -121,9 +122,11 @@ public class MainWindow extends JFrame {
 //    }
         private void setSearchMenu(){
             JMenuItem menuSearchBrandBike = new JMenuItem("Recherche vélos d'une certaine marque");
+            JMenuItem menuSearchRentalDate = new JMenuItem("Recherche locations entre 2 dates");
     //        JMenuItem menuSearchSubscriptions = new JMenuItem("Recherche abonnements ");
     //        JMenuItem menuSearchFamilySub = new JMenuItem("Recherche abonnement familial");
             researches.add(menuSearchBrandBike);
+            researches.add(menuSearchRentalDate);
     //        researches.add(menuSearchSubscriptions);
     //        researches.add(menuSearchFamilySub);
     //
@@ -136,6 +139,17 @@ public class MainWindow extends JFrame {
                     contentContainer.repaint();
                 }
             });
+
+            menuSearchRentalDate.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    contentContainer.removeAll();
+                    contentContainer.add(new SearchRentalDatePanel(contentContainer,controller));
+                    contentContainer.revalidate();
+                    contentContainer.repaint();
+                }
+        });
+
 //        menuSearchFamilySub.addActionListener(new ActionListener() {
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
