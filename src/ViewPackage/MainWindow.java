@@ -3,6 +3,7 @@ package ViewPackage;
 import ControllerPackage.Controller;
 //import ViewPackage.CRUD.*;
 //import ViewPackage.Job.*;
+import ViewPackage.Job.RepairPanel;
 import ViewPackage.Search.SearchBrandBikePanel;
 //import ViewPackage.Search.SearchFamilyPanel;
 //import ViewPackage.Search.SearchSubscriptionPanel;
@@ -50,10 +51,10 @@ public class MainWindow extends JFrame {
         this.setJMenuBar(menuBar);
 //        crudMember = new JMenu("Membre");
         researches = new JMenu("Recherche");
-//        JMenu businessTask = new JMenu("Tâche métier");
+        JMenu businessTask = new JMenu("Tâche métier");
 //        menuBar.add(crudMember);
         menuBar.add(researches);
-//        menuBar.add(businessTask);
+        menuBar.add(businessTask);
 
         //CRUD
 //        setCrudMenu();
@@ -62,16 +63,16 @@ public class MainWindow extends JFrame {
         setSearchMenu();
 
         //BusinessTask
-//        JMenuItem nbRentTask = new JMenuItem("Locations par stations");
-//        businessTask.add(nbRentTask);
-//        nbRentTask.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                contentContainer.removeAll();
-//                contentContainer.add(new BusinessTaskPanel(contentContainer, controller));
-//                contentContainer.revalidate();
-//            }
-//        });
+        JMenuItem AddNewRepairMenuItm = new JMenuItem("New repair");
+        businessTask.add(AddNewRepairMenuItm);
+        AddNewRepairMenuItm.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                contentContainer.removeAll();
+                contentContainer.add(new RepairPanel(contentContainer, controller));
+                contentContainer.revalidate();
+            }
+        });
 
         //Bike animation
 //        setAnimation();
