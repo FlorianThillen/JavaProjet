@@ -5,6 +5,7 @@ import ControllerPackage.Controller;
 //import ViewPackage.Job.*;
 import ViewPackage.Search.SearchBrandBikePanel;
 import ViewPackage.Search.SearchRentalDatePanel;
+import ViewPackage.Search.SearchRepairByStatusPanel;
 //import ViewPackage.Search.SearchFamilyPanel;
 //import ViewPackage.Search.SearchSubscriptionPanel;
 
@@ -123,10 +124,11 @@ public class MainWindow extends JFrame {
         private void setSearchMenu(){
             JMenuItem menuSearchBrandBike = new JMenuItem("Recherche vélos d'une certaine marque");
             JMenuItem menuSearchRentalDate = new JMenuItem("Recherche locations entre 2 dates");
-    //        JMenuItem menuSearchSubscriptions = new JMenuItem("Recherche abonnements ");
+            JMenuItem menuSearchRepair = new JMenuItem("Recherche statut réparation ");
     //        JMenuItem menuSearchFamilySub = new JMenuItem("Recherche abonnement familial");
             researches.add(menuSearchBrandBike);
             researches.add(menuSearchRentalDate);
+            researches.add(menuSearchRepair);
     //        researches.add(menuSearchSubscriptions);
     //        researches.add(menuSearchFamilySub);
     //
@@ -150,15 +152,15 @@ public class MainWindow extends JFrame {
                 }
         });
 
-//        menuSearchFamilySub.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                contentContainer.removeAll();
-//                contentContainer.add(new SearchFamilyPanel(controller, contentContainer));
-//                contentContainer.revalidate();
-//                contentContainer.repaint();
-//            }
-//        });
+            menuSearchRepair.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    contentContainer.removeAll();
+                    contentContainer.add(new SearchRepairByStatusPanel(controller));
+                    contentContainer.revalidate();
+                    contentContainer.repaint();
+                }
+            });
 //        menuSearchSubscriptions.addActionListener(new ActionListener() {
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
