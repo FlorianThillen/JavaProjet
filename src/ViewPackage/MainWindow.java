@@ -5,6 +5,8 @@ import ControllerPackage.Controller;
 //import ViewPackage.Job.*;
 import ViewPackage.Job.RepairPanel;
 import ViewPackage.Search.SearchBrandBikePanel;
+import ViewPackage.Search.SearchRentalDatePanel;
+import ViewPackage.Search.SearchRepairByStatusPanel;
 //import ViewPackage.Search.SearchFamilyPanel;
 //import ViewPackage.Search.SearchSubscriptionPanel;
 
@@ -122,9 +124,12 @@ public class MainWindow extends JFrame {
 //    }
         private void setSearchMenu(){
             JMenuItem menuSearchBrandBike = new JMenuItem("Recherche vélos d'une certaine marque");
-    //        JMenuItem menuSearchSubscriptions = new JMenuItem("Recherche abonnements ");
+            JMenuItem menuSearchRentalDate = new JMenuItem("Recherche locations entre 2 dates");
+            JMenuItem menuSearchRepair = new JMenuItem("Recherche statut réparation ");
     //        JMenuItem menuSearchFamilySub = new JMenuItem("Recherche abonnement familial");
             researches.add(menuSearchBrandBike);
+            researches.add(menuSearchRentalDate);
+            researches.add(menuSearchRepair);
     //        researches.add(menuSearchSubscriptions);
     //        researches.add(menuSearchFamilySub);
     //
@@ -137,15 +142,26 @@ public class MainWindow extends JFrame {
                     contentContainer.repaint();
                 }
             });
-//        menuSearchFamilySub.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                contentContainer.removeAll();
-//                contentContainer.add(new SearchFamilyPanel(controller, contentContainer));
-//                contentContainer.revalidate();
-//                contentContainer.repaint();
-//            }
-//        });
+
+            menuSearchRentalDate.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    contentContainer.removeAll();
+                    contentContainer.add(new SearchRentalDatePanel(contentContainer,controller));
+                    contentContainer.revalidate();
+                    contentContainer.repaint();
+                }
+        });
+
+            menuSearchRepair.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    contentContainer.removeAll();
+                    contentContainer.add(new SearchRepairByStatusPanel(controller));
+                    contentContainer.revalidate();
+                    contentContainer.repaint();
+                }
+            });
 //        menuSearchSubscriptions.addActionListener(new ActionListener() {
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
