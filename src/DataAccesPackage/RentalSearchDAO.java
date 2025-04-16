@@ -12,7 +12,7 @@ public class RentalSearchDAO {
         Connection connection = SingletonConnection.getInstance();
 
         List<RentalDateSearchModel> results = new ArrayList<>();
-        String sql = "select  rental.id, rental.startDate, bike.serialNumber, bike.buyingDate, brand.name as brand, station.name as station " +
+        String sql = "select  rental.id, rental.startDate, bike.serialNumber, bike.buyingDate, brand.name as brand,brand.warrantyDuration , station.name as station " +
                 "from    rental " +
                 "join    bike on rental.bikeId = bike.serialNumber " +
                 "join    brand on bike.brandName = brand.name" +
