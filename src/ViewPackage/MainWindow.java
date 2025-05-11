@@ -3,6 +3,7 @@ package ViewPackage;
 import ControllerPackage.Controller;
 //import ViewPackage.CRUD.*;
 //import ViewPackage.Job.*;
+import ViewPackage.Job.ListAndStatsPanel;
 import ViewPackage.Job.RepairPanel;
 import ViewPackage.Search.SearchBrandBikePanel;
 import ViewPackage.Search.SearchRentalDatePanel;
@@ -66,13 +67,25 @@ public class MainWindow extends JFrame {
 
         //BusinessTask
         JMenuItem AddNewRepairMenuItm = new JMenuItem("New repair");
+        JMenuItem listAndStatMenu = new JMenuItem("Liste et Statistiques");
         businessTask.add(AddNewRepairMenuItm);
+        businessTask.add(listAndStatMenu);
         AddNewRepairMenuItm.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 contentContainer.removeAll();
                 contentContainer.add(new RepairPanel(contentContainer, controller));
                 contentContainer.revalidate();
+            }
+        });
+
+        listAndStatMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                contentContainer.removeAll();
+                contentContainer.add(new ListAndStatsPanel(contentContainer,controller));
+                contentContainer.revalidate();
+                contentContainer.repaint();
             }
         });
 

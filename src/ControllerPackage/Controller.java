@@ -1,12 +1,11 @@
 package ControllerPackage;
 
-import ModelsPackage.RepairSearchModel;
+import ExceptionsPackage.DataAccesException;
+import ModelsPackage.*;
 import DataAccesPackage.RepairDataAccess;
 
-import ModelsPackage.RepairStatusModel;
 import businessPackage.RentalService;
-import ModelsPackage.RentalDateSearchModel;
-import ModelsPackage.BikeModel;
+import businessPackage.UnpaidSubscriptionService;
 
 
 import java.sql.SQLException;
@@ -16,6 +15,7 @@ import java.sql.Date;
 
 public class Controller {
     private RentalService rentalService = new RentalService();
+    private final UnpaidSubscriptionService unpaidSubscriptionService = new UnpaidSubscriptionService();
 
     public Vector<BikeModel> getBikes(String brandName) {
         return new Vector<BikeModel>();
@@ -23,6 +23,9 @@ public class Controller {
 
     public List<RentalDateSearchModel> getRentalsBetweenDates(Date start,Date end){
         return rentalService.searchRentals(start,end);
+    }
+    public List<UnpaidSubscriptionModel> getUnpaidSubscriptions() throws DataAccesException {
+        return unpaidSubscriptionService.getUnpaidSubscription();
     }
     public List<RepairSearchModel> getRepairsByStatus(String statusLabel) {
         try {
