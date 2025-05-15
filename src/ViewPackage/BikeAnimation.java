@@ -77,7 +77,7 @@ public class BikeAnimation extends JPanel implements Runnable {
     @Override
     public void run() {
         while (true) {
-            x += 5;
+            x += 10;
             if (x > getWidth()) {
                 x = -140;
             }

@@ -189,7 +189,7 @@ public class MainWindow extends JFrame {
     private void setAnimation() {
         bikeAnimation = new BikeAnimation();
         JPanel bikePanel = new JPanel(new BorderLayout());
-        bikePanel.setPreferredSize(new Dimension(1200, 200));
+        bikePanel.setPreferredSize(new Dimension(1200, 160));
         bikePanel.add(bikeAnimation, BorderLayout.CENTER);
         animationContainer.add(bikePanel, BorderLayout.SOUTH);
     }
