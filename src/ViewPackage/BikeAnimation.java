@@ -29,23 +29,49 @@ public class BikeAnimation extends JPanel implements Runnable {
     }
 
     private void drawBike(Graphics g, int x, int y) {
+        // Roues
         g.setColor(Color.BLACK);
-        g.drawOval(x, y, 40, 40);  // Roue avant
-        g.drawOval(x + 70, y, 40, 40);  // Roue arrière
+        g.drawOval(x, y, 40, 40);         // Roue avant
+        g.drawOval(x + 70, y, 40, 40);    // Roue arrière
 
-        // Dessiner le cadre
+        // Cadre
         g.drawLine(x + 20, y + 20, x + 70, y - 10);
         g.drawLine(x + 90, y + 20, x + 70, y - 10);
         g.drawLine(x + 20, y + 20, x + 40, y - 10);
         g.drawLine(x + 40, y - 10, x + 70, y - 10);
 
-        // Dessiner le guidon
-        g.drawLine(x + 70, y - 10, x + 70, y - 40);  // Tige du guidon
-        g.drawLine(x + 60, y - 40, x + 80, y - 40);  // Barre du guidon
+        // Guidon
+        g.drawLine(x + 70, y - 10, x + 70, y - 40);
+        g.drawLine(x + 60, y - 40, x + 80, y - 40);
 
-        // Dessiner la selle
-        g.drawLine(x + 40, y - 10, x + 40, y - 30);  // Tige de la selle
-        g.drawLine(x + 35, y - 30, x + 45, y - 30);  // Barre de la selle
+        // Selle
+        g.drawLine(x + 40, y - 10, x + 40, y - 30);
+        g.drawLine(x + 35, y - 30, x + 45, y - 30);
+
+        // Bonhomme
+        int headX = x + 40;
+        int headY = y - 50;
+
+        // Tête couleur peau
+        g.setColor(new Color(255, 220, 180));
+        g.fillOval(headX - 5, headY - 10, 10, 10);
+
+        // Casque rouge
+        g.setColor(Color.RED);
+        g.fillArc(headX - 6, headY - 12, 12, 8, 0, 180);
+
+        // Corps en bleu (buste épaissi)
+        g.setColor(Color.BLUE);
+        g.fillRect(headX - 4, headY, 8, 20); // rectangle pour le torse
+
+        // Bras
+        g.drawLine(headX, headY + 5, x + 70, y - 40);  // bras 1
+        g.drawLine(headX, headY + 5, x + 60, y - 40);  // bras 2
+
+        // Jambes en gris
+        g.setColor(Color.DARK_GRAY);
+        g.drawLine(headX, headY + 20, x + 50, y + 10);  // jambe 1
+        g.drawLine(headX, headY + 20, x + 55, y + 10);  // jambe 2
     }
 
     @Override

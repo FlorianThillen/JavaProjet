@@ -19,14 +19,14 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class MainWindow extends JFrame {
-    private final Container mainContainer, contentContainer;//, animationContainer;
+    private final Container mainContainer, contentContainer, animationContainer;
     private final Controller controller;
     private final JMenuBar menuBar;
     //    // Menus
 //    private final JMenu crudMember;
     private final JMenu researches;
     //Animation
-//    private BikeAnimation bikeAnimation;
+    private BikeAnimation bikeAnimation;
 
     public MainWindow() {
         super("Libia Vélo");
@@ -37,16 +37,16 @@ public class MainWindow extends JFrame {
             }
         });
 
-//        animationContainer = new JPanel(new BorderLayout());
+        animationContainer = new JPanel(new BorderLayout());
         contentContainer = new JPanel(new BorderLayout());
         contentContainer.add(new WelcomePanel());
         contentContainer.setVisible(true);
-//        animationContainer.setVisible(true);
+        animationContainer.setVisible(true);
 
         mainContainer = getContentPane();
         mainContainer.setLayout(new BoxLayout(mainContainer, BoxLayout.Y_AXIS));
         mainContainer.add(contentContainer);
-//        mainContainer.add(animationContainer);
+        mainContainer.add(animationContainer);
         mainContainer.setVisible(true);
         controller = new Controller();
 //
@@ -83,15 +83,15 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 contentContainer.removeAll();
-                contentContainer.add(new ListAndStatsPanel(contentContainer,controller));
+                contentContainer.add(new ListAndStatsPanel(contentContainer, controller));
                 contentContainer.revalidate();
                 contentContainer.repaint();
             }
         });
 
         //Bike animation
-//        setAnimation();
-//
+        setAnimation();
+
         this.setVisible(true);
         mainContainer.repaint();
         revalidate();
@@ -135,46 +135,46 @@ public class MainWindow extends JFrame {
 //
 //
 //    }
-        private void setSearchMenu(){
-            JMenuItem menuSearchBrandBike = new JMenuItem("Recherche vélos d'une certaine marque");
-            JMenuItem menuSearchRentalDate = new JMenuItem("Recherche locations entre 2 dates");
-            JMenuItem menuSearchRepair = new JMenuItem("Recherche statut réparation ");
-    //        JMenuItem menuSearchFamilySub = new JMenuItem("Recherche abonnement familial");
-            researches.add(menuSearchBrandBike);
-            researches.add(menuSearchRentalDate);
-            researches.add(menuSearchRepair);
-    //        researches.add(menuSearchSubscriptions);
-    //        researches.add(menuSearchFamilySub);
-    //
-            menuSearchBrandBike.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    contentContainer.removeAll();
-                    contentContainer.add(new SearchBrandBikePanel(contentContainer, controller));
-                    contentContainer.revalidate();
-                    contentContainer.repaint();
-                }
-            });
-
-            menuSearchRentalDate.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    contentContainer.removeAll();
-                    contentContainer.add(new SearchRentalDatePanel(contentContainer,controller));
-                    contentContainer.revalidate();
-                    contentContainer.repaint();
-                }
+    private void setSearchMenu() {
+        JMenuItem menuSearchBrandBike = new JMenuItem("Recherche vélos d'une certaine marque");
+        JMenuItem menuSearchRentalDate = new JMenuItem("Recherche locations entre 2 dates");
+        JMenuItem menuSearchRepair = new JMenuItem("Recherche statut réparation ");
+        //        JMenuItem menuSearchFamilySub = new JMenuItem("Recherche abonnement familial");
+        researches.add(menuSearchBrandBike);
+        researches.add(menuSearchRentalDate);
+        researches.add(menuSearchRepair);
+        //        researches.add(menuSearchSubscriptions);
+        //        researches.add(menuSearchFamilySub);
+        //
+        menuSearchBrandBike.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                contentContainer.removeAll();
+                contentContainer.add(new SearchBrandBikePanel(contentContainer, controller));
+                contentContainer.revalidate();
+                contentContainer.repaint();
+            }
         });
 
-            menuSearchRepair.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    contentContainer.removeAll();
-                    contentContainer.add(new SearchRepairByStatusPanel(controller));
-                    contentContainer.revalidate();
-                    contentContainer.repaint();
-                }
-            });
+        menuSearchRentalDate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                contentContainer.removeAll();
+                contentContainer.add(new SearchRentalDatePanel(contentContainer, controller));
+                contentContainer.revalidate();
+                contentContainer.repaint();
+            }
+        });
+
+        menuSearchRepair.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                contentContainer.removeAll();
+                contentContainer.add(new SearchRepairByStatusPanel(controller));
+                contentContainer.revalidate();
+                contentContainer.repaint();
+            }
+        });
 //        menuSearchSubscriptions.addActionListener(new ActionListener() {
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
@@ -184,12 +184,13 @@ public class MainWindow extends JFrame {
 //                contentContainer.repaint();
 //            }
 //        });
-        }
     }
-//    private void setAnimation(){
-//        bikeAnimation = new BikeAnimation();
-//        JPanel bikePanel = new JPanel(new BorderLayout());
-//        bikePanel.setPreferredSize(new Dimension(1200, 200));
-//        bikePanel.add(bikeAnimation, BorderLayout.CENTER);
-//        animationContainer.add(bikePanel, BorderLayout.SOUTH);
-//    }
+
+    private void setAnimation() {
+        bikeAnimation = new BikeAnimation();
+        JPanel bikePanel = new JPanel(new BorderLayout());
+        bikePanel.setPreferredSize(new Dimension(1200, 200));
+        bikePanel.add(bikeAnimation, BorderLayout.CENTER);
+        animationContainer.add(bikePanel, BorderLayout.SOUTH);
+    }
+}
