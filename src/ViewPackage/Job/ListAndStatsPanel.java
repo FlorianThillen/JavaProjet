@@ -67,7 +67,10 @@ public class ListAndStatsPanel extends JPanel{
         });
 
         bikesPerStationBtn.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Fonction 'vélos par station' à implémenter.");
+            container.removeAll();
+            container.add(new BikesPerStationPanel(container, controller));
+            container.revalidate();
+            container.repaint();
         });
 
         avgRepairCostBtn.addActionListener(e -> {

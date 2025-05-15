@@ -5,6 +5,7 @@ import ModelsPackage.*;
 import DataAccesPackage.RepairDataAccess;
 
 import businessPackage.RentalService;
+import businessPackage.StationStatsService;
 import businessPackage.UnpaidSubscriptionService;
 
 
@@ -16,6 +17,7 @@ import java.sql.Date;
 public class Controller {
     private RentalService rentalService = new RentalService();
     private final UnpaidSubscriptionService unpaidSubscriptionService = new UnpaidSubscriptionService();
+    private final StationStatsService stationStatsService = new StationStatsService();
 
     public Vector<BikeModel> getBikes(String brandName) {
         return new Vector<BikeModel>();
@@ -26,6 +28,9 @@ public class Controller {
     }
     public List<UnpaidSubscriptionModel> getUnpaidSubscriptions() throws DataAccesException {
         return unpaidSubscriptionService.getUnpaidSubscription();
+    }
+    public List<StationBikeNbModel> getStationsStatus(int min,int max)throws DataAccesException{
+        return stationStatsService.getStationsStatus(min, max);
     }
     public List<RepairSearchModel> getRepairsByStatus(String statusLabel) {
         try {
