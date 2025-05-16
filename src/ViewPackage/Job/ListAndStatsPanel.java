@@ -59,22 +59,27 @@ public class ListAndStatsPanel extends JPanel{
         add(bottomPanel, BorderLayout.SOUTH);
 
         // === Actions ===
+
+        //Boutton 1
         unpaidMembersBtn.addActionListener(e -> {
             container.removeAll();
             container.add(new UnpaidMembersPanel(container, controller));
             container.revalidate();
             container.repaint();
         });
-
+        //Boutton 2
         bikesPerStationBtn.addActionListener(e -> {
             container.removeAll();
             container.add(new BikesPerStationPanel(container, controller));
             container.revalidate();
             container.repaint();
         });
-
+        //Boutton 3
         avgRepairCostBtn.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Fonction 'coûts de réparation' à implémenter.");
+            container.removeAll();
+            container.add(new AvgRepairCostPanel(container, controller));
+            container.revalidate();
+            container.repaint();
         });
 
         backButton.addActionListener(e -> {
