@@ -38,7 +38,7 @@ public class SingletonConnection {
             }
             return uniqueConnection;
         } catch (SQLException sqlException) {
-            throw new ConnectionException("Erreur lors de la connexion à la base de données libiavelo.");
+            throw new ConnectionException("Erreur lors de la connexion à la base de données libiavelo. -> " + sqlException.getMessage());
         }
     }
     public static void closeConnection() throws ConnectionException {
