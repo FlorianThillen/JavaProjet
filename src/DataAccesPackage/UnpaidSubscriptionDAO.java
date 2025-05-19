@@ -9,25 +9,15 @@ import java.sql.Connection;
 import java.util.List;
 
 public class UnpaidSubscriptionDAO {
-    //private final Connection connection;
-
-    public UnpaidSubscriptionDAO(){
-        //this.connection=SingletonConnection.getInstance();
-    }
-
     public List<UnpaidSubscriptionModel> getUnpaidSubscription() throws DataAccesException {
-        List<UnpaidSubscriptionModel> fakeList = new ArrayList<>();
-        fakeList.add(new UnpaidSubscriptionModel("Alice", "Dupont", "alice@mail.be"));
-        fakeList.add(new UnpaidSubscriptionModel("Jean", "Martin", "jean@mail.be"));
-        return fakeList;
-        /*
+        Connection connection = SingletonConnection.getInstance();
         ArrayList<UnpaidSubscriptionModel> result = new ArrayList<>();
 
-        String query = "SELECT p.firstName, p.lastName, p.email " +
-                "FROM Person p " +
-                "JOIN Member m ON p.idPerson = m.personId " +
-                "JOIN Subscription s ON s.userId = m.idMember " +
-                "WHERE s.subscriptionPaid = false ";
+        String query = "SELECT p.firstname, p.lastname, p.email " +
+                "FROM person p " +
+                "JOIN member m ON p.id_person = m.person_id " +
+                "JOIN subscription s ON s.user_id = m.id_member " +
+                "WHERE s.subscription_paid = false ";
 
         try(PreparedStatement stmt = connection.prepareStatement(query)){
             ResultSet rs = stmt.executeQuery();
@@ -47,7 +37,5 @@ public class UnpaidSubscriptionDAO {
 
 
         return result;
-
-        */
     }
 }

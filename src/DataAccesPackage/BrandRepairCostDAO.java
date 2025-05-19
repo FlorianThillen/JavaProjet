@@ -8,22 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BrandRepairCostDAO {
-    //private final Connection connection;
-
-    public BrandRepairCostDAO() {
-   //     this.connection = SingletonConnection.getInstance();
-    }
-
     public List<BrandRepairCostModel> getAverageCostPerBrand() throws DataAccesException{
-        List<BrandRepairCostModel> fakeList = new ArrayList<>();
-
-        fakeList.add(new BrandRepairCostModel("Décathlon", 35.5f));
-        fakeList.add(new BrandRepairCostModel("Patapim", 22.3f));
-        fakeList.add(new BrandRepairCostModel("Crocodiro", 48.0f));
-
-        return fakeList;
-/*
-
+        Connection connection = SingletonConnection.getInstance();
         List<BrandRepairCostModel> result = new ArrayList<>();
 
         String query = "SELECT br.name AS brandName, AVG(r.cost) AS avgCost" +
@@ -36,16 +22,12 @@ public class BrandRepairCostDAO {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()){
-                String brandName = rs.getString("brandName");
-                float averageCost = rs.getFloat("avgCost");
+                rs.getString("brandName");
+                rs.getFloat("avgCost");
             }
         }catch (SQLException e){
             throw new DataAccesException("Erreur de récupération des coûts moyen de réparation",e);
         }
-
-
-        return result;*/
+        return result;
     }
-
-
 }

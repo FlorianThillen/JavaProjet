@@ -11,6 +11,11 @@ public class StationBikeNbModel {
         setStatus(status);
     }
 
+    public StationBikeNbModel(String stationName, int bikeCount){
+        setBikeCount(bikeCount);
+        setStationName(stationName);
+    }
+
 // setter
     public void setStationName(String stationName) {
         this.stationName = stationName;
