@@ -4,37 +4,31 @@ import ExceptionsPackage.DataAccesException;
 import ModelsPackage.UnpaidSubscriptionModel;
 import java.sql.*;
 import java.util.ArrayList;
-
-import java.sql.Connection;
 import java.util.List;
 
 public class UnpaidSubscriptionDAO {
     public List<UnpaidSubscriptionModel> getUnpaidSubscription() throws DataAccesException {
         Connection connection = SingletonConnection.getInstance();
-        ArrayList<UnpaidSubscriptionModel> result = new ArrayList<>();
+        List<UnpaidSubscriptionModel> result = new ArrayList<>();
 
-        String query = "SELECT p.firstname, p.lastname, p.email " +
-                "FROM person p " +
-                "JOIN member m ON p.id_person = m.person_id " +
-                "JOIN subscription s ON s.user_id = m.id_member " +
-                "WHERE s.subscription_paid = false ";
+        String query = "SELECT m.first_name, m.last_name, m.email " +
+                "FROM member m " +
+                "JOIN subscription s ON m.sub_id = s.card_number " +
+                "WHERE s.subscription_paid = false";
 
-        try(PreparedStatement stmt = connection.prepareStatement(query)){
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
             ResultSet rs = stmt.executeQuery();
 
-            while(rs.next()){
-                String firstName = rs.getString("firstName");
-                String lastName = rs.getString("lastName");
-                String email = rs.getString("email");
+            while (rs.next()) {
+                String firstName = rs.getString(1);
+                String lastName = rs.getString(2);
+                String email = rs.getString(3);
 
-                UnpaidSubscriptionModel model = new UnpaidSubscriptionModel(firstName, lastName, email);
-                result.add(model);
+                result.add(new UnpaidSubscriptionModel(firstName, lastName, email));
             }
-
-        } catch (SQLException e){
-            throw new DataAccesException("Erreur lors de la récuperation des abonnement non reglé",e);
+        } catch (SQLException e) {
+            throw new DataAccesException("Erreur lors de la récupération des abonnements non réglés", e);
         }
-
 
         return result;
     }

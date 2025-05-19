@@ -8,26 +8,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BrandRepairCostDAO {
-    public List<BrandRepairCostModel> getAverageCostPerBrand() throws DataAccesException{
+    public List<BrandRepairCostModel> getAverageCostPerBrand() throws DataAccesException {
         Connection connection = SingletonConnection.getInstance();
         List<BrandRepairCostModel> result = new ArrayList<>();
 
-        String query = "SELECT br.name AS brandName, AVG(r.cost) AS avgCost" +
-                "FROM repair r" +
-                "JOIN bike b ON r.bike_id = b.id_brand" +
-                "JOIN brand br ON b.brand_id = br.id_brand" +
+        String query = "SELECT br.name AS brandName, AVG(r.cost) AS avgCost " +
+                "FROM repair r " +
+                "JOIN bike b ON r.serial_number = b.serial_number " +
+                "JOIN brand br ON b.brand_name = br.name " +
                 "GROUP BY br.name";
 
-        try(PreparedStatement stmt = connection.prepareStatement(query)){
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
             ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()){
-                rs.getString("brandName");
-                rs.getFloat("avgCost");
+            while (rs.next()) {
+                String brandName = rs.getString("brandName");
+                float avgCost = rs.getFloat("avgCost");
+
+                result.add(new BrandRepairCostModel(brandName, avgCost));
             }
-        }catch (SQLException e){
-            throw new DataAccesException("Erreur de récupération des coûts moyen de réparation",e);
+        } catch (SQLException e) {
+            throw new DataAccesException("Erreur de récupération des coûts moyens de réparation", e);
         }
+
         return result;
     }
 }
