@@ -48,7 +48,7 @@ public class Controller {
         }
     }
 
-    public List<RepairStatusModel> getAllRepairStatus() {
+    public List<RepairStatusModel> getAllRepairStatus()throws DataAccesException {
         return new RepairDataAccess().getAllStatus();
     }
 }

@@ -1,6 +1,7 @@
 package ViewPackage.Search;
 
 import ControllerPackage.Controller;
+import ExceptionsPackage.DataAccesException;
 import ModelsPackage.RepairSearchModel;
 import ModelsPackage.RepairStatusModel;
 
@@ -24,7 +25,11 @@ public class SearchRepairByStatusPanel extends JPanel {
         topPanel.add(new JLabel("Statut de réparation :"));
 
         statusComboBox = new JComboBox<>();
-        loadStatusLabels();
+        try {
+            loadStatusLabels();
+        } catch (DataAccesException e) {
+            JOptionPane.showMessageDialog(this, "Erreur lors du chargement des statuts : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
         topPanel.add(statusComboBox);
 
         JButton searchButton = new JButton("Rechercher");
@@ -43,11 +48,11 @@ public class SearchRepairByStatusPanel extends JPanel {
         add(new JScrollPane(resultTable), BorderLayout.CENTER);
     }
 
-    private void loadStatusLabels() {
-        /*List<RepairStatusModel> statusList = controller.getAllRepairStatus();
+    private void loadStatusLabels() throws DataAccesException{
+        List<RepairStatusModel> statusList = controller.getAllRepairStatus();
         for (RepairStatusModel status : statusList) {
             statusComboBox.addItem(status.getStatus());
-        }*/ // A ENLEVER QD ON AURA LA BD
+        }
     }
 
     private void performSearch() {

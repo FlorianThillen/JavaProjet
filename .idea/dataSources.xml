@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="velodb@localhost" uuid="7a206869-2b94-454a-8cab-9079ad4d1824">
+    <data-source source="LOCAL" name="velodb@localhost" uuid="4d450e59-818f-4ded-8af7-a84022c31e97">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>

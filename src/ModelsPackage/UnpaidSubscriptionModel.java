@@ -40,6 +40,4 @@ public class UnpaidSubscriptionModel {
     public String getFullName(){
         return getFirstName()+" "+getLastName();
     }
-
-
 }

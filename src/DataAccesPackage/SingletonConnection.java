@@ -30,8 +30,7 @@ public class SingletonConnection {
                     char[] passwordChars = passwordField.getPassword();
                     String password = new String(passwordChars);
 
-                    uniqueConnection = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=velodb;encrypt=true;trustServerCertificate=true;",
-                            username, password);
+                    uniqueConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/velodb", username, password);
                 } else {
                     throw new ConnectionException("La connexion à la base de données a été annulée.");
                 }
