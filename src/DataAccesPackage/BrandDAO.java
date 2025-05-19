@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class BrandDAO {
-    ArrayList<BrandModel> fetchAllBrands() {
+    ArrayList<BrandModel> fetchAllBrands() throws DataAccesException {
         ArrayList<BrandModel> brandModels = new ArrayList<BrandModel>();
 
         Connection connection = SingletonConnection.getInstance();
@@ -19,7 +19,6 @@ public class BrandDAO {
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
 
         } catch (SQLException e) {
-            throw new DataAccesException("Erreur de récupération des coûts moyen de réparation", e);
             throw new DataAccesException("Erreur de récupération des marques", e);
         }
         return brandModels;
