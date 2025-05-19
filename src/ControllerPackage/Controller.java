@@ -2,7 +2,7 @@ package ControllerPackage;
 
 import ExceptionsPackage.DataAccesException;
 import ModelsPackage.*;
-import DataAccesPackage.RepairDataAccess;
+import DataAccesPackage.RepairDAO;
 
 import businessPackage.BrandRepairCostService;
 import businessPackage.RentalService;
@@ -42,13 +42,13 @@ public class Controller {
     }
     public List<RepairSearchModel> getRepairsByStatus(String statusLabel) {
         try {
-            return new RepairDataAccess().getRepairsByStatus(statusLabel);
+            return new RepairDAO().getRepairsByStatus(statusLabel);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     public List<RepairStatusModel> getAllRepairStatus()throws DataAccesException {
-        return new RepairDataAccess().getAllStatus();
+        return new RepairDAO().getAllStatus();
     }
 }

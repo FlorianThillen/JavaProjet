@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RepairDataAccess {
+public class RepairDAO {
 
     public List<RepairSearchModel> getRepairsByStatus(String statusLabel) throws SQLException {
         List<RepairSearchModel> repairs = new ArrayList<>();
