@@ -59,7 +59,7 @@ public class SearchRentalDatePanel extends JPanel{
             Date start = new Date(((java.util.Date) spinnerStart.getValue()).getTime());
             Date end = new Date(((java.util.Date) spinnerEnd.getValue()).getTime());
             model.setRowCount(0);
-          /*  try {
+            try {
                 List<RentalDateSearchModel> results = controller.getRentalsBetweenDates(start, end);
 
                 for (RentalDateSearchModel r : results) {
@@ -77,7 +77,7 @@ public class SearchRentalDatePanel extends JPanel{
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Erreur : " + ex.getMessage());
             }
-*/
+
             resultTable.setModel(model);
         });
     }

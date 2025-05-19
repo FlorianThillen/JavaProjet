@@ -12,12 +12,12 @@ public class RentalSearchDAO {
         Connection connection = SingletonConnection.getInstance();
 
         List<RentalDateSearchModel> results = new ArrayList<>();
-        String sql = "select  rental.id, rental.startDate, bike.serialNumber, bike.buyingDate, brand.name as brand,brand.warrantyDuration , station.name as station " +
-                "from    rental " +
-                "join    bike on rental.bikeId = bike.serialNumber " +
-                "join    brand on bike.brandName = brand.name" +
-                "join    station on  bike.stationId = station.stationNumber " +
-                "where   rental.startDate BETWEEN ? and ?";
+        String sql = "SELECT rental.id, rental.start_date, bike.serial_number, bike.buying_date, brand.name AS brand, brand.waranty_duration, station.name AS station " +
+                "FROM rental " +
+                "JOIN bike ON rental.bike_id = bike.serial_number " +
+                "JOIN brand ON bike.brand_name = brand.name " +
+                "JOIN station ON bike.station_id = station.station_number " +
+                "WHERE rental.start_date BETWEEN ? AND ?";
 
         try(PreparedStatement stmt = connection.prepareStatement(sql)){
             stmt.setDate(1,startDate);

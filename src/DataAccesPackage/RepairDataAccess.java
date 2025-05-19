@@ -13,7 +13,7 @@ public class RepairDataAccess {
         List<RepairSearchModel> repairs = new ArrayList<>();
         Connection connection = SingletonConnection.getInstance();
 
-        String query = "SELECT r.dat, r.cost, b.serial_number, b.is_electric, b.nb_kilometer, m.first_name, m.last_name " +
+        String query = "SELECT r.date, r.cost, b.serial_number, b.is_electric, b.nb_kilometer, m.first_name, m.last_name " +
                 "FROM repair r " +
                 "JOIN bike b ON r.serial_number = b.serial_number " +
                 "JOIN repair_status rs ON r.libelle = rs.libelle " +
@@ -25,13 +25,13 @@ public class RepairDataAccess {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 repairs.add(new RepairSearchModel(
-                        rs.getDate("dat"),
-                        rs.getDouble("cost"),
-                        rs.getString("serial_number"),
-                        rs.getBoolean("is_electric"),
-                        rs.getInt("nb_kilometer"),
-                        rs.getString("first_name"),
-                        rs.getString("last_name")
+                        rs.getDate(1),
+                        rs.getDouble(2),
+                        rs.getString(3),
+                        rs.getBoolean(4),
+                        rs.getInt(5),
+                        rs.getString(6),
+                        rs.getString(7)
                 ));
             }
         }
