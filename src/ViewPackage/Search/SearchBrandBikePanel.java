@@ -1,7 +1,9 @@
 package ViewPackage.Search;
 
 import ControllerPackage.Controller;
+import DataAccesPackage.BrandDAO;
 import ExceptionsPackage.ConnectionException;
+import ExceptionsPackage.DataAccesException;
 import ModelsPackage.BikeModel;
 import ModelsPackage.BrandModel;
 import ViewPackage.WelcomePanel;
@@ -15,7 +17,7 @@ import java.util.Vector;
 public class SearchBrandBikePanel extends JPanel{
     private Controller controller;
 
-    public SearchBrandBikePanel(Container contentContainer, Controller controller) {
+    public SearchBrandBikePanel(Container contentContainer, Controller controller) throws DataAccesException {
         this.controller = controller;
 
         // All the elements
@@ -26,12 +28,16 @@ public class SearchBrandBikePanel extends JPanel{
         JButton returnButton = new JButton("Return");
         JPanel outputPanel = new JPanel();
 
-
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         titlePanel.add(new JLabel("Veuillez choisir la marque de vélo qui vous intéresse."));
         add(titlePanel);
-
+        /*try {
+            JList<String> brandNames = getBrandList();
+            inputPanel.add(brandNames);
+        } catch (DataAccesException e) {
+            throw new DataAccesException("Erreur de récupération des marques", e);
+        }*/
         inputPanel.add(getBrandList());
         add(inputPanel);
 
@@ -96,7 +102,12 @@ public class SearchBrandBikePanel extends JPanel{
         return new JScrollPane(new JTable(bikeInfos, columnNames));
     }
 
-    private JList<String> getBrandList() {
-        return new JList<>(new String[]{"B1", "B2"});
+    private JList<String> getBrandList() throws DataAccesException {
+        BrandDAO dao = new BrandDAO();
+        Vector<String> brandNames = new Vector<>();
+        for (BrandModel brand: dao.getAllBrands()) {
+            brandNames.add(brand.getName());
+        }
+        return new JList<String>(brandNames);
     }
 }

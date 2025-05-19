@@ -3,6 +3,7 @@ package ViewPackage;
 import ControllerPackage.Controller;
 //import ViewPackage.CRUD.*;
 //import ViewPackage.Job.*;
+import ExceptionsPackage.DataAccesException;
 import ViewPackage.Job.ListAndStatsPanel;
 import ViewPackage.Job.RepairPanel;
 import ViewPackage.Search.SearchBrandBikePanel;
@@ -149,10 +150,15 @@ public class MainWindow extends JFrame {
         menuSearchBrandBike.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                contentContainer.removeAll();
-                contentContainer.add(new SearchBrandBikePanel(contentContainer, controller));
-                contentContainer.revalidate();
-                contentContainer.repaint();
+                try {
+                    contentContainer.removeAll();
+                    contentContainer.add(new SearchBrandBikePanel(contentContainer, controller));
+                    contentContainer.revalidate();
+                    contentContainer.repaint();
+                } catch (DataAccesException ex) {
+                    System.out.println();
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
