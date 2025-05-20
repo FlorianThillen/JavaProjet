@@ -151,11 +151,12 @@ public class BikeDAO {
 
     }
 
-    public Vector<BikeModel> getBikesFromBrand(String brandName) throws DataAccesException {
-        Vector<BikeModel> bikes = new Vector<>();
+    public ArrayList<BikeModel> getBikesFromBrand(String brandName) throws DataAccesException {
+        ArrayList<BikeModel> bikes = new ArrayList<>();
         String query = """
-                SELECT * FROM bike b WHERE b.brand_name = ?
+                SELECT * FROM bike b
                 JOIN station s ON b.station_id = s.station_number
+                WHERE b.brand_name = ?;
                 """;
         try(PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, brandName);

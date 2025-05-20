@@ -1,12 +1,10 @@
 package ViewPackage.Search;
 
 import ControllerPackage.Controller;
-import DataAccesPackage.BrandDAO;
 import ExceptionsPackage.ConnectionException;
 import ExceptionsPackage.DataAccesException;
 import ModelsPackage.BikeModel;
 import ModelsPackage.BrandBikesModel;
-import ModelsPackage.BrandModel;
 import ViewPackage.WelcomePanel;
 
 import javax.swing.*;
@@ -14,7 +12,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Vector;
 
 public class SearchBrandBikePanel extends JPanel{
     private Controller controller;
@@ -51,10 +48,10 @@ public class SearchBrandBikePanel extends JPanel{
             public void actionPerformed(ActionEvent e) {
                 outputPanel.removeAll();
                 try {
-                    outputPanel.add(getUpdatedOutputPane("test"));
+                    outputPanel.add(getUpdatedOutputPane(brandList.getSelectedValue()));
                     outputPanel.repaint();
                     outputPanel.revalidate();
-                } catch (ConnectionException ex) {
+                } catch (DataAccesException ex) {
                     throw new RuntimeException(ex);
                 }
             }
@@ -70,7 +67,7 @@ public class SearchBrandBikePanel extends JPanel{
         });
     }
 
-    private JScrollPane getUpdatedOutputPane(String brandName) throws ConnectionException {
+    private JScrollPane getUpdatedOutputPane(String brandName) throws DataAccesException {
         ArrayList<BikeModel> bikes = controller.getBikes(brandName);
         BrandBikesModel bikesModel = new BrandBikesModel(bikes);
         return new JScrollPane(new JTable(bikesModel));

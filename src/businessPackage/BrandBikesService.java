@@ -6,6 +6,7 @@ import ExceptionsPackage.DataAccesException;
 import ModelsPackage.BikeModel;
 import ModelsPackage.BrandModel;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 public class BrandBikesService {
@@ -17,7 +18,7 @@ public class BrandBikesService {
         return names;
     }
 
-    public Vector<BikeModel> getBikesFromBrand(String brandName) throws DataAccesException {
+    public ArrayList<BikeModel> getBikesFromBrand(String brandName) throws DataAccesException {
         return new BikeDAO().getBikesFromBrand(brandName);
     }
 }

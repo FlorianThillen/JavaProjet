@@ -19,8 +19,8 @@ public class Controller {
     private final StationStatsService stationStatsService = new StationStatsService();
     private final BrandRepairCostService brandRepairCostService = new BrandRepairCostService();
 
-    public ArrayList<BikeModel> getBikes(String brandName) {
-        return new ArrayList<BikeModel>();
+    public ArrayList<BikeModel> getBikes(String brandName) throws DataAccesException {
+        return new BrandBikesService().getBikesFromBrand(brandName);
     }
 
     public List<RentalDateSearchModel> getRentalsBetweenDates(Date start,Date end){
