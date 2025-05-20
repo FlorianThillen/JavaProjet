@@ -18,6 +18,7 @@ public class BikeModel {
         setBatteryLevel(batteryLevel);
         setNbKilometers(nbKilometers);
         setBrand(brand);
+        setStation(station);
     }
     public int getSerialNumber() {
         return serialNumber;
