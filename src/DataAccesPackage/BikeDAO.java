@@ -1,0 +1,153 @@
+package DataAccesPackage;
+
+import ExceptionsPackage.ConnectionException;
+import ExceptionsPackage.DataAccesException;
+import ModelsPackage.BikeModel;
+import ModelsPackage.BrandModel;
+import ModelsPackage.StationModel;
+
+import java.lang.reflect.Type;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class BikeDAO {
+    private final Connection connection;
+
+    public BikeDAO(){
+        this.connection = SingletonConnection.getInstance();
+    }
+
+    // cascade pour update et suppr ? a cause des tables repair & rental
+
+    // ================ operation CRUD - Read ================
+    public List<BikeModel> findAll()throws DataAccesException{
+        List<BikeModel> result = new ArrayList<>();
+
+        String query = "SELECT  b.serial_number, b.is_electric, b.buying_date, b.battery_level, b.nb_kilometer," +
+                "br.name AS brand_name, br.waranty_duration," +
+                "s.station_number,s.name as station_name, s.street, s.street_number " +
+                "FROM bike b " +
+                "JOIN brand br ON b.brand_name = br.name " +
+                "JOIN station s ON b.station_id = s.station_number";
+
+        try( PreparedStatement stmt = connection.prepareStatement(query) ){
+            ResultSet rs = stmt.executeQuery();
+
+
+            while (rs.next()){
+
+                //public StationModel(int stationNumber, String name, String street, int streetNumber, LocalityModel locality)
+                StationModel station = new StationModel(
+                        rs.getInt("station_number"),
+                        rs.getString("name"),
+                        rs.getString("street"),
+                        rs.getInt("street_number"),
+                        null
+                );
+
+                BrandModel brand = new BrandModel(
+                        rs.getString("name"),
+                        rs.getInt("waranty_duration")
+                );
+
+                //public BikeModel(int serialNumber, boolean isElectric, Date buyingDate, int batteryLevel, int nbKilometers, BrandModel brand,StationModel station)
+                result.add(new BikeModel(
+                        rs.getInt("id"),
+                        rs.getBoolean("is_electric"),
+                        rs.getDate("buying_date"),
+                        rs.getObject("battery_level") != null ? rs.getInt("battery_level") : 0,
+                        rs.getObject("nb_kilometer") != null ? rs.getInt("nb_kilometer") : 0,
+                        brand,
+                        station
+                ));
+            }
+        } catch (SQLException e){
+            throw new DataAccesException("Erreur lors du chargement des vélos",e);
+        }
+
+        return result;
+    }
+
+    // ================ operation CRUD - Create ================
+    public void insert(BikeModel bikeModel) throws DataAccesException{
+        String query = "INSERT INTO bike (serial_number,is_electric,buying_date,battery_level,nb_kilometer,station_id,brand_name ) " +
+                "VALUES (?,?,?,?,?,?,?)";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)){
+            stmt.setInt(1, bikeModel.getSerialNumber());
+            stmt.setBoolean(2, bikeModel.isElectric());
+            stmt.setDate(3, bikeModel.getBuyingDate());
+
+            if (bikeModel.getBatteryLevel() > 0){
+                stmt.setInt(4, bikeModel.getBatteryLevel());
+            } else {
+                stmt.setNull(4, Types.INTEGER);
+            }
+            if (bikeModel.getNbKilometers() > 0){
+                stmt.setInt(5, bikeModel.getNbKilometers());
+            } else {
+                stmt.setNull(5, Types.INTEGER);
+            }
+
+            stmt.setInt(6,bikeModel.getStation().getStationNumber());
+            stmt.setString(7,bikeModel.getBrand().getName());
+
+            stmt.executeUpdate();
+        }catch (SQLException e){
+            throw new DataAccesException("Erreur lors de l'insertion du vélo");
+        }
+
+    }
+
+    // ================ operation CRUD - Update ================
+
+    public void update(BikeModel bikeModel, int originalSerialNumber)throws DataAccesException{
+        String query ="UPDATE bike " +
+                "SET serial_number = ?, serial_number = ?, buying_date = ?, battery_level = ?, nb_kilometer = ?,station_id = ?,brand_name = ?" +
+                "WHERE serial_number = ?";
+        try(PreparedStatement stmt = connection.prepareStatement(query)){
+            stmt.setInt(1,bikeModel.getSerialNumber());
+            stmt.setBoolean(2,bikeModel.isElectric());
+            stmt.setDate(3,bikeModel.getBuyingDate());
+
+            if (bikeModel.getBatteryLevel() > 0) {
+                stmt.setInt(4, bikeModel.getBatteryLevel());
+            } else {
+                stmt.setNull(4, Types.INTEGER);
+            }
+
+            if (bikeModel.getNbKilometers() > 0) {
+                stmt.setInt(5, bikeModel.getNbKilometers());
+            } else {
+                stmt.setNull(5, Types.INTEGER);
+            }
+
+            stmt.setString(6,bikeModel.getBrand().getName());
+
+            stmt.setInt(7,originalSerialNumber); // dans le cas où on change l id
+            stmt.setInt(8,bikeModel.getStation().getStationNumber());
+
+
+            stmt.executeUpdate();
+
+        }catch (SQLException e){
+            throw new DataAccesException("Erreur lors de la MAJ du vélo",e);
+        }
+
+    }
+
+    // ================ operation CRUD - Delete ================
+    public void deleteBySerialNumber(int serialNumber)throws DataAccesException{
+        String query = "DELETE FROM bike WHERE serial_number = ?";
+
+        try(PreparedStatement stmt = connection.prepareStatement(query)){
+            stmt.setInt(1,serialNumber);
+            stmt.executeUpdate();
+        }catch (SQLException e){
+            throw new DataAccesException("Erreur lors de la suppresion du vélo",e);
+        }
+
+    }
+
+}

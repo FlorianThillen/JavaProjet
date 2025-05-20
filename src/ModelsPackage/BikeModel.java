@@ -9,8 +9,9 @@ public class BikeModel {
     private int batteryLevel;
     private int nbKilometers;
     private BrandModel brand;
+    private StationModel station;
 
-    public BikeModel(int serialNumber, boolean isElectric, Date buyingDate, int batteryLevel, int nbKilometers, BrandModel brand) {
+    public BikeModel(int serialNumber, boolean isElectric, Date buyingDate, int batteryLevel, int nbKilometers, BrandModel brand,StationModel station) {
         setSerialNumber(serialNumber);
         setElectric(isElectric);
         setBuyingDate(buyingDate);
@@ -30,8 +31,8 @@ public class BikeModel {
     public void setElectric(boolean electric) {
         this.electric = electric;
     }
-    public Date getBuyingDate() {
-        return buyingDate;
+    public java.sql.Date getBuyingDate() {
+        return (java.sql.Date) buyingDate;
     }
     public void setBuyingDate(Date buyingDate) {
         this.buyingDate = buyingDate;
@@ -53,5 +54,13 @@ public class BikeModel {
     }
     public void setBrand(BrandModel brand) {
         this.brand = brand;
+    }
+
+    public void setStation(StationModel station) {
+        this.station = station;
+    }
+
+    public StationModel getStation() {
+        return station;
     }
 }
