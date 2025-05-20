@@ -4,12 +4,14 @@ import ExceptionsPackage.ConnectionException;
 import ExceptionsPackage.DataAccesException;
 import ModelsPackage.BikeModel;
 import ModelsPackage.BrandModel;
+import ModelsPackage.LocalityModel;
 import ModelsPackage.StationModel;
 
 import java.lang.reflect.Type;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 public class BikeDAO {
     private final Connection connection;
@@ -21,7 +23,7 @@ public class BikeDAO {
     // cascade pour update et suppr ? a cause des tables repair & rental
 
     // ================ operation CRUD - Read ================
-    public List<BikeModel> findAll()throws DataAccesException{
+    public List<BikeModel> findAll() throws DataAccesException{
         List<BikeModel> result = new ArrayList<>();
 
         String query = "SELECT  b.serial_number, b.is_electric, b.buying_date, b.battery_level, b.nb_kilometer," +
@@ -36,7 +38,6 @@ public class BikeDAO {
 
 
             while (rs.next()){
-
                 //public StationModel(int stationNumber, String name, String street, int streetNumber, LocalityModel locality)
                 StationModel station = new StationModel(
                         rs.getInt("station_number"),
@@ -102,7 +103,7 @@ public class BikeDAO {
 
     // ================ operation CRUD - Update ================
 
-    public void update(BikeModel bikeModel, int originalSerialNumber)throws DataAccesException{
+    public void update(BikeModel bikeModel, int originalSerialNumber) throws DataAccesException{
         String query ="UPDATE bike " +
                 "SET serial_number = ?, serial_number = ?, buying_date = ?, battery_level = ?, nb_kilometer = ?,station_id = ?,brand_name = ?" +
                 "WHERE serial_number = ?";
@@ -138,7 +139,7 @@ public class BikeDAO {
     }
 
     // ================ operation CRUD - Delete ================
-    public void deleteBySerialNumber(int serialNumber)throws DataAccesException{
+    public void deleteBySerialNumber(int serialNumber) throws DataAccesException{
         String query = "DELETE FROM bike WHERE serial_number = ?";
 
         try(PreparedStatement stmt = connection.prepareStatement(query)){
@@ -150,4 +151,44 @@ public class BikeDAO {
 
     }
 
+    public Vector<BikeModel> getBikesFromBrand(String brandName) throws DataAccesException {
+        Vector<BikeModel> bikes = new Vector<>();
+        String query = """
+                SELECT * FROM bike b WHERE b.brand_name = ?
+                JOIN station s ON b.station_id = s.station_number
+                """;
+        try(PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, brandName);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                LocalityModel locality = new LocalityModel(
+                        rs.getInt(12),
+                        rs.getString(13)
+                );
+
+                StationModel station = new StationModel(
+                        rs.getInt(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getInt(11),
+                        locality
+                );
+
+                bikes.add(new BikeModel(
+                        rs.getInt(1),
+                        rs.getBoolean(2),
+                        rs.getDate(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        null,
+                        station
+                ));
+            }
+        } catch (SQLException e) {
+            String error_message = String.format("Erreur lors du chargement des vélos de la marque %s", brandName);
+            throw new DataAccesException(error_message, e);
+        }
+        return bikes;
+    }
 }

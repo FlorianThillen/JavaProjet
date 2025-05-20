@@ -4,13 +4,11 @@ import ExceptionsPackage.DataAccesException;
 import ModelsPackage.*;
 import DataAccesPackage.RepairDAO;
 
-import businessPackage.BrandRepairCostService;
-import businessPackage.RentalService;
-import businessPackage.StationStatsService;
-import businessPackage.UnpaidSubscriptionService;
+import businessPackage.*;
 
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.sql.Date;
@@ -21,8 +19,8 @@ public class Controller {
     private final StationStatsService stationStatsService = new StationStatsService();
     private final BrandRepairCostService brandRepairCostService = new BrandRepairCostService();
 
-    public Vector<BikeModel> getBikes(String brandName) {
-        return new Vector<BikeModel>();
+    public ArrayList<BikeModel> getBikes(String brandName) {
+        return new ArrayList<BikeModel>();
     }
 
     public List<RentalDateSearchModel> getRentalsBetweenDates(Date start,Date end){
@@ -48,7 +46,11 @@ public class Controller {
         }
     }
 
-    public List<RepairStatusModel> getAllRepairStatus()throws DataAccesException {
+    public List<RepairStatusModel> getAllRepairStatus() throws DataAccesException {
         return new RepairDAO().getAllStatus();
+    }
+
+    public Vector<String> getAllBrandNames() throws DataAccesException {
+        return new BrandBikesService().getAllBrandNames();
     }
 }

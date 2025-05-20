@@ -16,13 +16,16 @@ public class BrandDAO {
         Connection connection = SingletonConnection.getInstance();
 
         String query = """
-SELECT * FROM brand;
-""";
+                    SELECT * FROM brand
+                    """;
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                brandModels.add(new BrandModel(rs.getString(1), rs.getInt(2)));
+                brandModels.add(new BrandModel(
+                        rs.getString(1),
+                        rs.getInt(2)
+                ));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
