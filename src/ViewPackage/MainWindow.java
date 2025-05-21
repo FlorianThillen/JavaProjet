@@ -110,13 +110,12 @@ public class MainWindow extends JFrame {
             }
         });
 
-        //crud 2 bike
+        //crud 2 : bike
         bikeCRUD.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 contentContainer.removeAll();
-                // L: deso j'ai commente la ligne parce que ca compilait pas
-                // contentContainer.add(new BikeAdminPanel(contentContainer, controller));
+                contentContainer.add(new BikeAdminPanel(contentContainer, controller));
                 contentContainer.revalidate();
                 contentContainer.repaint();
             }

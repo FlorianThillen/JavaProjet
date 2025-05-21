@@ -104,7 +104,7 @@ public class BikeDAO {
 
     public void update(BikeModel bikeModel, int originalSerialNumber)throws DataAccesException{
         String query ="UPDATE bike " +
-                "SET serial_number = ?, serial_number = ?, buying_date = ?, battery_level = ?, nb_kilometer = ?,station_id = ?,brand_name = ?" +
+                "SET serial_number = ?, is_electric = ?, buying_date = ?, battery_level = ?, nb_kilometer = ?,station_id = ?,brand_name = ? " +
                 "WHERE serial_number = ?";
         try(PreparedStatement stmt = connection.prepareStatement(query)){
             stmt.setInt(1,bikeModel.getSerialNumber());
@@ -123,15 +123,15 @@ public class BikeDAO {
                 stmt.setNull(5, Types.INTEGER);
             }
 
-            stmt.setString(6,bikeModel.getBrand().getName());
+            stmt.setInt(6,bikeModel.getStation().getStationNumber());
+            stmt.setString(7,bikeModel.getBrand().getName());
 
-            stmt.setInt(7,originalSerialNumber); // dans le cas où on change l id
-            stmt.setInt(8,bikeModel.getStation().getStationNumber());
-
+            stmt.setInt(8,originalSerialNumber); // dans le cas où on change l id
 
             stmt.executeUpdate();
 
         }catch (SQLException e){
+            e.printStackTrace();
             throw new DataAccesException("Erreur lors de la MAJ du vélo",e);
         }
 
