@@ -91,7 +91,6 @@ public class Controller {
         return new NewRepairService().getStationsFromLocality(locality);
     }
 
-<<<<<<< Updated upstream
     // Crud Rental
     public List<RentalModel> getAllRentals() throws DataAccesException {
         return rentalService.getAllRentals();
@@ -113,9 +112,7 @@ public class Controller {
         rentalService.deleteRental(id);
     }
 
-=======
     public ArrayList<BikeModel> getBikesFromStation(StationModel station) throws DataAccesException {
         return new BikeDAO().getBikesFromStation(station);
     }
->>>>>>> Stashed changes
 }
