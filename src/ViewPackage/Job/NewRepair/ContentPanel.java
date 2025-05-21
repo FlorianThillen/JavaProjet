@@ -15,16 +15,18 @@ public class ContentPanel extends JPanel {
         setState(new ContentPanelLocality());
     }
 
-    public void setState(ContentPanelState state) throws DataAccesException {
+    private void setState(ContentPanelState state) throws DataAccesException {
         this.state = state;
         list.setListData(state.getChoices());
     }
 
-    public void goNextState() {
-        state.
+    public void goNextState() throws DataAccesException {
+        ContentPanelState nextState = state.getNextState();
+        if (nextState != null) setState(nextState);
     }
 
-    public void goPreviousState() {
-
+    public void goPreviousState() throws DataAccesException {
+        ContentPanelState previousState = state.getPreviousState();
+        if (previousState != null) setState(previousState);
     }
 }

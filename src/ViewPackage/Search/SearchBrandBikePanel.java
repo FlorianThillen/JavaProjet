@@ -42,27 +42,21 @@ public class SearchBrandBikePanel extends JPanel{
         add(outputPanel);
 
 
-        confirmButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                outputPanel.removeAll();
-                try {
-                    outputPanel.add(getUpdatedOutputPane(brandList.getSelectedValue()));
-                    outputPanel.repaint();
-                    outputPanel.revalidate();
-                } catch (DataAccesException ex) {
-                    throw new RuntimeException(ex);
-                }
+        confirmButton.addActionListener(e -> {
+            outputPanel.removeAll();
+            try {
+                outputPanel.add(getUpdatedOutputPane(brandList.getSelectedValue()));
+                outputPanel.repaint();
+                outputPanel.revalidate();
+            } catch (DataAccesException ex) {
+                throw new RuntimeException(ex);
             }
         });
-        returnButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                contentContainer.removeAll();
-                contentContainer.add(new WelcomePanel());
-                contentContainer.revalidate();
-                contentContainer.repaint();
-            }
+        returnButton.addActionListener(e -> {
+            contentContainer.removeAll();
+            contentContainer.add(new WelcomePanel());
+            contentContainer.revalidate();
+            contentContainer.repaint();
         });
     }
 

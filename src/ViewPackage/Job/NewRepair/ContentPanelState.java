@@ -20,4 +20,12 @@ public abstract class ContentPanelState {
     public void setPreviousState(ContentPanelState previousState) {
         this.previousState = previousState;
     }
+
+    public ContentPanelState getNextState() {
+        return nextState;
+    }
+
+    public ContentPanelState getPreviousState() {
+        return previousState;
+    }
 }
