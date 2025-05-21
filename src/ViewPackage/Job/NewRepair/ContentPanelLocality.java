@@ -1,6 +1,11 @@
 package ViewPackage.Job.NewRepair;
 
 import ExceptionsPackage.DataAccesException;
+import ModelsPackage.LocalityModel;
+
+import javax.swing.*;
+import javax.swing.event.TableColumnModelListener;
+import java.util.ArrayList;
 
 public class ContentPanelLocality extends ContentPanelState {
     public ContentPanelLocality() {
@@ -8,7 +13,17 @@ public class ContentPanelLocality extends ContentPanelState {
     }
 
     @Override
-    public String[] getChoices() throws DataAccesException {
-        return controller.getLocalityNames();
+    public JComponent getInputComponent() throws DataAccesException {
+        ArrayList<LocalityModel> localities = controller.getLocalities();
+
+        DefaultListModel<LocalityModel> listModel = new DefaultListModel<>();
+        listModel.addAll(localities);
+
+        JList<LocalityModel> list = new JList<>(listModel);
+        list.addListSelectionListener(e -> {
+            setInputValue(list.getSelectedValue());
+        });
+
+        return list;
     }
 }

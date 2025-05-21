@@ -1,7 +1,11 @@
 package DataAccesPackage;
 
 import ExceptionsPackage.DataAccesException;
+import ModelsPackage.BikeModel;
+import ModelsPackage.LocalityModel;
 import ModelsPackage.StationBikeNbModel;
+import ModelsPackage.StationModel;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

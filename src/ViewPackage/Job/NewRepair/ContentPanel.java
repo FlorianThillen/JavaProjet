@@ -3,21 +3,26 @@ package ViewPackage.Job.NewRepair;
 import ExceptionsPackage.DataAccesException;
 
 import javax.swing.*;
-import java.util.Arrays;
-import java.util.Vector;
 
 public class ContentPanel extends JPanel {
     ContentPanelState state;
-    JList<String> list = new JList<>();
+    JComponent inputComponent;
 
     public ContentPanel() throws DataAccesException {
-        add(list);
         setState(new ContentPanelLocality());
     }
 
     private void setState(ContentPanelState state) throws DataAccesException {
         this.state = state;
-        list.setListData(state.getChoices());
+        updateInputComponent();
+    }
+
+    private void updateInputComponent() throws DataAccesException {
+        if (inputComponent != null) remove(inputComponent);
+        inputComponent = state.getInputComponent();
+        add(inputComponent);
+        revalidate();
+        repaint();
     }
 
     public void goNextState() throws DataAccesException {

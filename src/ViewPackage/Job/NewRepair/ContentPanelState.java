@@ -3,14 +3,15 @@ package ViewPackage.Job.NewRepair;
 import ControllerPackage.Controller;
 import ExceptionsPackage.DataAccesException;
 
-import java.awt.desktop.AppReopenedEvent;
+import javax.swing.*;
 
 public abstract class ContentPanelState {
     final Controller controller = new Controller();
     private ContentPanelState previousState;
     private ContentPanelState nextState;
+    private Object inputValue;
 
-    abstract String[] getChoices() throws DataAccesException;
+    abstract JComponent getInputComponent() throws DataAccesException;
 
     public void setNextState(ContentPanelState nextState) {
         this.nextState = nextState;
@@ -27,5 +28,13 @@ public abstract class ContentPanelState {
 
     public ContentPanelState getPreviousState() {
         return previousState;
+    }
+
+    public Object getInputValue() {
+        return inputValue;
+    }
+
+    public void setInputValue(Object inputValue) {
+        this.inputValue = inputValue;
     }
 }
