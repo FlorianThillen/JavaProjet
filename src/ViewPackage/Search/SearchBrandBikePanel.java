@@ -1,7 +1,6 @@
 package ViewPackage.Search;
 
 import ControllerPackage.Controller;
-import ExceptionsPackage.ConnectionException;
 import ExceptionsPackage.DataAccesException;
 import ModelsPackage.BikeModel;
 import ModelsPackage.BrandBikesModel;
@@ -32,7 +31,7 @@ public class SearchBrandBikePanel extends JPanel{
         titlePanel.add(new JLabel("Veuillez choisir la marque de vélo qui vous intéresse."));
         add(titlePanel);
 
-        JList<String> brandList = new JList<String>(this.controller.getAllBrandNames());
+        JList<String> brandList = new JList<>(this.controller.getAllBrandNames());
         inputPanel.add(brandList);
         add(inputPanel);
 

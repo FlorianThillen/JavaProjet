@@ -78,4 +78,10 @@ public class Controller {
     public Vector<String> getAllBrandNames() throws DataAccesException {
         return new BrandBikesService().getAllBrandNames();
     }
+
+    // === New Repair
+
+    public String[] getLocalityNames() throws DataAccesException {
+        return new NewRepairService().getLocalityNames();
+    }
 }

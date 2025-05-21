@@ -6,7 +6,7 @@ import ControllerPackage.Controller;
 import ExceptionsPackage.DataAccesException;
 import ViewPackage.CRUD.BikeAdminPanel;
 import ViewPackage.Job.ListAndStatsPanel;
-import ViewPackage.Job.RepairPanel;
+import ViewPackage.Job.NewRepair.Panel;
 import ViewPackage.Search.SearchBrandBikePanel;
 import ViewPackage.Search.SearchRentalDatePanel;
 import ViewPackage.Search.SearchRepairByStatusPanel;
@@ -81,7 +81,11 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 contentContainer.removeAll();
-                contentContainer.add(new RepairPanel(contentContainer, controller));
+                try {
+                    contentContainer.add(new Panel(contentContainer, controller));
+                } catch (DataAccesException ex) {
+                    throw new RuntimeException(ex);
+                }
                 contentContainer.revalidate();
             }
         });
@@ -111,7 +115,8 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 contentContainer.removeAll();
-                contentContainer.add(new BikeAdminPanel(contentContainer, controller));
+                // L: deso j'ai commente la ligne parce que ca compilait pas
+                // contentContainer.add(new BikeAdminPanel(contentContainer, controller));
                 contentContainer.revalidate();
                 contentContainer.repaint();
             }

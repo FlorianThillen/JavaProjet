@@ -1,17 +1,14 @@
 package DataAccesPackage;
 
-import ExceptionsPackage.ConnectionException;
 import ExceptionsPackage.DataAccesException;
 import ModelsPackage.BikeModel;
 import ModelsPackage.BrandModel;
 import ModelsPackage.LocalityModel;
 import ModelsPackage.StationModel;
 
-import java.lang.reflect.Type;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 public class BikeDAO {
     private final Connection connection;

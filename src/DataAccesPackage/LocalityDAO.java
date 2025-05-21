@@ -2,35 +2,37 @@ package DataAccesPackage;
 
 import ExceptionsPackage.DataAccesException;
 import ModelsPackage.BrandModel;
+import ModelsPackage.LocalityModel;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class BrandDAO {
-    public ArrayList<BrandModel> getAllBrands() throws DataAccesException {
-        ArrayList<BrandModel> brandModels = new ArrayList<BrandModel>();
+public class LocalityDAO {
+    public ArrayList<LocalityModel> selectAllLocalities() throws DataAccesException {
+        ArrayList<LocalityModel> localityModels = new ArrayList<LocalityModel>();
 
         Connection connection = SingletonConnection.getInstance();
 
         String query = """
-                    SELECT * FROM brand
+                    SELECT * FROM localite
                     """;
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                brandModels.add(new BrandModel(
-                        rs.getString(1),
-                        rs.getInt(2)
+                localityModels.add(new LocalityModel(
+                        rs.getInt(1),
+                        rs.getString(2)
                 ));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            throw new DataAccesException("Erreur de récupération des marques", e);
+            throw new DataAccesException("Erreur de récupération des localités", e);
         }
-        return brandModels;
+        return localityModels;
     }
 }
