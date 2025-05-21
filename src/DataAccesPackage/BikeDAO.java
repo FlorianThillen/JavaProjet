@@ -244,4 +244,9 @@ public class BikeDAO {
         return list;
     }
 
+    public ArrayList<BikeModel> getBikesFromStation() throws DataAccesException {
+        ArrayList<BikeModel> bikes = new ArrayList<>();
+
+        return null;
+    }
 }

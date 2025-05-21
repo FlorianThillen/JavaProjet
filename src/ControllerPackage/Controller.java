@@ -82,8 +82,12 @@ public class Controller {
 
     // === New Repair
 
-    public String[] getLocalityNames() throws DataAccesException {
-        return new NewRepairService().getLocalityNames();
+    public ArrayList<LocalityModel> getLocalities() throws DataAccesException {
+        return new NewRepairService().getLocalities();
+    }
+
+    public ArrayList<StationModel> getStationsFromLocality(LocalityModel locality) throws DataAccesException {
+        return new NewRepairService().getStationsFromLocality(locality);
     }
 
     // Crud Rental

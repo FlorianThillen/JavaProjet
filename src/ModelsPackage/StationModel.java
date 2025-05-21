@@ -1,7 +1,5 @@
 package ModelsPackage;
 
-import java.time.LocalDate;
-
 public class StationModel {
     private int stationNumber;
     private String name;
