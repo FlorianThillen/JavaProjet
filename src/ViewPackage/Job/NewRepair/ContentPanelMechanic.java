@@ -10,9 +10,7 @@ import java.util.ArrayList;
 
 public class ContentPanelMechanic extends ContentPanelState {
     public ContentPanelMechanic() throws DataAccesException {
-        setNextState(new ContentPanelStatus());
-
-        ArrayList<MechanicModel> Mechanics = controller.;
+        ArrayList<MechanicModel> Mechanics = controller.getAllMechanics();
 
         DefaultListModel<MechanicModel> listModel = new DefaultListModel<>();
         listModel.addAll(Mechanics);

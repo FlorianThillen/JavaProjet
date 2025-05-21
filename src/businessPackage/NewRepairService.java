@@ -2,10 +2,12 @@ package businessPackage;
 
 import DataAccesPackage.BikeDAO;
 import DataAccesPackage.LocalityDAO;
+import DataAccesPackage.MechanicDAO;
 import DataAccesPackage.StationDAO;
 import ExceptionsPackage.DataAccesException;
 import ModelsPackage.BikeModel;
 import ModelsPackage.LocalityModel;
+import ModelsPackage.MechanicModel;
 import ModelsPackage.StationModel;
 
 import java.util.ArrayList;
@@ -21,5 +23,9 @@ public class NewRepairService {
 
     public ArrayList<BikeModel> getBikesFromStation(StationModel station) throws DataAccesException {
         return new BikeDAO().getBikesFromStation(station);
+    }
+
+    public ArrayList<MechanicModel> getAllMechanics() throws DataAccesException {
+        return new MechanicDAO().selectAllMechanics();
     }
 }

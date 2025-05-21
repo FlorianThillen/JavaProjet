@@ -91,6 +91,10 @@ public class Controller {
         return new NewRepairService().getStationsFromLocality(locality);
     }
 
+    public ArrayList<MechanicModel> getAllMechanics() throws DataAccesException {
+        return new NewRepairService().getAllMechanics();
+    }
+
     // Crud Rental
     public List<RentalModel> getAllRentals() throws DataAccesException {
         return rentalService.getAllRentals();
