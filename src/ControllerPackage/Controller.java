@@ -14,18 +14,19 @@ import java.util.Vector;
 import java.sql.Date;
 
 public class Controller {
-    private RentalService rentalService = new RentalService();
+    private RentalSearchService rentalSearchService = new RentalSearchService();
     private final UnpaidSubscriptionService unpaidSubscriptionService = new UnpaidSubscriptionService();
     private final StationStatsService stationStatsService = new StationStatsService();
     private final BrandRepairCostService brandRepairCostService = new BrandRepairCostService();
     private final BikeService bikeService = new BikeService();
+    private final RentalService rentalService = new RentalService();
 
     public ArrayList<BikeModel> getBikes(String brandName) throws DataAccesException {
         return new BrandBikesService().getBikesFromBrand(brandName);
     }
 
     public List<RentalDateSearchModel> getRentalsBetweenDates(Date start,Date end){
-        return rentalService.searchRentals(start,end);
+        return rentalSearchService.searchRentals(start,end);
     }
     // tache métier 2 ,1/3
     public List<UnpaidSubscriptionModel> getUnpaidSubscriptions() throws DataAccesException {
@@ -84,4 +85,26 @@ public class Controller {
     public String[] getLocalityNames() throws DataAccesException {
         return new NewRepairService().getLocalityNames();
     }
+
+    // Crud Rental
+    public List<RentalModel> getAllRentals() throws DataAccesException {
+        return rentalService.getAllRentals();
+    }
+
+    public RentalModel getRentalById(int id) throws DataAccesException {
+        return rentalService.getRentalById(id);
+    }
+
+    public void insertRental(RentalModel rental) throws DataAccesException {
+        rentalService.insertRental(rental);
+    }
+
+    public void updateRental(RentalModel rental) throws DataAccesException {
+        rentalService.updateRental(rental);
+    }
+
+    public void deleteRental(int id) throws DataAccesException {
+        rentalService.deleteRental(id);
+    }
+
 }

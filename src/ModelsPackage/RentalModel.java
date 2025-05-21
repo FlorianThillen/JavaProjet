@@ -1,17 +1,18 @@
 package ModelsPackage;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class RentalModel {
     private int rentalId;
-    private Date startDate;
-    private Date returnDate;
+    private LocalDate startDate;
+    private LocalDate returnDate;
     private String comment;
     private boolean hadIssue;
     private SubscriptionModel subscription;
     private BikeModel bike;
 
-    public RentalModel(int rentalId, Date startDate, Date returnDate, String comment, boolean hadIssue, SubscriptionModel subscription, BikeModel bike) {
+    public RentalModel(int rentalId, LocalDate startDate, LocalDate returnDate, String comment, boolean hadIssue, SubscriptionModel subscription, BikeModel bike) {
         setRentalId(rentalId);
         setStartDate(startDate);
         setReturnDate(returnDate);
@@ -20,22 +21,27 @@ public class RentalModel {
         setSubscription(subscription);
         setBike(bike);
     }
+
+    public RentalModel() {
+
+    }
+
     public int getRentalId() {
         return rentalId;
     }
     public void setRentalId(int rentalId) {
         this.rentalId = rentalId;
     }
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
-    public Date getReturnDate() {
+    public LocalDate getReturnDate() {
         return returnDate;
     }
-    public void setReturnDate(Date returnDate) {
+    public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
     }
     public String getComment() {

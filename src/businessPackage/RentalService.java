@@ -1,26 +1,36 @@
 package businessPackage;
 
-import DataAccesPackage.SingletonConnection;
-import ModelsPackage.RentalDateSearchModel;
-import DataAccesPackage.RentalSearchDAO;
+import DataAccesPackage.RentalDAO;
+import ExceptionsPackage.DataAccesException;
+import ModelsPackage.RentalModel;
 
-import java.sql.Date;
 import java.util.List;
 
 
 public class RentalService {
-    private final RentalSearchDAO rentalSearchDAO;
+    private final RentalDAO rentalDAO;
 
     public RentalService(){
-        this.rentalSearchDAO = new RentalSearchDAO();
+        this.rentalDAO =new RentalDAO();
     }
 
-    public List<RentalDateSearchModel> searchRentals(Date startDate, Date endDate){
-        if(startDate.after(endDate)){
-            throw new IllegalArgumentException("! Date de debut apres la date de fin !"); // à modifier pour appeler une exepction à créer dans l exception package
-        }
-        return rentalSearchDAO.getRentalsBewteenDates(startDate,endDate);
+    public List<RentalModel> getAllRentals() throws DataAccesException {
+        return rentalDAO.getAllRentals();
     }
 
+    public RentalModel getRentalById(int id) throws DataAccesException {
+        return rentalDAO.getRentalById(id);
+    }
 
+    public void insertRental(RentalModel rental) throws DataAccesException {
+        rentalDAO.insertRental(rental);
+    }
+
+    public void updateRental(RentalModel rental) throws DataAccesException {
+        rentalDAO.updateRental(rental);
+    }
+
+    public void deleteRental(int id) throws DataAccesException {
+        rentalDAO.deleteRental(id);
+    }
 }

@@ -20,6 +20,11 @@ public class BikeModel {
         setBrand(brand);
         setStation(station);
     }
+
+    public BikeModel() {
+
+    }
+
     public int getSerialNumber() {
         return serialNumber;
     }

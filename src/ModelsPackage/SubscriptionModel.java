@@ -16,6 +16,11 @@ public class SubscriptionModel {
         setCautionPayed(cautionPayed);
         setSubscriptionPayed(subscriptionPayed);
     }
+
+    public SubscriptionModel() {
+
+    }
+
     public int getCardNumber() {
         return cardNumber;
     }

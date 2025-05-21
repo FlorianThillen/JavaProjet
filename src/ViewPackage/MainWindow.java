@@ -1,7 +1,6 @@
 package ViewPackage;
 
 import ControllerPackage.Controller;
-//import ViewPackage.CRUD.*;
 //import ViewPackage.Job.*;
 import ExceptionsPackage.DataAccesException;
 import ViewPackage.CRUD.BikeAdminPanel;
@@ -10,8 +9,8 @@ import ViewPackage.Job.NewRepair.Panel;
 import ViewPackage.Search.SearchBrandBikePanel;
 import ViewPackage.Search.SearchRentalDatePanel;
 import ViewPackage.Search.SearchRepairByStatusPanel;
-//import ViewPackage.Search.SearchFamilyPanel;
-//import ViewPackage.Search.SearchSubscriptionPanel;
+import ViewPackage.CRUD.RentalAdminPanel;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -104,7 +103,7 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 contentContainer.removeAll();
-                //contentContainer.add(new [panel adequat](contentContainer, controller));
+                contentContainer.add(new RentalAdminPanel());
                 contentContainer.revalidate();
                 contentContainer.repaint();
             }
