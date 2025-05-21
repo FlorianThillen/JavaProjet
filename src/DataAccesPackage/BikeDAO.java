@@ -244,9 +244,33 @@ public class BikeDAO {
         return list;
     }
 
-    public ArrayList<BikeModel> getBikesFromStation() throws DataAccesException {
+    public ArrayList<BikeModel> getBikesFromStation(StationModel station) throws DataAccesException {
         ArrayList<BikeModel> bikes = new ArrayList<>();
 
+        String query = """
+                SELECT * FROM bike b
+                WHERE b.station_id = ?;
+                """;
+        try(PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, station.getStationNumber());
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                bikes.add(new BikeModel(
+                        rs.getInt(1),
+                        rs.getBoolean(2),
+                        rs.getDate(3),
+                        rs.getInt(4),
+                        rs.getInt(5),
+                        null,
+                        station
+
+                ));
+            }
+        } catch (SQLException e) {
+            String error_message = String.format("Erreur lors du chargement des velos de la station %s", station.getName());
+            throw new DataAccesException(error_message, e);
+        }
         return null;
     }
 }

@@ -9,9 +9,15 @@ public abstract class ContentPanelState {
     final Controller controller = new Controller();
     private ContentPanelState previousState;
     private ContentPanelState nextState;
-    private Object inputValue;
+    private JComponent inputComponent;
 
-    abstract JComponent getInputComponent() throws DataAccesException;
+    public void setInputComponent(JComponent inputComponent) {
+        this.inputComponent = inputComponent;
+    }
+
+    public JComponent getInputComponent() throws DataAccesException {
+        return inputComponent;
+    };
 
     public void setNextState(ContentPanelState nextState) {
         this.nextState = nextState;
@@ -30,11 +36,5 @@ public abstract class ContentPanelState {
         return previousState;
     }
 
-    public Object getInputValue() {
-        return inputValue;
-    }
-
-    public void setInputValue(Object inputValue) {
-        this.inputValue = inputValue;
-    }
+    public abstract Object getInputValue() throws DataAccesException;
 }

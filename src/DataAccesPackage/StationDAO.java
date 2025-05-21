@@ -31,7 +31,7 @@ public class StationDAO {
                         rs.getString(2),
                         rs.getString(3),
                         rs.getInt(4),
-                        null
+                        locality
                 ));
             }
         } catch (SQLException e) {
