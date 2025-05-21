@@ -23,7 +23,7 @@ public class BikeDAO {
     // cascade pour update et suppr ? a cause des tables repair & rental
 
     // ================ operation CRUD - Read ================
-    public List<BikeModel> findAll() throws DataAccesException{
+    public List<BikeModel> findAll()throws DataAccesException{
         List<BikeModel> result = new ArrayList<>();
 
         String query = "SELECT  b.serial_number, b.is_electric, b.buying_date, b.battery_level, b.nb_kilometer," +
@@ -38,6 +38,7 @@ public class BikeDAO {
 
 
             while (rs.next()){
+
                 //public StationModel(int stationNumber, String name, String street, int streetNumber, LocalityModel locality)
                 StationModel station = new StationModel(
                         rs.getInt("station_number"),
@@ -103,7 +104,7 @@ public class BikeDAO {
 
     // ================ operation CRUD - Update ================
 
-    public void update(BikeModel bikeModel, int originalSerialNumber) throws DataAccesException{
+    public void update(BikeModel bikeModel, int originalSerialNumber)throws DataAccesException{
         String query ="UPDATE bike " +
                 "SET serial_number = ?, serial_number = ?, buying_date = ?, battery_level = ?, nb_kilometer = ?,station_id = ?,brand_name = ?" +
                 "WHERE serial_number = ?";
@@ -139,7 +140,7 @@ public class BikeDAO {
     }
 
     // ================ operation CRUD - Delete ================
-    public void deleteBySerialNumber(int serialNumber) throws DataAccesException{
+    public void deleteBySerialNumber(int serialNumber)throws DataAccesException{
         String query = "DELETE FROM bike WHERE serial_number = ?";
 
         try(PreparedStatement stmt = connection.prepareStatement(query)){
@@ -192,4 +193,56 @@ public class BikeDAO {
         }
         return bikes;
     }
+    // ===clef etrangere
+
+    //brand
+    public List<BrandModel> getAllBrands()throws DataAccesException{
+        List<BrandModel> list = new ArrayList<>();
+        String query = "SELECT * FROM brand";
+        try (PreparedStatement stmt = connection.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                list.add(new BrandModel(
+                        rs.getString("name"),
+                        rs.getInt("waranty_duration")
+                ));
+            }
+
+        } catch (SQLException e) {
+            throw new DataAccesException("Erreur lors du chargement des marques", e);
+        }
+
+        return list;
+    }
+
+    public List<StationModel> getAllStations() throws DataAccesException {
+        List<StationModel> list = new ArrayList<>();
+        String query = """
+        SELECT s.station_number, s.name, s.street, s.street_number,
+               l.postal_code, l.name AS locality_name
+        FROM Station s
+        JOIN Locality l ON s.postal_code = l.postal_code AND s.local_name = l.name
+    """;
+
+        try (PreparedStatement stmt = connection.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                list.add(new StationModel(
+                        rs.getInt("station_number"),
+                        rs.getString("name"),
+                        rs.getString("street"),
+                        rs.getInt("street_number"),
+                        new LocalityModel(rs.getInt("postal_code"), rs.getString("locality_name"))
+                ));
+            }
+
+        } catch (SQLException e) {
+            throw new DataAccesException("Erreur lors du chargement des stations", e);
+        }
+
+        return list;
+    }
+
 }

@@ -18,6 +18,7 @@ public class Controller {
     private final UnpaidSubscriptionService unpaidSubscriptionService = new UnpaidSubscriptionService();
     private final StationStatsService stationStatsService = new StationStatsService();
     private final BrandRepairCostService brandRepairCostService = new BrandRepairCostService();
+    private final BikeService bikeService = new BikeService();
 
     public ArrayList<BikeModel> getBikes(String brandName) throws DataAccesException {
         return new BrandBikesService().getBikesFromBrand(brandName);
@@ -38,6 +39,30 @@ public class Controller {
     public List<BrandRepairCostModel> getAverageRepairCostPeBrand()throws DataAccesException{
         return brandRepairCostService.getAverageRepairCostPerBrand();
     }
+
+    //==== crud bikes
+    public void insertBike(BikeModel bikeModel)throws DataAccesException{
+        bikeService.insertBike(bikeModel);
+    }
+    public List<BikeModel> getAllBikes()throws DataAccesException{
+        return bikeService.getAllBikes();
+    }
+    public List<BrandModel> getAllBrands() throws DataAccesException {
+        return bikeService.getAllBrands();
+    }
+
+    public List<StationModel> getAllStations() throws DataAccesException {
+        return bikeService.getAllStations();
+    }
+    public void deleteBike(int serialNumber)throws DataAccesException{
+        bikeService.deleteBike(serialNumber);
+    }
+    public void updateBike(BikeModel bikeModel,int originalSerialNumber)throws DataAccesException{
+        bikeService.updateBike(bikeModel,originalSerialNumber);
+    }
+
+    // ====
+
     public List<RepairSearchModel> getRepairsByStatus(String statusLabel) {
         try {
             return new RepairDAO().getRepairsByStatus(statusLabel);

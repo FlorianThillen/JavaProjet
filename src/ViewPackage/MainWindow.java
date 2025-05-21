@@ -4,6 +4,7 @@ import ControllerPackage.Controller;
 //import ViewPackage.CRUD.*;
 //import ViewPackage.Job.*;
 import ExceptionsPackage.DataAccesException;
+import ViewPackage.CRUD.BikeAdminPanel;
 import ViewPackage.Job.ListAndStatsPanel;
 import ViewPackage.Job.RepairPanel;
 import ViewPackage.Search.SearchBrandBikePanel;
@@ -56,12 +57,17 @@ public class MainWindow extends JFrame {
 //        crudMember = new JMenu("Membre");
         researches = new JMenu("Recherche");
         JMenu businessTask = new JMenu("Tâche métier");
-//        menuBar.add(crudMember);
+        JMenu CRUD = new JMenu("CRUD");
+
         menuBar.add(researches);
         menuBar.add(businessTask);
+        menuBar.add(CRUD);
 
         //CRUD
-//        setCrudMenu();
+        JMenuItem rentalCRUD = new JMenuItem("Rental");
+        JMenuItem bikeCRUD = new JMenuItem("Bike");
+        CRUD.add(rentalCRUD);
+        CRUD.add(bikeCRUD);
 
         //Research
         setSearchMenu();
@@ -89,6 +95,27 @@ public class MainWindow extends JFrame {
                 contentContainer.repaint();
             }
         });
+        //crud 1 rental
+        rentalCRUD.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                contentContainer.removeAll();
+                //contentContainer.add(new [panel adequat](contentContainer, controller));
+                contentContainer.revalidate();
+                contentContainer.repaint();
+            }
+        });
+
+        //crud 2 bike
+        bikeCRUD.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                contentContainer.removeAll();
+                contentContainer.add(new BikeAdminPanel(contentContainer, controller));
+                contentContainer.revalidate();
+                contentContainer.repaint();
+            }
+        });
 
         //Bike animation
         setAnimation();
@@ -97,6 +124,7 @@ public class MainWindow extends JFrame {
         mainContainer.repaint();
         revalidate();
     }
+
 
     //    private void setCrudMenu() {
 //        // CRUD
