@@ -42,20 +42,20 @@ public class BikeDAO {
                 //public StationModel(int stationNumber, String name, String street, int streetNumber, LocalityModel locality)
                 StationModel station = new StationModel(
                         rs.getInt("station_number"),
-                        rs.getString("name"),
+                        rs.getString("station_name"), //+
                         rs.getString("street"),
                         rs.getInt("street_number"),
                         null
                 );
 
                 BrandModel brand = new BrandModel(
-                        rs.getString("name"),
+                        rs.getString("brand_name"),
                         rs.getInt("waranty_duration")
                 );
 
                 //public BikeModel(int serialNumber, boolean isElectric, Date buyingDate, int batteryLevel, int nbKilometers, BrandModel brand,StationModel station)
                 result.add(new BikeModel(
-                        rs.getInt("id"),
+                        rs.getInt("serial_number"),
                         rs.getBoolean("is_electric"),
                         rs.getDate("buying_date"),
                         rs.getObject("battery_level") != null ? rs.getInt("battery_level") : 0,
@@ -65,7 +65,8 @@ public class BikeDAO {
                 ));
             }
         } catch (SQLException e){
-            throw new DataAccesException("Erreur lors du chargement des vélos",e);
+            e.printStackTrace();
+            throw new DataAccesException("Erreur lors du chargement des vélos (findall)",e);
         }
 
         return result;
@@ -193,7 +194,6 @@ public class BikeDAO {
         }
         return bikes;
     }
-    // ===clef etrangere
 
     //brand
     public List<BrandModel> getAllBrands()throws DataAccesException{
@@ -210,6 +210,7 @@ public class BikeDAO {
             }
 
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new DataAccesException("Erreur lors du chargement des marques", e);
         }
 
@@ -221,9 +222,9 @@ public class BikeDAO {
         String query = """
         SELECT s.station_number, s.name, s.street, s.street_number,
                l.postal_code, l.name AS locality_name
-        FROM Station s
-        JOIN Locality l ON s.postal_code = l.postal_code AND s.local_name = l.name
-    """;
+        FROM station s
+        JOIN localite l ON s.postal_code = l.postal_code AND s.local_name = l.name
+        """;
 
         try (PreparedStatement stmt = connection.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
@@ -239,6 +240,7 @@ public class BikeDAO {
             }
 
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new DataAccesException("Erreur lors du chargement des stations", e);
         }
 

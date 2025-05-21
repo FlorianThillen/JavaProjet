@@ -46,4 +46,10 @@ public class StationModel {
     public void setLocality(LocalityModel locality) {
         this.locality = locality;
     }
+
+    //pour recevoir le nom en cas d appel du model
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

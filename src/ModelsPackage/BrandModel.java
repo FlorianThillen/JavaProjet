@@ -20,4 +20,10 @@ public class BrandModel {
     public void setWarrantyDuration(int warrantyDuration) {
         this.warrantyDuration = warrantyDuration;
     }
+
+    //pour recevoir le nom en cas d appel du model
+    @Override
+    public String toString() {
+        return getName();
+    }
 }
