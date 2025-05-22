@@ -21,6 +21,8 @@ public class Controller {
     private final BrandRepairCostService brandRepairCostService = new BrandRepairCostService();
     private final BikeService bikeService = new BikeService();
     private final RentalService rentalService = new RentalService();
+    private final BrandService brandService = new BrandService();
+    private final StationService stationService = new StationService();
 
     public ArrayList<BikeModel> getBikes(String brandName) throws DataAccesException {
         return new BrandBikesService().getBikesFromBrand(brandName);
@@ -50,11 +52,11 @@ public class Controller {
         return bikeService.getAllBikes();
     }
     public List<BrandModel> getAllBrands() throws DataAccesException {
-        return bikeService.getAllBrands();
+        return brandService.getAllBrands();
     }
 
     public List<StationModel> getAllStations() throws DataAccesException {
-        return bikeService.getAllStations();
+        return stationService.getAllStations();
     }
     public void deleteBike(int serialNumber)throws DataAccesException{
         bikeService.deleteBike(serialNumber);

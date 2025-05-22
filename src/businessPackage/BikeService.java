@@ -21,13 +21,18 @@ public class BikeService {
     public List<BikeModel> getAllBikes()throws DataAccesException{
         return bikeDAO.findAll();
     }
+    //---
+    /*
     public List<BrandModel> getAllBrands() throws DataAccesException {
         return bikeDAO.getAllBrands();
     }
 
+
     public List<StationModel> getAllStations() throws DataAccesException {
         return bikeDAO.getAllStations();
     }
+    */
+    //---
     public void deleteBike(int serialNumber) throws DataAccesException {
         bikeDAO.deleteBySerialNumber(serialNumber);
     }
