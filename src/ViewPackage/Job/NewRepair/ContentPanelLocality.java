@@ -1,26 +1,27 @@
 package ViewPackage.Job.NewRepair;
 
 import ExceptionsPackage.DataAccesException;
-import ModelsPackage.BikeModel;
 import ModelsPackage.LocalityModel;
 
 import javax.swing.*;
 import java.util.ArrayList;
 
 public class ContentPanelLocality extends ContentPanelState {
+    private final JList<LocalityModel> list = new JList<>();
+
     public ContentPanelLocality() throws DataAccesException {
-        setNextState(new ContentPanelStation());
+        LocalityModel[] localities = controller.getLocalities().toArray(LocalityModel[]::new);
+        list.setListData(localities);
 
-        ArrayList<LocalityModel> localities = controller.getLocalities();
-
-        DefaultListModel<LocalityModel> listModel = new DefaultListModel<>();
-        listModel.addAll(localities);
-
-        setInputComponent(new JList<>(listModel));
+        ArrayList<JComponent> comps = new ArrayList<>();
+        comps.add(list);
+        setInputComponents(comps);
     }
 
     @Override
-    public LocalityModel getInputValue() throws DataAccesException {
-        return ((JList<LocalityModel>)getInputComponent()).getSelectedValue();
+    ContentPanelState getNextState() throws DataAccesException {
+        ContentPanelStation nextState = new ContentPanelStation(list.getSelectedValue());
+        nextState.setPreviousState(this);
+        return nextState;
     }
 }

@@ -6,22 +6,23 @@ import ModelsPackage.StationModel;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Stack;
 
-public class ContentPanelStation extends ContentPanelState{
-    public ContentPanelStation() throws DataAccesException {
-        setNextState(new ContentPanelBike());
+public class ContentPanelStation extends ContentPanelState {
+    private final JList<StationModel> list = new JList<>();
 
-        ArrayList<StationModel> stations = controller.getStationsFromLocality((LocalityModel) getPreviousState().getInputValue());
+    public ContentPanelStation(LocalityModel locality) throws DataAccesException {
+        StationModel[] stations = controller.getStationsFromLocality(locality).toArray(StationModel[]::new);
+        list.setListData(stations);
 
-        DefaultListModel<StationModel> listModel = new DefaultListModel<>();
-        listModel.addAll(stations);
-
-        setInputComponent(new JList<>(listModel));
+        ArrayList<JComponent> comps = new ArrayList<>();
+        comps.add(list);
+        setInputComponents(comps);
     }
 
     @Override
-    public StationModel getInputValue() throws DataAccesException {
-        return ((JList<StationModel>)getInputComponent()).getSelectedValue();
+    ContentPanelState getNextState() throws DataAccesException {
+        ContentPanelBike nextState = new ContentPanelBike(list.getSelectedValue());
+        nextState.setPreviousState(this);
+        return nextState;
     }
 }

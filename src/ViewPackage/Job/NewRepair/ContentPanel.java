@@ -6,7 +6,6 @@ import javax.swing.*;
 
 public class ContentPanel extends JPanel {
     ContentPanelState state;
-    JComponent inputComponent;
 
     public ContentPanel() throws DataAccesException {
         setState(new ContentPanelLocality());
@@ -14,13 +13,14 @@ public class ContentPanel extends JPanel {
 
     private void setState(ContentPanelState state) throws DataAccesException {
         this.state = state;
-        updateInputComponent();
+        updateInputComponents();
     }
 
-    private void updateInputComponent() throws DataAccesException {
-        if (inputComponent != null) remove(inputComponent);
-        inputComponent = state.getInputComponent();
-        add(inputComponent);
+    private void updateInputComponents() throws DataAccesException {
+        removeAll();
+        for(JComponent comp: state.getInputComponents()) {
+            add(comp);
+        }
         revalidate();
         repaint();
     }

@@ -2,25 +2,28 @@ package ViewPackage.Job.NewRepair;
 
 import ExceptionsPackage.DataAccesException;
 import ModelsPackage.BikeModel;
+import ModelsPackage.LocalityModel;
 import ModelsPackage.StationModel;
 
 import javax.swing.*;
 import java.util.ArrayList;
 
 public class ContentPanelBike extends ContentPanelState {
-    public ContentPanelBike() throws DataAccesException {
-        setNextState(new ContentPanelRepair());
+    private final JList<BikeModel> list = new JList<>();
 
-        ArrayList<BikeModel> bikes = controller.getBikesFromStation((StationModel) getPreviousState().getInputValue());
+    public ContentPanelBike(StationModel station) throws DataAccesException {
+        BikeModel[] bikes = controller.getBikesFromStation(station).toArray(BikeModel[]::new);
+        list.setListData(bikes);
 
-        DefaultListModel<BikeModel> listModel = new DefaultListModel<>();
-        listModel.addAll(bikes);
-
-        setInputComponent(new JList<>(listModel));
+        ArrayList<JComponent> comps = new ArrayList<>();
+        comps.add(list);
+        setInputComponents(comps);
     }
 
     @Override
-    public BikeModel getInputValue() throws DataAccesException {
-        return ((JList<BikeModel>)getInputComponent()).getSelectedValue();
+    ContentPanelState getNextState() throws DataAccesException {
+        ContentPanelRepair nextState = new ContentPanelRepair(list.getSelectedValue());
+        nextState.setPreviousState(this);
+        return nextState;
     }
 }
