@@ -1,7 +1,6 @@
 package ViewPackage;
 
 import ControllerPackage.Controller;
-//import ViewPackage.Job.*;
 import ExceptionsPackage.DataAccesException;
 import ViewPackage.CRUD.BikeAdminPanel;
 import ViewPackage.Job.ListAndStatsPanel;
@@ -23,8 +22,7 @@ public class MainWindow extends JFrame {
     private final Container mainContainer, contentContainer, animationContainer;
     private final Controller controller;
     private final JMenuBar menuBar;
-    //    // Menus
-//    private final JMenu crudMember;
+    // Menus
     private final JMenu researches;
     //Animation
     private BikeAnimation bikeAnimation;
@@ -128,56 +126,14 @@ public class MainWindow extends JFrame {
         revalidate();
     }
 
-
-    //    private void setCrudMenu() {
-//        // CRUD
-//        JMenuItem addMember = new JMenuItem("Ajouter un membre");
-//        JMenuItem memberList = new JMenuItem("Liste des membres");
-//        JMenuItem updateMember = new JMenuItem("Modifier ou supprimer un membre");
-//        crudMember.add(addMember);
-//        crudMember.add(memberList);
-//        crudMember.add(updateMember);
-//        addMember.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                contentContainer.removeAll();
-//                contentContainer.add(new AddMemberPanel(contentContainer, controller));
-//                contentContainer.revalidate();
-//                contentContainer.repaint();
-//            }
-//        });
-//        memberList.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                contentContainer.removeAll();
-//                contentContainer.add(new MemberListPanel(contentContainer, controller));
-//                contentContainer.revalidate();
-//                contentContainer.repaint();
-//            }
-//        });
-//        updateMember.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                contentContainer.removeAll();
-//                contentContainer.add(new SearchMemberPanel(contentContainer, controller));
-//                contentContainer.revalidate();
-//                contentContainer.repaint();
-//            }
-//        });
-//
-//
-//    }
+    // CRUD
     private void setSearchMenu() {
         JMenuItem menuSearchBrandBike = new JMenuItem("Recherche vélos d'une certaine marque");
         JMenuItem menuSearchRentalDate = new JMenuItem("Recherche locations entre 2 dates");
         JMenuItem menuSearchRepair = new JMenuItem("Recherche statut réparation ");
-        //        JMenuItem menuSearchFamilySub = new JMenuItem("Recherche abonnement familial");
         researches.add(menuSearchBrandBike);
         researches.add(menuSearchRentalDate);
         researches.add(menuSearchRepair);
-        //        researches.add(menuSearchSubscriptions);
-        //        researches.add(menuSearchFamilySub);
-        //
         menuSearchBrandBike.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -212,15 +168,6 @@ public class MainWindow extends JFrame {
                 contentContainer.repaint();
             }
         });
-//        menuSearchSubscriptions.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                contentContainer.removeAll();
-//                contentContainer.add(new SearchSubscriptionPanel(controller, contentContainer));
-//                contentContainer.revalidate();
-//                contentContainer.repaint();
-//            }
-//        });
     }
 
     private void setAnimation() {

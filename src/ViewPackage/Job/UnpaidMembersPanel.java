@@ -65,6 +65,4 @@ public class UnpaidMembersPanel extends JPanel {
             JOptionPane.showMessageDialog(this, "Erreur lors de la récupération : " + e.getMessage());
         }
     }
-
-
 }

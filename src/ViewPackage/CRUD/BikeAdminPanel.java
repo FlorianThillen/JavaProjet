@@ -277,8 +277,5 @@ public class BikeAdminPanel extends JPanel {
         brandBox.setSelectedIndex(0);
         stationBox.setSelectedIndex(0);
     }
-
-
-
 }
 
