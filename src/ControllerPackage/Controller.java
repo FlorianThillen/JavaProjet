@@ -66,7 +66,6 @@ public class Controller {
     }
 
     // ====
-
     public List<RepairSearchModel> getRepairsByStatus(String statusLabel) {
         try {
             return new RepairDAO().getRepairsByStatus(statusLabel);
@@ -84,7 +83,6 @@ public class Controller {
     }
 
     // === New Repair
-
     public ArrayList<LocalityModel> getLocalities() throws DataAccesException {
         return new NewRepairService().getLocalities();
     }
@@ -119,6 +117,10 @@ public class Controller {
     }
 
     public ArrayList<BikeModel> getBikesFromStation(StationModel station) throws DataAccesException {
-        return new BikeDAO().getBikesFromStation(station);
+        return new NewRepairService().getBikesFromStation(station);
+    }
+
+    public void saveNewRepair(RepairModel repair) throws DataAccesException {
+        new NewRepairService().saveNewRepair(repair);
     }
 }

@@ -6,7 +6,7 @@ import ExceptionsPackage.DataAccesException;
 import javax.swing.*;
 import java.util.ArrayList;
 
-public abstract class ContentPanelState {
+public class ContentPanelState {
     final Controller controller = new Controller();
     private ContentPanelState previousState;
     private ArrayList<JComponent> inputComponents;
@@ -15,13 +15,15 @@ public abstract class ContentPanelState {
         this.inputComponents = inputComponents;
     }
 
-    public ArrayList<JComponent> getInputComponents() throws DataAccesException { return inputComponents; };
+    public ArrayList<JComponent> getInputComponents() { return inputComponents; };
 
     public void setPreviousState(ContentPanelState previousState) {
         this.previousState = previousState;
     }
 
-    abstract ContentPanelState getNextState() throws DataAccesException;
+    public ContentPanelState getNextState() throws DataAccesException {
+        return null;
+    };
 
     public ContentPanelState getPreviousState() {
         return previousState;

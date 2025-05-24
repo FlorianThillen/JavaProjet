@@ -81,7 +81,7 @@ public class MainWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 contentContainer.removeAll();
                 try {
-                    contentContainer.add(new Panel(contentContainer, controller));
+                    contentContainer.add(new Panel());
                 } catch (DataAccesException ex) {
                     throw new RuntimeException(ex);
                 }

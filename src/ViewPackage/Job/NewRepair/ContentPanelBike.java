@@ -21,7 +21,7 @@ public class ContentPanelBike extends ContentPanelState {
     }
 
     @Override
-    ContentPanelState getNextState() throws DataAccesException {
+    public ContentPanelState getNextState() throws DataAccesException {
         ContentPanelRepair nextState = new ContentPanelRepair(list.getSelectedValue());
         nextState.setPreviousState(this);
         return nextState;

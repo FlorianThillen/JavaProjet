@@ -69,4 +69,9 @@ public class BikeModel {
     public StationModel getStation() {
         return station;
     }
+
+    @Override
+    public String toString() {
+        return Integer.toString(getSerialNumber());
+    }
 }

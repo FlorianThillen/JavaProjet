@@ -1,22 +1,14 @@
 package ViewPackage.Job.NewRepair;
 
 import javax.swing.*;
-import java.awt.*;
-
-import ControllerPackage.Controller;
 import ExceptionsPackage.DataAccesException;
 
 public class Panel extends JPanel {
-    private Controller controller;
-    private ContentPanel contentPanel;
-
-    public Panel(Container container, Controller controller) throws DataAccesException {
+    public Panel() throws DataAccesException {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        this.controller = controller;
-
         JPanel titlePanel = new JPanel();
-        contentPanel = new ContentPanel();
+        ContentPanel contentPanel = new ContentPanel();
         JPanel confirmationPanel = new JPanel();
 
         titlePanel.add(new JLabel("Title"));

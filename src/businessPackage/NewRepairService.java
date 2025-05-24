@@ -1,14 +1,8 @@
 package businessPackage;
 
-import DataAccesPackage.BikeDAO;
-import DataAccesPackage.LocalityDAO;
-import DataAccesPackage.MechanicDAO;
-import DataAccesPackage.StationDAO;
+import DataAccesPackage.*;
 import ExceptionsPackage.DataAccesException;
-import ModelsPackage.BikeModel;
-import ModelsPackage.LocalityModel;
-import ModelsPackage.MechanicModel;
-import ModelsPackage.StationModel;
+import ModelsPackage.*;
 
 import java.util.ArrayList;
 
@@ -27,5 +21,9 @@ public class NewRepairService {
 
     public ArrayList<MechanicModel> getAllMechanics() throws DataAccesException {
         return new MechanicDAO().selectAllMechanics();
+    }
+
+    public void saveNewRepair(RepairModel repair) throws DataAccesException {
+        new RepairDAO().insert(repair);
     }
 }

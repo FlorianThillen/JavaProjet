@@ -20,7 +20,7 @@ public class BikeDAO {
     // cascade pour update et suppr ? a cause des tables repair & rental
 
     // ================ operation CRUD - Read ================
-    public List<BikeModel> findAll()throws DataAccesException{
+    public List<BikeModel> findAll() throws DataAccesException {
         List<BikeModel> result = new ArrayList<>();
 
         String query = "SELECT  b.serial_number, b.is_electric, b.buying_date, b.battery_level, b.nb_kilometer," +
@@ -94,10 +94,9 @@ public class BikeDAO {
             stmt.setString(7,bikeModel.getBrand().getName());
 
             stmt.executeUpdate();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new DataAccesException("Erreur lors de l'insertion du vélo");
         }
-
     }
 
     // ================ operation CRUD - Update ================
@@ -193,57 +192,6 @@ public class BikeDAO {
     }
 
     //brand
-    public List<BrandModel> getAllBrands()throws DataAccesException{
-        List<BrandModel> list = new ArrayList<>();
-        String query = "SELECT * FROM brand";
-        try (PreparedStatement stmt = connection.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
-
-            while (rs.next()) {
-                list.add(new BrandModel(
-                        rs.getString("name"),
-                        rs.getInt("waranty_duration")
-                ));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DataAccesException("Erreur lors du chargement des marques", e);
-        }
-
-        return list;
-    }
-
-    public List<StationModel> getAllStations() throws DataAccesException {
-        List<StationModel> list = new ArrayList<>();
-        String query = """
-        SELECT s.station_number, s.name, s.street, s.street_number,
-               l.postal_code, l.name AS locality_name
-        FROM station s
-        JOIN localite l ON s.postal_code = l.postal_code AND s.local_name = l.name
-        """;
-
-        try (PreparedStatement stmt = connection.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
-
-            while (rs.next()) {
-                list.add(new StationModel(
-                        rs.getInt("station_number"),
-                        rs.getString("name"),
-                        rs.getString("street"),
-                        rs.getInt("street_number"),
-                        new LocalityModel(rs.getInt("postal_code"), rs.getString("locality_name"))
-                ));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new DataAccesException("Erreur lors du chargement des stations", e);
-        }
-
-        return list;
-    }
-
     public ArrayList<BikeModel> getBikesFromStation(StationModel station) throws DataAccesException {
         ArrayList<BikeModel> bikes = new ArrayList<>();
 
@@ -271,6 +219,6 @@ public class BikeDAO {
             String error_message = String.format("Erreur lors du chargement des velos de la station %s", station.getName());
             throw new DataAccesException(error_message, e);
         }
-        return null;
+        return bikes;
     }
 }

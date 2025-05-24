@@ -5,12 +5,12 @@ import java.util.Date;
 public class RepairModel {
     private int repairId;
     private int cost;
-    private Date date;
+    private java.sql.Date date;
     private RepairStatusModel status;
     private MechanicModel mechanic;
     private BikeModel bike;
 
-    public RepairModel(int repairId, int cost, Date date, RepairStatusModel status, MechanicModel mechanic, BikeModel bike) {
+    public RepairModel(int repairId, int cost, java.sql.Date date, RepairStatusModel status, MechanicModel mechanic, BikeModel bike) {
         setRepairId(repairId);
         setCost(cost);
         setDate(date);
@@ -30,10 +30,10 @@ public class RepairModel {
     public void setCost(int cost) {
         this.cost = cost;
     }
-    public Date getDate() {
+    public java.sql.Date getDate() {
         return date;
     }
-    public void setDate(Date date) {
+    public void setDate(java.sql.Date date) {
         this.date = date;
     }
     public RepairStatusModel getStatus() {

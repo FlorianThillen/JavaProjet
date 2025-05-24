@@ -1,8 +1,11 @@
 package DataAccesPackage;
 
+import ExceptionsPackage.DataAccesException;
+import ModelsPackage.RepairModel;
 import ModelsPackage.RepairSearchModel;
 import ModelsPackage.RepairStatusModel;
 
+import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,5 +60,27 @@ public class RepairDAO {
         }
 
         return status;
+    }
+
+    public void insert(RepairModel repair) throws DataAccesException {
+        Connection connection = SingletonConnection.getInstance();
+
+        String query = """
+                INSERT INTO repair (id, cost, date, libelle, serial_number)
+                VALUES (?,?,?,?,?);
+                """;
+
+        try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setInt(1, repair.getRepairId());
+            stmt.setFloat(2, repair.getCost());
+            stmt.setDate(3, repair.getDate());
+            stmt.setString(4, repair.getStatus().getStatus());
+            stmt.setInt(5, repair.getBike().getSerialNumber());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new DataAccesException("Erreur lors de l'insertion de la nouvelle réparation", e.getCause());
+        }
     }
 }

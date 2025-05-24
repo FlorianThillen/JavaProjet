@@ -8,6 +8,8 @@ public class ContentPanel extends JPanel {
     ContentPanelState state;
 
     public ContentPanel() throws DataAccesException {
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
         setState(new ContentPanelLocality());
     }
 

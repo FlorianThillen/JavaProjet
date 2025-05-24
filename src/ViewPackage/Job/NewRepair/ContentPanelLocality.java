@@ -19,7 +19,7 @@ public class ContentPanelLocality extends ContentPanelState {
     }
 
     @Override
-    ContentPanelState getNextState() throws DataAccesException {
+    public ContentPanelState getNextState() throws DataAccesException {
         ContentPanelStation nextState = new ContentPanelStation(list.getSelectedValue());
         nextState.setPreviousState(this);
         return nextState;

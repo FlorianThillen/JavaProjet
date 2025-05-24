@@ -44,4 +44,9 @@ public class MechanicModel {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s %s", lastName, firstName);
+    }
 }
