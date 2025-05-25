@@ -13,7 +13,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class RentalAdminPanel extends JPanel {
-
     private final JTextField idField = new JTextField(10);
     private final JTextField startDateField = new JTextField(10);
     private final JTextField returnDateField = new JTextField(10);

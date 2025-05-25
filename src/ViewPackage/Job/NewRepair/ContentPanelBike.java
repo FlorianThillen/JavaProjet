@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 public class ContentPanelBike extends ContentPanelState {
-    private final JList<BikeModel> list = new JList<>();
+    private final JComboBox<BikeModel> comBox = new JComboBox<>();
 
     public ContentPanelBike(StationModel station) throws DataAccessException {
         ArrayList<JComponent> comps = new ArrayList<>();
@@ -17,15 +17,16 @@ public class ContentPanelBike extends ContentPanelState {
         comps.add(new JLabel(text));
 
         BikeModel[] bikes = controller.getBikesFromStation(station).toArray(BikeModel[]::new);
-        list.setListData(bikes);
+        for(BikeModel bike: bikes)
+            comBox.addItem(bike);
 
-        comps.add(list);
+        comps.add(comBox);
         setInputComponents(comps);
     }
 
     @Override
     public ContentPanelState getNextState() throws DataAccessException {
-        ContentPanelRepair nextState = new ContentPanelRepair(list.getSelectedValue());
+        ContentPanelRepair nextState = new ContentPanelRepair((BikeModel) comBox.getSelectedItem());
         nextState.setPreviousState(this);
         return nextState;
     }

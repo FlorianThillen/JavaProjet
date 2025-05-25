@@ -5,6 +5,7 @@ import ModelsPackage.BikeModel;
 import ModelsPackage.MechanicModel;
 import ModelsPackage.RepairModel;
 import ModelsPackage.RepairStatusModel;
+import jdk.jshell.Snippet;
 
 import javax.swing.*;
 import java.sql.Date;
@@ -12,26 +13,28 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ContentPanelRepair extends ContentPanelState {
-    private final JList<MechanicModel> mechanicsList = new JList<>();
-    private final JList<RepairStatusModel> statusList = new JList<>();
-    private final CostPanel costPanel = new CostPanel();
-    private BikeModel bike;
+    private final JComboBox<MechanicModel> mechanicsComBox = new JComboBox<>();
+    private final JComboBox<RepairStatusModel> statusComBox = new JComboBox<>();
+    private final BikeModel bike;
+    private final JTextField costField = new JTextField();
 
     public ContentPanelRepair(BikeModel bike) throws DataAccessException {
         ArrayList<JComponent> comps = new ArrayList<>();
 
         comps.add(new JLabel("Mécaniciens disponible : "));
         MechanicModel[] mechanics = controller.getAllMechanics().toArray(MechanicModel[]::new);
-        mechanicsList.setListData(mechanics);
-        comps.add(mechanicsList);
+        for(MechanicModel mechanic: mechanics)
+            mechanicsComBox.addItem(mechanic);
+        comps.add(mechanicsComBox);
 
         comps.add(new JLabel("Statut de la réparation : "));
         RepairStatusModel[] status = controller.getAllRepairStatus().toArray(RepairStatusModel[]::new);
-        statusList.setListData(status);
-        comps.add(statusList);
+        for(RepairStatusModel singleStatus: status)
+            statusComBox.addItem(singleStatus);
+        comps.add(statusComBox);
 
         comps.add(new JLabel("Coût de la réparation : "));
-        comps.add(costPanel);
+        comps.add(costField);
 
         this.bike = bike;
 
@@ -41,12 +44,13 @@ public class ContentPanelRepair extends ContentPanelState {
     @Override
     public ContentPanelState getNextState() throws DataAccessException {
         try {
+            int cost = Integer.parseInt(costField.getText());
             RepairModel newRepair = new RepairModel(
                     100,
-                    costPanel.getCost(),
+                    cost,
                     Date.valueOf(LocalDate.now()),
-                    statusList.getSelectedValue(),
-                    mechanicsList.getSelectedValue(),
+                    (RepairStatusModel) statusComBox.getSelectedItem(),
+                    (MechanicModel) mechanicsComBox.getSelectedItem(),
                     bike
             );
             controller.saveNewRepair(newRepair);
@@ -69,20 +73,6 @@ public class ContentPanelRepair extends ContentPanelState {
             );
 
             throw e;
-        }
-    }
-
-    private class CostPanel extends JPanel {
-        private final JTextField costField = new JTextField();
-
-        public CostPanel() {
-            setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-            add(new JLabel("Coût:"));
-            this.add(costField);
-        }
-
-        public int getCost() throws NumberFormatException {
-            return Math.round(Float.parseFloat(costField.getText()));
         }
     }
 }

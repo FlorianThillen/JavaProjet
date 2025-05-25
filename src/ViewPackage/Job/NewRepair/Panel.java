@@ -19,7 +19,7 @@ public class Panel extends JPanel {
 
         JButton returnButton = new JButton("Return");
         JButton confirmButton = new JButton("Confirm");
-        confirmationPanel.setLayout(new BoxLayout(confirmationPanel, BoxLayout.X_AXIS));
+        confirmationPanel.setLayout(new FlowLayout());
         confirmationPanel.add(returnButton);
         confirmationPanel.add(confirmButton);
 
@@ -34,7 +34,6 @@ public class Panel extends JPanel {
                 throw new RuntimeException(ex);
             }
         });
-
         confirmButton.addActionListener(e -> {
             try {
                 contentPanel.goNextState();
