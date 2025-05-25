@@ -65,7 +65,7 @@ public class ContentPanelRepair extends ContentPanelState {
 
             JOptionPane.showMessageDialog(
                     null,
-                    "Le prix inserez n'est pas valide."
+                    "Le prix insere n'est pas valide."
             );
 
             return null;
