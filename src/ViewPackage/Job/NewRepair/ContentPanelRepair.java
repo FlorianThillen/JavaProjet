@@ -41,13 +41,16 @@ public class ContentPanelRepair extends ContentPanelState {
         setInputComponents(comps);
     }
 
+    private float getCost() {
+        return Float.parseFloat(costField.getText());
+    }
+
     @Override
     public ContentPanelState getNextState() throws DataAccessException {
         try {
-            int cost = Integer.parseInt(costField.getText());
             RepairModel newRepair = new RepairModel(
                     100,
-                    cost,
+                    (int) getCost(),
                     Date.valueOf(LocalDate.now()),
                     (RepairStatusModel) statusComBox.getSelectedItem(),
                     (MechanicModel) mechanicsComBox.getSelectedItem(),

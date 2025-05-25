@@ -1,11 +1,11 @@
 package ControllerPackage;
 
 import ExceptionsPackage.DataAccessException;
+import ExceptionsPackage.InvalidUserInputException;
 import ModelsPackage.*;
 import DataAccessPackage.RepairDAO;
 
 import BusinessPackage.*;
-
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,7 +27,9 @@ public class Controller {
         return new BrandBikesService().getBikesFromBrand(brandName);
     }
 
-    public List<RentalDateSearchModel> getRentalsBetweenDates(Date start,Date end){
+    public List<RentalDateSearchModel> getRentalsBetweenDates(Date start, Date end) throws InvalidUserInputException {
+        if (end.before(start)) throw new InvalidUserInputException("End date is before start date.");
+
         return rentalSearchService.searchRentals(start,end);
     }
     // tache métier 2 ,1/3
@@ -35,7 +37,11 @@ public class Controller {
         return unpaidSubscriptionService.getUnpaidSubscription();
     }
     // tache métier 2 ,2/3
-    public List<StationBikeNbModel> getStationsStatus(int min,int max)throws DataAccessException {
+    public List<StationBikeNbModel> getStationsStatus(int min,int max) throws DataAccessException, InvalidUserInputException {
+        if (min < 0) throw new InvalidUserInputException("Requested minimum should be 0 or above.");
+        if (max < 1) throw new InvalidUserInputException("Maximum should be 1 or above.");
+        if (max <= min) throw new InvalidUserInputException("Maximum should be above minimum.");
+
         return stationStatsService.getStationsStatus(min, max);
     }
     // tache métier 2 ,3/3
@@ -44,10 +50,10 @@ public class Controller {
     }
 
     //==== crud bikes
-    public void insertBike(BikeModel bikeModel)throws DataAccessException {
+    public void insertBike(BikeModel bikeModel) throws DataAccessException {
         bikeService.insertBike(bikeModel);
     }
-    public List<BikeModel> getAllBikes()throws DataAccessException {
+    public List<BikeModel> getAllBikes() throws DataAccessException {
         return bikeService.getAllBikes();
     }
     public List<BrandModel> getAllBrands() throws DataAccessException {
@@ -57,10 +63,10 @@ public class Controller {
     public List<StationModel> getAllStations() throws DataAccessException {
         return stationService.getAllStations();
     }
-    public void deleteBike(int serialNumber)throws DataAccessException {
+    public void deleteBike(int serialNumber) throws DataAccessException {
         bikeService.deleteBike(serialNumber);
     }
-    public void updateBike(BikeModel bikeModel,int originalSerialNumber)throws DataAccessException {
+    public void updateBike(BikeModel bikeModel, int originalSerialNumber) throws DataAccessException {
         bikeService.updateBike(bikeModel,originalSerialNumber);
     }
 

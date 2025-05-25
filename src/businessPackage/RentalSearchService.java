@@ -20,5 +20,4 @@ public class RentalSearchService {
         }
         return rentalSearchDAO.getRentalsBewteenDates(startDate,endDate);
     }
-
 }

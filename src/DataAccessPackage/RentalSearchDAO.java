@@ -8,7 +8,7 @@ import java.util.List;
 
 
 public class RentalSearchDAO {
-    public List<RentalDateSearchModel> getRentalsBewteenDates(Date startDate,Date endDate){
+    public List<RentalDateSearchModel> getRentalsBewteenDates(Date startDate, Date endDate) {
         Connection connection = SingletonConnection.getInstance();
 
         List<RentalDateSearchModel> results = new ArrayList<>();
@@ -42,5 +42,4 @@ public class RentalSearchDAO {
 
         return results;
     }
-
 }
