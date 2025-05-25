@@ -2,13 +2,13 @@ package ViewPackage;
 
 import ControllerPackage.Controller;
 import ExceptionsPackage.DataAccessException;
-import ViewPackage.crud.BikeAdminPanel;
-import ViewPackage.job.ListAndStatsPanel;
-import ViewPackage.job.newrepair.Panel;
+import ViewPackage.CRUD.BikeAdminPanel;
+import ViewPackage.Job.ListAndStatsPanel;
+import ViewPackage.Job.NewRepair.Panel;
 import ViewPackage.search.SearchBrandBikePanel;
 import ViewPackage.search.SearchRentalDatePanel;
 import ViewPackage.search.SearchRepairByStatusPanel;
-import ViewPackage.crud.RentalAdminPanel;
+import ViewPackage.CRUD.RentalAdminPanel;
 
 
 import javax.swing.*;

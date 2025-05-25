@@ -1,4 +1,4 @@
-package ViewPackage.job.newrepair;
+package ViewPackage.Job.NewRepair;
 
 import ExceptionsPackage.DataAccessException;
 import ModelsPackage.LocalityModel;

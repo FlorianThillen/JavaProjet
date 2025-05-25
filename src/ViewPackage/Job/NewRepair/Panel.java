@@ -1,4 +1,4 @@
-package ViewPackage.job.newrepair;
+package ViewPackage.Job.NewRepair;
 
 import javax.swing.*;
 import ExceptionsPackage.DataAccessException;

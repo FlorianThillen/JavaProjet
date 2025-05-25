@@ -1,4 +1,4 @@
-package ViewPackage.crud;
+package ViewPackage.CRUD;
 
 import ControllerPackage.Controller;
 import ExceptionsPackage.DataAccessException;

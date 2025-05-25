@@ -1,4 +1,4 @@
-package ViewPackage.crud;
+package ViewPackage.CRUD;
 
 import DataAccessPackage.RentalDAO;
 import ExceptionsPackage.DataAccessException;
