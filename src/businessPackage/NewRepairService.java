@@ -1,29 +1,29 @@
-package businessPackage;
+package BusinessPackage;
 
-import DataAccesPackage.*;
-import ExceptionsPackage.DataAccesException;
+import DataAccessPackage.*;
+import ExceptionsPackage.DataAccessException;
 import ModelsPackage.*;
 
 import java.util.ArrayList;
 
 public class NewRepairService {
-    public ArrayList<LocalityModel> getLocalities() throws DataAccesException {
+    public ArrayList<LocalityModel> getLocalities() throws DataAccessException {
         return new LocalityDAO().selectAllLocalities();
     }
 
-    public ArrayList<StationModel> getStationsFromLocality(LocalityModel locality) throws DataAccesException {
+    public ArrayList<StationModel> getStationsFromLocality(LocalityModel locality) throws DataAccessException {
         return new StationDAO().selectStationsFromLocality(locality);
     }
 
-    public ArrayList<BikeModel> getBikesFromStation(StationModel station) throws DataAccesException {
+    public ArrayList<BikeModel> getBikesFromStation(StationModel station) throws DataAccessException {
         return new BikeDAO().getBikesFromStation(station);
     }
 
-    public ArrayList<MechanicModel> getAllMechanics() throws DataAccesException {
+    public ArrayList<MechanicModel> getAllMechanics() throws DataAccessException {
         return new MechanicDAO().selectAllMechanics();
     }
 
-    public void saveNewRepair(RepairModel repair) throws DataAccesException {
+    public void saveNewRepair(RepairModel repair) throws DataAccessException {
         new RepairDAO().insert(repair);
     }
 }

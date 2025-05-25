@@ -1,6 +1,6 @@
-package DataAccesPackage;
+package DataAccessPackage;
 
-import ExceptionsPackage.DataAccesException;
+import ExceptionsPackage.DataAccessException;
 import ModelsPackage.LocalityModel;
 import ModelsPackage.StationModel;
 
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StationDAO {
-    public ArrayList<StationModel> selectStationsFromLocality(LocalityModel locality) throws DataAccesException {
+    public ArrayList<StationModel> selectStationsFromLocality(LocalityModel locality) throws DataAccessException {
         ArrayList<StationModel> stations = new ArrayList<>();
 
         Connection connection = SingletonConnection.getInstance();
@@ -37,12 +37,12 @@ public class StationDAO {
             }
         } catch (SQLException e) {
             String error_message = String.format("Erreur lors du chargement des stations de %s", locality.getName());
-            throw new DataAccesException(error_message, e);
+            throw new DataAccessException(error_message, e);
         }
         return stations;
     }
 
-    public List<StationModel> getAllStations() throws DataAccesException {
+    public List<StationModel> getAllStations() throws DataAccessException {
         List<StationModel> list = new ArrayList<>();
 
         Connection connection = SingletonConnection.getInstance();
@@ -69,7 +69,7 @@ public class StationDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new DataAccesException("Erreur lors du chargement des stations", e);
+            throw new DataAccessException("Erreur lors du chargement des stations", e);
         }
 
         return list;

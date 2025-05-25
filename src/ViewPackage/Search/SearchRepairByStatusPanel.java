@@ -1,7 +1,7 @@
-package ViewPackage.Search;
+package ViewPackage.search;
 
 import ControllerPackage.Controller;
-import ExceptionsPackage.DataAccesException;
+import ExceptionsPackage.DataAccessException;
 import ModelsPackage.RepairSearchModel;
 import ModelsPackage.RepairStatusModel;
 
@@ -27,7 +27,7 @@ public class SearchRepairByStatusPanel extends JPanel {
         statusComboBox = new JComboBox<>();
         try {
             loadStatusLabels();
-        } catch (DataAccesException e) {
+        } catch (DataAccessException e) {
             JOptionPane.showMessageDialog(this, "Erreur lors du chargement des statuts : " + e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         topPanel.add(statusComboBox);
@@ -48,7 +48,7 @@ public class SearchRepairByStatusPanel extends JPanel {
         add(new JScrollPane(resultTable), BorderLayout.CENTER);
     }
 
-    private void loadStatusLabels() throws DataAccesException{
+    private void loadStatusLabels() throws DataAccessException {
         List<RepairStatusModel> statusList = controller.getAllRepairStatus();
         for (RepairStatusModel status : statusList) {
             statusComboBox.addItem(status.getStatus());

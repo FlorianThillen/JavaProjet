@@ -1,6 +1,6 @@
-package businessPackage;
-import DataAccesPackage.StationStatsDAO;
-import ExceptionsPackage.DataAccesException;
+package BusinessPackage;
+import DataAccessPackage.StationStatsDAO;
+import ExceptionsPackage.DataAccessException;
 import ModelsPackage.StationBikeNbModel;
 
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ public class StationStatsService {
     public StationStatsService(){
         this.stationStatsDAO = new StationStatsDAO();
     }
-    public List<StationBikeNbModel> getStationsStatus(int min , int max) throws DataAccesException{
+    public List<StationBikeNbModel> getStationsStatus(int min , int max) throws DataAccessException {
         List<StationBikeNbModel> rawData = stationStatsDAO.getBikeCountPerStation();
         List<StationBikeNbModel> result = new ArrayList<>();
 

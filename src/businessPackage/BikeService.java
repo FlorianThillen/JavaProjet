@@ -1,9 +1,7 @@
-package businessPackage;
-import DataAccesPackage.BikeDAO;
-import ExceptionsPackage.DataAccesException;
+package BusinessPackage;
+import DataAccessPackage.BikeDAO;
+import ExceptionsPackage.DataAccessException;
 import ModelsPackage.BikeModel;
-import ModelsPackage.BrandModel;
-import ModelsPackage.StationModel;
 
 import java.util.List;
 
@@ -14,11 +12,11 @@ public class BikeService {
         this.bikeDAO=new BikeDAO();
     }
 
-    public void insertBike(BikeModel bikeModel)throws DataAccesException{
+    public void insertBike(BikeModel bikeModel)throws DataAccessException {
         bikeDAO.insert(bikeModel);
     }
 
-    public List<BikeModel> getAllBikes()throws DataAccesException{
+    public List<BikeModel> getAllBikes()throws DataAccessException {
         return bikeDAO.findAll();
     }
     //---
@@ -33,10 +31,10 @@ public class BikeService {
     }
     */
     //---
-    public void deleteBike(int serialNumber) throws DataAccesException {
+    public void deleteBike(int serialNumber) throws DataAccessException {
         bikeDAO.deleteBySerialNumber(serialNumber);
     }
-    public void updateBike(BikeModel bike, int originalSerialNumber) throws DataAccesException {
+    public void updateBike(BikeModel bike, int originalSerialNumber) throws DataAccessException {
         bikeDAO.update(bike, originalSerialNumber);
     }
 

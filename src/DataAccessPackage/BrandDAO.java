@@ -1,13 +1,13 @@
-package DataAccesPackage;
+package DataAccessPackage;
 
-import ExceptionsPackage.DataAccesException;
+import ExceptionsPackage.DataAccessException;
 import ModelsPackage.BrandModel;
 
 import java.sql.*;
 import java.util.*;
 
 public class BrandDAO {
-    public ArrayList<BrandModel> getAllBrands() throws DataAccesException {
+    public ArrayList<BrandModel> getAllBrands() throws DataAccessException {
         ArrayList<BrandModel> brandModels = new ArrayList<BrandModel>();
 
         Connection connection = SingletonConnection.getInstance();
@@ -26,7 +26,7 @@ public class BrandDAO {
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            throw new DataAccesException("Erreur de récupération des marques", e);
+            throw new DataAccessException("Erreur de récupération des marques", e);
         }
         return brandModels;
     }

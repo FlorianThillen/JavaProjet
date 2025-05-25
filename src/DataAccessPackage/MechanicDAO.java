@@ -1,7 +1,6 @@
-package DataAccesPackage;
+package DataAccessPackage;
 
-import ExceptionsPackage.DataAccesException;
-import ModelsPackage.BrandModel;
+import ExceptionsPackage.DataAccessException;
 import ModelsPackage.MechanicModel;
 
 import java.sql.Connection;
@@ -11,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class MechanicDAO {
-    public ArrayList<MechanicModel> selectAllMechanics() throws DataAccesException {
+    public ArrayList<MechanicModel> selectAllMechanics() throws DataAccessException {
         ArrayList<MechanicModel> mechanics = new ArrayList<MechanicModel>();
 
         Connection connection = SingletonConnection.getInstance();
@@ -33,7 +32,7 @@ public class MechanicDAO {
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            throw new DataAccesException("Erreur de récupération des mecaniciens", e);
+            throw new DataAccessException("Erreur de récupération des mecaniciens", e);
         }
         return mechanics;
     }

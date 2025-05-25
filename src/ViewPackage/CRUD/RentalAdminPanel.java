@@ -1,7 +1,7 @@
-package ViewPackage.CRUD;
+package ViewPackage.crud;
 
-import DataAccesPackage.RentalDAO;
-import ExceptionsPackage.DataAccesException;
+import DataAccessPackage.RentalDAO;
+import ExceptionsPackage.DataAccessException;
 import ModelsPackage.BikeModel;
 import ModelsPackage.RentalModel;
 import ModelsPackage.SubscriptionModel;
@@ -103,7 +103,7 @@ public class RentalAdminPanel extends JPanel {
                         rental.getSubscription().getCardNumber()
                 });
             }
-        } catch (DataAccesException e) {
+        } catch (DataAccessException e) {
             showError("Erreur chargement des locations : " + e.getMessage());
         }
     }
@@ -153,7 +153,7 @@ public class RentalAdminPanel extends JPanel {
             rentalDAO.insertRental(rental);
             loadRentals();
             clearForm();
-        } catch (DataAccesException e) {
+        } catch (DataAccessException e) {
             showError("Erreur lors de l'ajout : " + e.getMessage());
         }
     }
@@ -166,7 +166,7 @@ public class RentalAdminPanel extends JPanel {
             rentalDAO.updateRental(rental);
             loadRentals();
             clearForm();
-        } catch (DataAccesException e) {
+        } catch (DataAccessException e) {
             showError("Erreur lors de la modification : " + e.getMessage());
         }
     }

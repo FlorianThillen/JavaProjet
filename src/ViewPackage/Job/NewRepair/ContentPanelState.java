@@ -1,7 +1,7 @@
-package ViewPackage.Job.NewRepair;
+package ViewPackage.job.newrepair;
 
 import ControllerPackage.Controller;
-import ExceptionsPackage.DataAccesException;
+import ExceptionsPackage.DataAccessException;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class ContentPanelState {
         this.previousState = previousState;
     }
 
-    public ContentPanelState getNextState() throws DataAccesException {
+    public ContentPanelState getNextState() throws DataAccessException {
         return null;
     };
 

@@ -1,4 +1,4 @@
-package ViewPackage.Job.NewRepair;
+package ViewPackage.job.newrepair;
 
 import javax.swing.*;
 import java.util.ArrayList;

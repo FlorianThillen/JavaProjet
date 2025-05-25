@@ -1,16 +1,13 @@
-package ViewPackage.Job.NewRepair;
+package ViewPackage.job.newrepair;
 
-import ExceptionsPackage.DataAccesException;
+import ExceptionsPackage.DataAccessException;
 import ModelsPackage.BikeModel;
 import ModelsPackage.MechanicModel;
 import ModelsPackage.RepairModel;
 import ModelsPackage.RepairStatusModel;
 
 import javax.swing.*;
-import java.awt.*;
 import java.sql.Date;
-import java.sql.SQLException;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -20,7 +17,7 @@ public class ContentPanelRepair extends ContentPanelState {
     private final CostPanel costPanel = new CostPanel();
     private BikeModel bike;
 
-    public ContentPanelRepair(BikeModel bike) throws DataAccesException {
+    public ContentPanelRepair(BikeModel bike) throws DataAccessException {
         ArrayList<JComponent> comps = new ArrayList<>();
 
         MechanicModel[] mechanics = controller.getAllMechanics().toArray(MechanicModel[]::new);
@@ -39,7 +36,7 @@ public class ContentPanelRepair extends ContentPanelState {
     }
 
     @Override
-    public ContentPanelState getNextState() throws DataAccesException {
+    public ContentPanelState getNextState() throws DataAccessException {
         try {
             RepairModel newRepair = new RepairModel(
                     100,
@@ -62,7 +59,7 @@ public class ContentPanelRepair extends ContentPanelState {
             );
 
             return null;
-        } catch (DataAccesException e) {
+        } catch (DataAccessException e) {
             JOptionPane.showMessageDialog(
                     null,
                     "Erreur lors de l'insertion de la nouvelle reparation."

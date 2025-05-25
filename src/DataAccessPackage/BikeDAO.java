@@ -1,6 +1,6 @@
-package DataAccesPackage;
+package DataAccessPackage;
 
-import ExceptionsPackage.DataAccesException;
+import ExceptionsPackage.DataAccessException;
 import ModelsPackage.BikeModel;
 import ModelsPackage.BrandModel;
 import ModelsPackage.LocalityModel;
@@ -20,7 +20,7 @@ public class BikeDAO {
     // cascade pour update et suppr ? a cause des tables repair & rental
 
     // ================ operation CRUD - Read ================
-    public List<BikeModel> findAll() throws DataAccesException {
+    public List<BikeModel> findAll() throws DataAccessException {
         List<BikeModel> result = new ArrayList<>();
 
         String query = "SELECT  b.serial_number, b.is_electric, b.buying_date, b.battery_level, b.nb_kilometer," +
@@ -63,14 +63,14 @@ public class BikeDAO {
             }
         } catch (SQLException e){
             e.printStackTrace();
-            throw new DataAccesException("Erreur lors du chargement des vélos (findall)",e);
+            throw new DataAccessException("Erreur lors du chargement des vélos (findall)",e);
         }
 
         return result;
     }
 
     // ================ operation CRUD - Create ================
-    public void insert(BikeModel bikeModel) throws DataAccesException{
+    public void insert(BikeModel bikeModel) throws DataAccessException {
         String query = "INSERT INTO bike (serial_number,is_electric,buying_date,battery_level,nb_kilometer,station_id,brand_name ) " +
                 "VALUES (?,?,?,?,?,?,?)";
 
@@ -95,13 +95,13 @@ public class BikeDAO {
 
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new DataAccesException("Erreur lors de l'insertion du vélo");
+            throw new DataAccessException("Erreur lors de l'insertion du vélo");
         }
     }
 
     // ================ operation CRUD - Update ================
 
-    public void update(BikeModel bikeModel, int originalSerialNumber)throws DataAccesException{
+    public void update(BikeModel bikeModel, int originalSerialNumber)throws DataAccessException {
         String query ="UPDATE bike " +
                 "SET serial_number = ?, is_electric = ?, buying_date = ?, battery_level = ?, nb_kilometer = ?,station_id = ?,brand_name = ? " +
                 "WHERE serial_number = ?";
@@ -131,25 +131,25 @@ public class BikeDAO {
 
         }catch (SQLException e){
             e.printStackTrace();
-            throw new DataAccesException("Erreur lors de la MAJ du vélo",e);
+            throw new DataAccessException("Erreur lors de la MAJ du vélo",e);
         }
 
     }
 
     // ================ operation CRUD - Delete ================
-    public void deleteBySerialNumber(int serialNumber)throws DataAccesException{
+    public void deleteBySerialNumber(int serialNumber)throws DataAccessException {
         String query = "DELETE FROM bike WHERE serial_number = ?";
 
         try(PreparedStatement stmt = connection.prepareStatement(query)){
             stmt.setInt(1,serialNumber);
             stmt.executeUpdate();
         }catch (SQLException e){
-            throw new DataAccesException("Erreur lors de la suppresion du vélo",e);
+            throw new DataAccessException("Erreur lors de la suppresion du vélo",e);
         }
 
     }
 
-    public ArrayList<BikeModel> getBikesFromBrand(String brandName) throws DataAccesException {
+    public ArrayList<BikeModel> getBikesFromBrand(String brandName) throws DataAccessException {
         ArrayList<BikeModel> bikes = new ArrayList<>();
         String query = """
                 SELECT * FROM bike b
@@ -186,13 +186,13 @@ public class BikeDAO {
             }
         } catch (SQLException e) {
             String error_message = String.format("Erreur lors du chargement des vélos de la marque %s", brandName);
-            throw new DataAccesException(error_message, e);
+            throw new DataAccessException(error_message, e);
         }
         return bikes;
     }
 
     //brand
-    public ArrayList<BikeModel> getBikesFromStation(StationModel station) throws DataAccesException {
+    public ArrayList<BikeModel> getBikesFromStation(StationModel station) throws DataAccessException {
         ArrayList<BikeModel> bikes = new ArrayList<>();
 
         String query = """
@@ -217,7 +217,7 @@ public class BikeDAO {
             }
         } catch (SQLException e) {
             String error_message = String.format("Erreur lors du chargement des velos de la station %s", station.getName());
-            throw new DataAccesException(error_message, e);
+            throw new DataAccessException(error_message, e);
         }
         return bikes;
     }

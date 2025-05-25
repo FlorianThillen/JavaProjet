@@ -1,13 +1,13 @@
-package DataAccesPackage;
+package DataAccessPackage;
 
-import ExceptionsPackage.DataAccesException;
+import ExceptionsPackage.DataAccessException;
 import ModelsPackage.UnpaidSubscriptionModel;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UnpaidSubscriptionDAO {
-    public List<UnpaidSubscriptionModel> getUnpaidSubscription() throws DataAccesException {
+    public List<UnpaidSubscriptionModel> getUnpaidSubscription() throws DataAccessException {
         Connection connection = SingletonConnection.getInstance();
         List<UnpaidSubscriptionModel> result = new ArrayList<>();
 
@@ -27,7 +27,7 @@ public class UnpaidSubscriptionDAO {
                 result.add(new UnpaidSubscriptionModel(firstName, lastName, email));
             }
         } catch (SQLException e) {
-            throw new DataAccesException("Erreur lors de la récupération des abonnements non réglés", e);
+            throw new DataAccessException("Erreur lors de la récupération des abonnements non réglés", e);
         }
 
         return result;

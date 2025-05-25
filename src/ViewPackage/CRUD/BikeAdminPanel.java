@@ -1,18 +1,16 @@
-package ViewPackage.CRUD;
+package ViewPackage.crud;
 
 import ControllerPackage.Controller;
-import ExceptionsPackage.DataAccesException;
+import ExceptionsPackage.DataAccessException;
 import ModelsPackage.BikeModel;
 import ModelsPackage.BrandModel;
 import ModelsPackage.StationModel;
-import ViewPackage.Job.ListAndStatsPanel;
 import ViewPackage.WelcomePanel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.List;
 
 public class BikeAdminPanel extends JPanel {
@@ -64,7 +62,7 @@ public class BikeAdminPanel extends JPanel {
             List<StationModel> stations = controller.getAllStations();
             for (StationModel s : stations) stationBox.addItem(s);
 
-        } catch (DataAccesException e) {
+        } catch (DataAccessException e) {
             JOptionPane.showMessageDialog(this, "Erreur lors du chargement des marques/stations.");
         }
 

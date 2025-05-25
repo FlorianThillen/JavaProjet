@@ -1,11 +1,8 @@
-package businessPackage;
+package BusinessPackage;
 
-import DataAccesPackage.BikeDAO;
-import ExceptionsPackage.DataAccesException;
 import ModelsPackage.RentalDateSearchModel;
-import DataAccesPackage.RentalSearchDAO;
-import ModelsPackage.RentalModel;
-import DataAccesPackage.RentalDAO;
+import DataAccessPackage.RentalSearchDAO;
+
 import java.sql.Date;
 import java.util.List;
 

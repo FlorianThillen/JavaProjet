@@ -1,10 +1,9 @@
-package ViewPackage.Job;
+package ViewPackage.job;
 
 import ControllerPackage.Controller;
-import ExceptionsPackage.DataAccesException;
+import ExceptionsPackage.DataAccessException;
 import ModelsPackage.BrandRepairCostModel;
 
-import javax.naming.ldap.Control;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -57,7 +56,7 @@ public class AvgRepairCostPanel extends JPanel{
                         String.format("%.2f",stat.getAverageCost()),
                         });
             }
-        }catch (DataAccesException e){
+        }catch (DataAccessException e){
             JOptionPane.showMessageDialog(this,"Erreur , "+ e.getMessage());
         }
     }

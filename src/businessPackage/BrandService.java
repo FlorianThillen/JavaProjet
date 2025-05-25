@@ -1,8 +1,7 @@
-package businessPackage;
+package BusinessPackage;
 
-import DataAccesPackage.BrandDAO;
-import DataAccesPackage.StationDAO;
-import ExceptionsPackage.DataAccesException;
+import DataAccessPackage.BrandDAO;
+import ExceptionsPackage.DataAccessException;
 import ModelsPackage.BrandModel;
 
 import java.util.List;
@@ -15,7 +14,7 @@ public class BrandService {
     }
 
 
-    public List<BrandModel> getAllBrands() throws DataAccesException {
+    public List<BrandModel> getAllBrands() throws DataAccessException {
         return brandDAO.getAllBrands();
     }
 

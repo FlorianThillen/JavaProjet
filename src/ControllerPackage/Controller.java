@@ -1,11 +1,10 @@
 package ControllerPackage;
 
-import DataAccesPackage.BikeDAO;
-import ExceptionsPackage.DataAccesException;
+import ExceptionsPackage.DataAccessException;
 import ModelsPackage.*;
-import DataAccesPackage.RepairDAO;
+import DataAccessPackage.RepairDAO;
 
-import businessPackage.*;
+import BusinessPackage.*;
 
 
 import java.sql.SQLException;
@@ -24,7 +23,7 @@ public class Controller {
     private final BrandService brandService = new BrandService();
     private final StationService stationService = new StationService();
 
-    public ArrayList<BikeModel> getBikes(String brandName) throws DataAccesException {
+    public ArrayList<BikeModel> getBikes(String brandName) throws DataAccessException {
         return new BrandBikesService().getBikesFromBrand(brandName);
     }
 
@@ -32,36 +31,36 @@ public class Controller {
         return rentalSearchService.searchRentals(start,end);
     }
     // tache métier 2 ,1/3
-    public List<UnpaidSubscriptionModel> getUnpaidSubscriptions() throws DataAccesException {
+    public List<UnpaidSubscriptionModel> getUnpaidSubscriptions() throws DataAccessException {
         return unpaidSubscriptionService.getUnpaidSubscription();
     }
     // tache métier 2 ,2/3
-    public List<StationBikeNbModel> getStationsStatus(int min,int max)throws DataAccesException{
+    public List<StationBikeNbModel> getStationsStatus(int min,int max)throws DataAccessException {
         return stationStatsService.getStationsStatus(min, max);
     }
     // tache métier 2 ,3/3
-    public List<BrandRepairCostModel> getAverageRepairCostPeBrand()throws DataAccesException{
+    public List<BrandRepairCostModel> getAverageRepairCostPeBrand()throws DataAccessException {
         return brandRepairCostService.getAverageRepairCostPerBrand();
     }
 
     //==== crud bikes
-    public void insertBike(BikeModel bikeModel)throws DataAccesException{
+    public void insertBike(BikeModel bikeModel)throws DataAccessException {
         bikeService.insertBike(bikeModel);
     }
-    public List<BikeModel> getAllBikes()throws DataAccesException{
+    public List<BikeModel> getAllBikes()throws DataAccessException {
         return bikeService.getAllBikes();
     }
-    public List<BrandModel> getAllBrands() throws DataAccesException {
+    public List<BrandModel> getAllBrands() throws DataAccessException {
         return brandService.getAllBrands();
     }
 
-    public List<StationModel> getAllStations() throws DataAccesException {
+    public List<StationModel> getAllStations() throws DataAccessException {
         return stationService.getAllStations();
     }
-    public void deleteBike(int serialNumber)throws DataAccesException{
+    public void deleteBike(int serialNumber)throws DataAccessException {
         bikeService.deleteBike(serialNumber);
     }
-    public void updateBike(BikeModel bikeModel,int originalSerialNumber)throws DataAccesException{
+    public void updateBike(BikeModel bikeModel,int originalSerialNumber)throws DataAccessException {
         bikeService.updateBike(bikeModel,originalSerialNumber);
     }
 
@@ -74,53 +73,53 @@ public class Controller {
         }
     }
 
-    public List<RepairStatusModel> getAllRepairStatus() throws DataAccesException {
+    public List<RepairStatusModel> getAllRepairStatus() throws DataAccessException {
         return new RepairDAO().getAllStatus();
     }
 
-    public Vector<String> getAllBrandNames() throws DataAccesException {
+    public Vector<String> getAllBrandNames() throws DataAccessException {
         return new BrandBikesService().getAllBrandNames();
     }
 
     // === New Repair
-    public ArrayList<LocalityModel> getLocalities() throws DataAccesException {
+    public ArrayList<LocalityModel> getLocalities() throws DataAccessException {
         return new NewRepairService().getLocalities();
     }
 
-    public ArrayList<StationModel> getStationsFromLocality(LocalityModel locality) throws DataAccesException {
+    public ArrayList<StationModel> getStationsFromLocality(LocalityModel locality) throws DataAccessException {
         return new NewRepairService().getStationsFromLocality(locality);
     }
 
-    public ArrayList<MechanicModel> getAllMechanics() throws DataAccesException {
+    public ArrayList<MechanicModel> getAllMechanics() throws DataAccessException {
         return new NewRepairService().getAllMechanics();
     }
 
     // Crud Rental
-    public List<RentalModel> getAllRentals() throws DataAccesException {
+    public List<RentalModel> getAllRentals() throws DataAccessException {
         return rentalService.getAllRentals();
     }
 
-    public RentalModel getRentalById(int id) throws DataAccesException {
+    public RentalModel getRentalById(int id) throws DataAccessException {
         return rentalService.getRentalById(id);
     }
 
-    public void insertRental(RentalModel rental) throws DataAccesException {
+    public void insertRental(RentalModel rental) throws DataAccessException {
         rentalService.insertRental(rental);
     }
 
-    public void updateRental(RentalModel rental) throws DataAccesException {
+    public void updateRental(RentalModel rental) throws DataAccessException {
         rentalService.updateRental(rental);
     }
 
-    public void deleteRental(int id) throws DataAccesException {
+    public void deleteRental(int id) throws DataAccessException {
         rentalService.deleteRental(id);
     }
 
-    public ArrayList<BikeModel> getBikesFromStation(StationModel station) throws DataAccesException {
+    public ArrayList<BikeModel> getBikesFromStation(StationModel station) throws DataAccessException {
         return new NewRepairService().getBikesFromStation(station);
     }
 
-    public void saveNewRepair(RepairModel repair) throws DataAccesException {
+    public void saveNewRepair(RepairModel repair) throws DataAccessException {
         new NewRepairService().saveNewRepair(repair);
     }
 }

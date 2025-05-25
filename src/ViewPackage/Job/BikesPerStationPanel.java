@@ -1,6 +1,6 @@
-package ViewPackage.Job;
+package ViewPackage.job;
 import ControllerPackage.Controller;
-import ExceptionsPackage.DataAccesException;
+import ExceptionsPackage.DataAccessException;
 import ModelsPackage.StationBikeNbModel;
 
 import javax.swing.*;
@@ -65,7 +65,7 @@ public class BikesPerStationPanel extends JPanel{
                             stat.getStatus()
                     });
                 }
-            } catch (DataAccesException ex) {
+            } catch (DataAccessException ex) {
                 JOptionPane.showMessageDialog(this, "Erreur : " + ex.getMessage());
             }
         });

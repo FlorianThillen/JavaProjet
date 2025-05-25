@@ -1,8 +1,7 @@
-package businessPackage;
+package BusinessPackage;
 
-import DataAccesPackage.RentalDAO;
-import DataAccesPackage.StationDAO;
-import ExceptionsPackage.DataAccesException;
+import DataAccessPackage.StationDAO;
+import ExceptionsPackage.DataAccessException;
 import ModelsPackage.StationModel;
 
 import java.util.List;
@@ -15,7 +14,7 @@ public class StationService {
     }
 
 
-    public List<StationModel> getAllStations() throws DataAccesException {
+    public List<StationModel> getAllStations() throws DataAccessException {
         return stationDAO.getAllStations();
     }
 

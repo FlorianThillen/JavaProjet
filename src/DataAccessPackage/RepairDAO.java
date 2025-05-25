@@ -1,11 +1,10 @@
-package DataAccesPackage;
+package DataAccessPackage;
 
-import ExceptionsPackage.DataAccesException;
+import ExceptionsPackage.DataAccessException;
 import ModelsPackage.RepairModel;
 import ModelsPackage.RepairSearchModel;
 import ModelsPackage.RepairStatusModel;
 
-import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +61,7 @@ public class RepairDAO {
         return status;
     }
 
-    public void insert(RepairModel repair) throws DataAccesException {
+    public void insert(RepairModel repair) throws DataAccessException {
         Connection connection = SingletonConnection.getInstance();
 
         String query = """
@@ -80,7 +79,7 @@ public class RepairDAO {
             stmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            throw new DataAccesException("Erreur lors de l'insertion de la nouvelle réparation", e.getCause());
+            throw new DataAccessException("Erreur lors de l'insertion de la nouvelle réparation", e.getCause());
         }
     }
 }

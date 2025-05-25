@@ -1,12 +1,11 @@
-package DataAccesPackage;
+package DataAccessPackage;
 
-import ExceptionsPackage.DataAccesException;
+import ExceptionsPackage.DataAccessException;
 import ModelsPackage.RentalModel;
 import ModelsPackage.BikeModel;
 import ModelsPackage.SubscriptionModel;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class RentalDAO {
         this.connection = SingletonConnection.getInstance();
     }
 
-    public List<RentalModel> getAllRentals() throws DataAccesException {
+    public List<RentalModel> getAllRentals() throws DataAccessException {
         List<RentalModel> rentals = new ArrayList<>();
         String sql = "SELECT * FROM rental";
 
@@ -28,13 +27,13 @@ public class RentalDAO {
                 rentals.add(mapResultSetToRental(rs));
             }
         } catch (SQLException e) {
-            throw new DataAccesException("Erreur lors de la récupération des locations", e);
+            throw new DataAccessException("Erreur lors de la récupération des locations", e);
         }
 
         return rentals;
     }
 
-    public RentalModel getRentalById(int id) throws DataAccesException {
+    public RentalModel getRentalById(int id) throws DataAccessException {
         String sql = "SELECT * FROM rental WHERE id = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -46,13 +45,13 @@ public class RentalDAO {
                 }
             }
         } catch (SQLException e) {
-            throw new DataAccesException("Erreur lors de la récupération de la location avec l'ID : " + id, e);
+            throw new DataAccessException("Erreur lors de la récupération de la location avec l'ID : " + id, e);
         }
 
         return null;
     }
 
-    public void insertRental(RentalModel rental) throws DataAccesException {
+    public void insertRental(RentalModel rental) throws DataAccessException {
         String sql = "INSERT INTO rental (id, start_date, return_date, comment, had_issue, bike_id, sub_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -65,11 +64,11 @@ public class RentalDAO {
             stmt.setInt(7, rental.getSubscription().getCardNumber());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new DataAccesException("Erreur lors de l'insertion de la location", e);
+            throw new DataAccessException("Erreur lors de l'insertion de la location", e);
         }
     }
 
-    public void updateRental(RentalModel rental) throws DataAccesException {
+    public void updateRental(RentalModel rental) throws DataAccessException {
         String sql = "UPDATE rental SET start_date = ?, return_date = ?, comment = ?, had_issue = ?, bike_id = ?, sub_id = ? WHERE id = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -82,18 +81,18 @@ public class RentalDAO {
             stmt.setInt(7, rental.getRentalId());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new DataAccesException("Erreur lors de la mise à jour de la location avec l'ID : " + rental.getRentalId(), e);
+            throw new DataAccessException("Erreur lors de la mise à jour de la location avec l'ID : " + rental.getRentalId(), e);
         }
     }
 
-    public void deleteRental(int id) throws DataAccesException {
+    public void deleteRental(int id) throws DataAccessException {
         String sql = "DELETE FROM rental WHERE id = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new DataAccesException("Erreur lors de la suppression de la location avec l'ID : " + id, e);
+            throw new DataAccessException("Erreur lors de la suppression de la location avec l'ID : " + id, e);
         }
     }
 

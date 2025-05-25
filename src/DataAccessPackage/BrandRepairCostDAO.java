@@ -1,6 +1,6 @@
-package DataAccesPackage;
+package DataAccessPackage;
 
-import ExceptionsPackage.DataAccesException;
+import ExceptionsPackage.DataAccessException;
 import ModelsPackage.BrandRepairCostModel;
 
 import java.sql.*;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BrandRepairCostDAO {
-    public List<BrandRepairCostModel> getAverageCostPerBrand() throws DataAccesException {
+    public List<BrandRepairCostModel> getAverageCostPerBrand() throws DataAccessException {
         Connection connection = SingletonConnection.getInstance();
         List<BrandRepairCostModel> result = new ArrayList<>();
 
@@ -28,7 +28,7 @@ public class BrandRepairCostDAO {
                 result.add(new BrandRepairCostModel(brandName, avgCost));
             }
         } catch (SQLException e) {
-            throw new DataAccesException("Erreur de récupération des coûts moyens de réparation", e);
+            throw new DataAccessException("Erreur de récupération des coûts moyens de réparation", e);
         }
 
         return result;

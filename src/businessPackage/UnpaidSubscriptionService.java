@@ -1,11 +1,10 @@
-package businessPackage;
+package BusinessPackage;
 
 
-import DataAccesPackage.UnpaidSubscriptionDAO;
-import ExceptionsPackage.DataAccesException;
+import DataAccessPackage.UnpaidSubscriptionDAO;
+import ExceptionsPackage.DataAccessException;
 import ModelsPackage.UnpaidSubscriptionModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UnpaidSubscriptionService {
@@ -15,7 +14,7 @@ public class UnpaidSubscriptionService {
     public UnpaidSubscriptionService(){
         this.dao=new UnpaidSubscriptionDAO();
     }
-    public List<UnpaidSubscriptionModel> getUnpaidSubscription()throws DataAccesException{
+    public List<UnpaidSubscriptionModel> getUnpaidSubscription()throws DataAccessException {
         return dao.getUnpaidSubscription();
     }
 }

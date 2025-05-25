@@ -1,4 +1,4 @@
-package ViewPackage.Job;
+package ViewPackage.job;
 
 import ControllerPackage.Controller;
 import ViewPackage.WelcomePanel;

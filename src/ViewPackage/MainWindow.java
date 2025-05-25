@@ -1,14 +1,14 @@
 package ViewPackage;
 
 import ControllerPackage.Controller;
-import ExceptionsPackage.DataAccesException;
-import ViewPackage.CRUD.BikeAdminPanel;
-import ViewPackage.Job.ListAndStatsPanel;
-import ViewPackage.Job.NewRepair.Panel;
-import ViewPackage.Search.SearchBrandBikePanel;
-import ViewPackage.Search.SearchRentalDatePanel;
-import ViewPackage.Search.SearchRepairByStatusPanel;
-import ViewPackage.CRUD.RentalAdminPanel;
+import ExceptionsPackage.DataAccessException;
+import ViewPackage.crud.BikeAdminPanel;
+import ViewPackage.job.ListAndStatsPanel;
+import ViewPackage.job.newrepair.Panel;
+import ViewPackage.search.SearchBrandBikePanel;
+import ViewPackage.search.SearchRentalDatePanel;
+import ViewPackage.search.SearchRepairByStatusPanel;
+import ViewPackage.crud.RentalAdminPanel;
 
 
 import javax.swing.*;
@@ -80,7 +80,7 @@ public class MainWindow extends JFrame {
                 contentContainer.removeAll();
                 try {
                     contentContainer.add(new Panel());
-                } catch (DataAccesException ex) {
+                } catch (DataAccessException ex) {
                     throw new RuntimeException(ex);
                 }
                 contentContainer.revalidate();
@@ -142,7 +142,7 @@ public class MainWindow extends JFrame {
                     contentContainer.add(new SearchBrandBikePanel(contentContainer, controller));
                     contentContainer.revalidate();
                     contentContainer.repaint();
-                } catch (DataAccesException ex) {
+                } catch (DataAccessException ex) {
                     System.out.println();
                     throw new RuntimeException(ex);
                 }

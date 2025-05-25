@@ -1,4 +1,4 @@
-package DataAccesPackage;
+package DataAccessPackage;
 
 import ExceptionsPackage.*;
 

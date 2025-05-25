@@ -1,6 +1,6 @@
-package ViewPackage.Job.NewRepair;
+package ViewPackage.job.newrepair;
 
-import ExceptionsPackage.DataAccesException;
+import ExceptionsPackage.DataAccessException;
 import ModelsPackage.LocalityModel;
 import ModelsPackage.StationModel;
 
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class ContentPanelStation extends ContentPanelState {
     private final JList<StationModel> list = new JList<>();
 
-    public ContentPanelStation(LocalityModel locality) throws DataAccesException {
+    public ContentPanelStation(LocalityModel locality) throws DataAccessException {
         StationModel[] stations = controller.getStationsFromLocality(locality).toArray(StationModel[]::new);
         list.setListData(stations);
 
@@ -20,7 +20,7 @@ public class ContentPanelStation extends ContentPanelState {
     }
 
     @Override
-    public ContentPanelState getNextState() throws DataAccesException {
+    public ContentPanelState getNextState() throws DataAccessException {
         ContentPanelBike nextState = new ContentPanelBike(list.getSelectedValue());
         nextState.setPreviousState(this);
         return nextState;

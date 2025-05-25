@@ -1,4 +1,4 @@
-package ViewPackage.Search;
+package ViewPackage.search;
 
 import ControllerPackage.Controller;
 import ModelsPackage.RentalDateSearchModel;
@@ -7,7 +7,6 @@ import ViewPackage.WelcomePanel;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
 import java.sql.Date;
 import java.util.List;
 

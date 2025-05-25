@@ -1,15 +1,13 @@
-package ViewPackage.Job;
+package ViewPackage.job;
 
 import ControllerPackage.Controller;
-import ExceptionsPackage.DataAccesException;
+import ExceptionsPackage.DataAccessException;
 import ModelsPackage.UnpaidSubscriptionModel;
 
-import javax.naming.ldap.Control;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
-import java.util.prefs.BackingStoreException;
 
 public class UnpaidMembersPanel extends JPanel {
     private final Controller controller;
@@ -61,7 +59,7 @@ public class UnpaidMembersPanel extends JPanel {
                         u.getEmail()
                 });
             }
-        } catch (DataAccesException e) {
+        } catch (DataAccessException e) {
             JOptionPane.showMessageDialog(this, "Erreur lors de la récupération : " + e.getMessage());
         }
     }

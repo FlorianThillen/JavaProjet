@@ -1,10 +1,10 @@
-package ViewPackage.Job.NewRepair;
+package ViewPackage.job.newrepair;
 
 import javax.swing.*;
-import ExceptionsPackage.DataAccesException;
+import ExceptionsPackage.DataAccessException;
 
 public class Panel extends JPanel {
-    public Panel() throws DataAccesException {
+    public Panel() throws DataAccessException {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         JPanel titlePanel = new JPanel();
@@ -26,7 +26,7 @@ public class Panel extends JPanel {
         returnButton.addActionListener(e -> {
             try {
                 contentPanel.goPreviousState();
-            } catch (DataAccesException ex) {
+            } catch (DataAccessException ex) {
                 throw new RuntimeException(ex);
             }
         });
@@ -34,7 +34,7 @@ public class Panel extends JPanel {
         confirmButton.addActionListener(e -> {
             try {
                 contentPanel.goNextState();
-            } catch (DataAccesException ex) {
+            } catch (DataAccessException ex) {
                 throw new RuntimeException(ex);
             }
         });
