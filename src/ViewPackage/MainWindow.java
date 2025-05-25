@@ -143,7 +143,6 @@ public class MainWindow extends JFrame {
                     contentContainer.revalidate();
                     contentContainer.repaint();
                 } catch (DataAccessException ex) {
-                    System.out.println();
                     throw new RuntimeException(ex);
                 }
             }

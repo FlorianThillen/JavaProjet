@@ -10,7 +10,7 @@ public class BrandService {
     private final BrandDAO brandDAO;
 
     public BrandService(){
-        this.brandDAO =new BrandDAO();
+        this.brandDAO = new BrandDAO();
     }
 
 

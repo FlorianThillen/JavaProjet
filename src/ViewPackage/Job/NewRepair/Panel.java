@@ -3,6 +3,8 @@ package ViewPackage.job.newrepair;
 import javax.swing.*;
 import ExceptionsPackage.DataAccessException;
 
+import java.awt.*;
+
 public class Panel extends JPanel {
     public Panel() throws DataAccessException {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -11,7 +13,9 @@ public class Panel extends JPanel {
         ContentPanel contentPanel = new ContentPanel();
         JPanel confirmationPanel = new JPanel();
 
-        titlePanel.add(new JLabel("Title"));
+        JLabel title = new JLabel("Enregistrement d'une nouvelle réparation.");
+        title.setFont(new Font("Arial", Font.BOLD, 18));
+        titlePanel.add(title);
 
         JButton returnButton = new JButton("Return");
         JButton confirmButton = new JButton("Confirm");

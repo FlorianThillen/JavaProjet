@@ -10,10 +10,13 @@ public class ContentPanelLocality extends ContentPanelState {
     private final JList<LocalityModel> list = new JList<>();
 
     public ContentPanelLocality() throws DataAccessException {
+        ArrayList<JComponent> comps = new ArrayList<>();
+
+        comps.add(new JLabel("Localités disponibles : "));
+
         LocalityModel[] localities = controller.getLocalities().toArray(LocalityModel[]::new);
         list.setListData(localities);
 
-        ArrayList<JComponent> comps = new ArrayList<>();
         comps.add(list);
         setInputComponents(comps);
     }

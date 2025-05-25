@@ -11,10 +11,14 @@ public class ContentPanelBike extends ContentPanelState {
     private final JList<BikeModel> list = new JList<>();
 
     public ContentPanelBike(StationModel station) throws DataAccessException {
+        ArrayList<JComponent> comps = new ArrayList<>();
+
+        String text = String.format("Vélos de %s : ", station.getName());
+        comps.add(new JLabel(text));
+
         BikeModel[] bikes = controller.getBikesFromStation(station).toArray(BikeModel[]::new);
         list.setListData(bikes);
 
-        ArrayList<JComponent> comps = new ArrayList<>();
         comps.add(list);
         setInputComponents(comps);
     }

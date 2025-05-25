@@ -3,6 +3,7 @@ package ViewPackage.job.newrepair;
 import ExceptionsPackage.DataAccessException;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class ContentPanel extends JPanel {
     ContentPanelState state;
@@ -22,6 +23,7 @@ public class ContentPanel extends JPanel {
         removeAll();
         for(JComponent comp: state.getInputComponents()) {
             add(comp);
+            comp.setAlignmentX(Component.CENTER_ALIGNMENT);
         }
         revalidate();
         repaint();

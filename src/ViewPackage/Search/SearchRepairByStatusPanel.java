@@ -20,7 +20,6 @@ public class SearchRepairByStatusPanel extends JPanel {
         this.controller = controller;
         setLayout(new BorderLayout());
 
-
         JPanel topPanel = new JPanel();
         topPanel.add(new JLabel("Statut de réparation :"));
 

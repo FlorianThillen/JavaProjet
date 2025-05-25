@@ -20,14 +20,17 @@ public class ContentPanelRepair extends ContentPanelState {
     public ContentPanelRepair(BikeModel bike) throws DataAccessException {
         ArrayList<JComponent> comps = new ArrayList<>();
 
+        comps.add(new JLabel("Mécaniciens disponible : "));
         MechanicModel[] mechanics = controller.getAllMechanics().toArray(MechanicModel[]::new);
         mechanicsList.setListData(mechanics);
         comps.add(mechanicsList);
 
+        comps.add(new JLabel("Statut de la réparation : "));
         RepairStatusModel[] status = controller.getAllRepairStatus().toArray(RepairStatusModel[]::new);
         statusList.setListData(status);
         comps.add(statusList);
 
+        comps.add(new JLabel("Coût de la réparation : "));
         comps.add(costPanel);
 
         this.bike = bike;

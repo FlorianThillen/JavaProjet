@@ -11,10 +11,14 @@ public class ContentPanelStation extends ContentPanelState {
     private final JList<StationModel> list = new JList<>();
 
     public ContentPanelStation(LocalityModel locality) throws DataAccessException {
+        ArrayList<JComponent> comps = new ArrayList<>();
+
+        String text = String.format("Stations de %s : ", locality.getName());
+        comps.add(new JLabel(text));
+
         StationModel[] stations = controller.getStationsFromLocality(locality).toArray(StationModel[]::new);
         list.setListData(stations);
 
-        ArrayList<JComponent> comps = new ArrayList<>();
         comps.add(list);
         setInputComponents(comps);
     }

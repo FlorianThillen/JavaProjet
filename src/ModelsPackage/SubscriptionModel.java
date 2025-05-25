@@ -17,9 +17,7 @@ public class SubscriptionModel {
         setSubscriptionPayed(subscriptionPayed);
     }
 
-    public SubscriptionModel() {
-
-    }
+    public SubscriptionModel() { }
 
     public int getCardNumber() {
         return cardNumber;

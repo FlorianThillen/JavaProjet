@@ -21,6 +21,11 @@ public class BrandBikesModel extends AbstractTableModel {
         contents = bikes;
     }
 
+    public void setData(ArrayList<BikeModel> bikes) {
+        contents = bikes;
+        fireTableDataChanged();
+    }
+
     @Override
     public int getColumnCount() {
         return columnNames.size();
