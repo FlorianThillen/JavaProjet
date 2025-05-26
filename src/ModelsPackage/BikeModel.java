@@ -29,6 +29,7 @@ public class BikeModel {
         return serialNumber;
     }
     public void setSerialNumber(int serialNumber) {
+        if (serialNumber < 1) throw new IllegalArgumentException("serialNumber should be higher than 0.");
         this.serialNumber = serialNumber;
     }
     public boolean isElectric() {
@@ -47,12 +48,15 @@ public class BikeModel {
         return batteryLevel;
     }
     public void setBatteryLevel(int batteryLevel) {
+        if (batteryLevel < 0) throw new IllegalArgumentException("batteryLevel can't be lower than 0.");
+        if (batteryLevel > 100) throw new IllegalArgumentException("batteryLevel can't be higher than 100.");
         this.batteryLevel = batteryLevel;
     }
     public int getNbKilometers() {
         return nbKilometers;
     }
     public void setNbKilometers(int nbKilometers) {
+        if (nbKilometers < 0) throw new IllegalArgumentException("nbKilometers should be minimum 0.");
         this.nbKilometers = nbKilometers;
     }
     public BrandModel getBrand() {

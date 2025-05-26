@@ -5,9 +5,9 @@ import ExceptionsPackage.DataAccessException;
 import ViewPackage.CRUD.BikeAdminPanel;
 import ViewPackage.Job.ListAndStatsPanel;
 import ViewPackage.Job.NewRepair.Panel;
-import ViewPackage.search.SearchBrandBikePanel;
-import ViewPackage.search.SearchRentalDatePanel;
-import ViewPackage.search.SearchRepairByStatusPanel;
+import ViewPackage.Search.SearchBrandBikePanel;
+import ViewPackage.Search.SearchRentalDatePanel;
+import ViewPackage.Search.SearchRepairByStatusPanel;
 import ViewPackage.CRUD.RentalAdminPanel;
 
 

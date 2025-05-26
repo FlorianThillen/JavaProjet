@@ -1,4 +1,4 @@
-package ViewPackage.search;
+package ViewPackage.Search;
 
 import ControllerPackage.Controller;
 import ModelsPackage.RentalDateSearchModel;

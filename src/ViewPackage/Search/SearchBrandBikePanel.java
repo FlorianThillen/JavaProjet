@@ -1,4 +1,4 @@
-package ViewPackage.search;
+package ViewPackage.Search;
 
 import ControllerPackage.Controller;
 import ExceptionsPackage.DataAccessException;
@@ -7,10 +7,8 @@ import ModelsPackage.BrandBikesModel;
 import ViewPackage.WelcomePanel;
 
 import javax.swing.*;
-import javax.swing.text.StyledEditorKit;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Vector;
 
 public class SearchBrandBikePanel extends JPanel {
     private final Controller controller;

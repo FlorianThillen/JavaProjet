@@ -1,7 +1,6 @@
 package ControllerPackage;
 
 import ExceptionsPackage.DataAccessException;
-import ExceptionsPackage.InvalidUserInputException;
 import ModelsPackage.*;
 import DataAccessPackage.RepairDAO;
 
@@ -27,8 +26,8 @@ public class Controller {
         return new BrandBikesService().getBikesFromBrand(brandName);
     }
 
-    public List<RentalDateSearchModel> getRentalsBetweenDates(Date start, Date end) throws InvalidUserInputException {
-        if (end.before(start)) throw new InvalidUserInputException("End date is before start date.");
+    public List<RentalDateSearchModel> getRentalsBetweenDates(Date start, Date end) throws IllegalArgumentException {
+        if (end.before(start)) throw new IllegalArgumentException("End date is before start date.");
 
         return rentalSearchService.searchRentals(start,end);
     }
@@ -37,15 +36,15 @@ public class Controller {
         return unpaidSubscriptionService.getUnpaidSubscription();
     }
     // tache métier 2 ,2/3
-    public List<StationBikeNbModel> getStationsStatus(int min,int max) throws DataAccessException, InvalidUserInputException {
-        if (min < 0) throw new InvalidUserInputException("Requested minimum should be 0 or above.");
-        if (max < 1) throw new InvalidUserInputException("Maximum should be 1 or above.");
-        if (max <= min) throw new InvalidUserInputException("Maximum should be above minimum.");
+    public List<StationBikeNbModel> getStationsStatus(int min,int max) throws DataAccessException, IllegalArgumentException {
+        if (min < 0) throw new IllegalArgumentException("Requested minimum should be 0 or above.");
+        if (max < 1) throw new IllegalArgumentException("Maximum should be 1 or above.");
+        if (max <= min) throw new IllegalArgumentException("Maximum should be above minimum.");
 
         return stationStatsService.getStationsStatus(min, max);
     }
     // tache métier 2 ,3/3
-    public List<BrandRepairCostModel> getAverageRepairCostPeBrand()throws DataAccessException {
+    public List<BrandRepairCostModel> getAverageRepairCostPeBrand() throws DataAccessException {
         return brandRepairCostService.getAverageRepairCostPerBrand();
     }
 
@@ -66,7 +65,14 @@ public class Controller {
     public void deleteBike(int serialNumber) throws DataAccessException {
         bikeService.deleteBike(serialNumber);
     }
-    public void updateBike(BikeModel bikeModel, int originalSerialNumber) throws DataAccessException {
+    public void updateBike(BikeModel bikeModel, int originalSerialNumber) throws DataAccessException, IllegalArgumentException {
+        if (originalSerialNumber < 1)
+            throw new IllegalArgumentException("originalSerialNumber should be positive.");
+        if (bikeModel == null)
+            throw new IllegalArgumentException("bikeModel is null.");
+        else if (bikeModel.getSerialNumber() == originalSerialNumber)
+            throw new IllegalArgumentException("Both serial number are identical.");
+
         bikeService.updateBike(bikeModel,originalSerialNumber);
     }
 

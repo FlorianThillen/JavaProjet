@@ -1,9 +1,9 @@
 package TestPackage;
 
 import ControllerPackage.Controller;
-import ExceptionsPackage.InvalidUserInputException;
+import ModelsPackage.BikeModel;
 
-import java.util.Calendar;
+import java.time.Instant;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,7 +22,7 @@ class ControllerTest {
 
     @org.junit.jupiter.api.Test
     void getRentalsBetweenDates() {
-        assertThrows(InvalidUserInputException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
            controller.getRentalsBetweenDates(
                    new java.sql.Date(2020,3,20),
                    new java.sql.Date(2004,6,4)
@@ -32,21 +32,42 @@ class ControllerTest {
 
     @org.junit.jupiter.api.Test
     void getStationsStatus() {
-        assertThrows(InvalidUserInputException.class, () ->
+        assertThrows(IllegalArgumentException.class, () ->
         {
             controller.getStationsStatus(-89, 74);
         });
-        assertThrows(InvalidUserInputException.class, () ->
+        assertThrows(IllegalArgumentException.class, () ->
         {
             controller.getStationsStatus(87, 6);
         });
-        assertThrows(InvalidUserInputException.class, () ->
+        assertThrows(IllegalArgumentException.class, () ->
         {
             controller.getStationsStatus(64, 3);
         });
-        assertThrows(InvalidUserInputException.class, () ->
+        assertThrows(IllegalArgumentException.class, () ->
         {
             controller.getStationsStatus(0, 0);
+        });
+    }
+
+    @org.junit.jupiter.api.Test
+    void updateBike() {
+        assertThrows(IllegalArgumentException.class, ()->{
+            controller.updateBike(new BikeModel(), -34);
+        });
+        assertThrows(IllegalArgumentException.class, ()->{
+            controller.updateBike(new BikeModel(
+                    64432,
+                    true,
+                    Date.from(Instant.now()),
+                    68,
+                    200,
+                    null,
+                    null
+            ), 64432);
+        });
+        assertThrows(IllegalArgumentException.class, ()->{
+            controller.updateBike(null, 10298);
         });
     }
 }
