@@ -18,7 +18,7 @@ class BikeModelTest {
     void setSerialNumber() {
         final int testSerialNumber = 2;
         bike.setSerialNumber(testSerialNumber);
-        assertEquals(bike.getSerialNumber(), testSerialNumber);
+        assertEquals(testSerialNumber, bike.getSerialNumber());
 
         assertThrows(IllegalArgumentException.class, ()->{
             bike.setSerialNumber(-2);
@@ -29,7 +29,7 @@ class BikeModelTest {
     void setBatteryLevel() {
         final int testBatteryLevel = 20;
         bike.setBatteryLevel(testBatteryLevel);
-        assertEquals(bike.getBatteryLevel(), testBatteryLevel);
+        assertEquals(testBatteryLevel, bike.getBatteryLevel());
 
         assertThrows(IllegalArgumentException.class, ()->{
             bike.setBatteryLevel(-80);
@@ -43,7 +43,7 @@ class BikeModelTest {
     void setNbKilometers() {
         final int testKmCount = 20;
         bike.setBatteryLevel(testKmCount);
-        assertEquals(bike.getBatteryLevel(), testKmCount);
+        assertEquals(testKmCount, bike.getBatteryLevel());
 
         assertThrows(IllegalArgumentException.class, ()->{
             bike.setNbKilometers(-80);

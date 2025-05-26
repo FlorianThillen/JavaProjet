@@ -14,6 +14,8 @@ public class StationModel {
         setStreetNumber(streetNumber);
         setLocality(locality);
     }
+    public StationModel() {};
+
     public int getStationNumber() {
         return stationNumber;
     }
@@ -36,6 +38,7 @@ public class StationModel {
         return streetNumber;
     }
     public void setStreetNumber(int streetNumber) {
+        if (streetNumber < 1) throw new IllegalArgumentException("streetNumber must be an int above 0.");
         this.streetNumber = streetNumber;
     }
     public LocalityModel getLocality() {

@@ -18,6 +18,7 @@ public class RepairModel {
         setMechanic(mechanic);
         setBike(bike);
     }
+    public RepairModel() {};
     public int getRepairId() {
         return repairId;
     }
@@ -28,6 +29,7 @@ public class RepairModel {
         return cost;
     }
     public void setCost(int cost) {
+        if (cost < 0) throw new IllegalArgumentException("cost can't be negative");
         this.cost = cost;
     }
     public java.sql.Date getDate() {

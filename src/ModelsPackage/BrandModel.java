@@ -8,6 +8,8 @@ public class BrandModel {
         setName(name);
         setWarrantyDuration(warrantyDuration);
     }
+    public BrandModel() {};
+
     public String getName() {
         return name;
     }
@@ -18,6 +20,7 @@ public class BrandModel {
         return warrantyDuration;
     }
     public void setWarrantyDuration(int warrantyDuration) {
+        if (warrantyDuration < 0) throw new IllegalArgumentException("warrantyDuration should be 0 or higher.");
         this.warrantyDuration = warrantyDuration;
     }
 
