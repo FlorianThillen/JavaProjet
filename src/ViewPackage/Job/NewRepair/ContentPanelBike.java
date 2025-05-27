@@ -13,6 +13,12 @@ public class ContentPanelBike extends ContentPanelState {
     public ContentPanelBike(StationModel station) throws DataAccessException {
         ArrayList<JComponent> comps = new ArrayList<>();
 
+        comps.add(new JLabel("Localité choisie : "));
+        comps.add(new JLabel(station.getLocality().getName()));
+
+        comps.add(new JLabel("Station choisie : "));
+        comps.add(new JLabel(station.getName()));
+
         String text = String.format("Vélos de %s : ", station.getName());
         comps.add(new JLabel(text));
 

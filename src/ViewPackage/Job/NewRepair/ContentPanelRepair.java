@@ -21,6 +21,15 @@ public class ContentPanelRepair extends ContentPanelState {
     public ContentPanelRepair(BikeModel bike) throws DataAccessException {
         ArrayList<JComponent> comps = new ArrayList<>();
 
+        comps.add(new JLabel("Localité choisie : "));
+        comps.add(new JLabel(bike.getStation().getLocality().getName()));
+
+        comps.add(new JLabel("Station choisie : "));
+        comps.add(new JLabel(bike.getStation().getName()));
+
+        comps.add(new JLabel("Velo choisi :"));
+        comps.add(new JLabel(Integer.toString(bike.getSerialNumber())));
+
         comps.add(new JLabel("Mécaniciens disponible : "));
         MechanicModel[] mechanics = controller.getAllMechanics().toArray(MechanicModel[]::new);
         for(MechanicModel mechanic: mechanics)

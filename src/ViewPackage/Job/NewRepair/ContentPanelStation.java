@@ -13,6 +13,8 @@ public class ContentPanelStation extends ContentPanelState {
     public ContentPanelStation(LocalityModel locality) throws DataAccessException {
         ArrayList<JComponent> comps = new ArrayList<>();
 
+        comps.add(new JLabel("Localité choisie : "));
+        comps.add(new JLabel(locality.getName()));
         String text = String.format("Stations de %s : ", locality.getName());
         comps.add(new JLabel(text));
 
