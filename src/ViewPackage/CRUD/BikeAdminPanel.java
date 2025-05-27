@@ -149,11 +149,11 @@ public class BikeAdminPanel extends JPanel {
     }
 
     private void handleInsert(){
+        String veloIdentique="";
         try {
             int serial = Integer.parseInt(serialField.getText().trim());
             boolean isElectric = electricCheck.isSelected();
             Date buyingDate = new Date(((java.util.Date) dateSpinner.getValue()).getTime());
-
             Integer battery = batteryField.getText().isBlank() ? null : Integer.parseInt(batteryField.getText().trim());
             Integer km = kmField.getText().isBlank() ? null : Integer.parseInt(kmField.getText().trim());
 
@@ -169,18 +169,17 @@ public class BikeAdminPanel extends JPanel {
                     km != null ? km : 0,
                     brand, station);
 
+            veloIdentique=" ,vélo avec le même id ";
             controller.insertBike(bike);
+            veloIdentique="";
             JOptionPane.showMessageDialog(this, "Vélo ajouté avec succès !");
 
             loadBikeTable();
             // pour reset les champs
             emptyForm();
 
-
-        }catch (NumberFormatException ex){
-            JOptionPane.showMessageDialog(this,"Certian champs numérique sont invalides");
         }catch (Exception ex){
-            JOptionPane.showMessageDialog(this,"Erreur : "+ex.getMessage());
+            JOptionPane.showMessageDialog(this,"Erreur lors de l'ajout : "+ex.getMessage()+veloIdentique);
         }
     }
     private void handleDelete(){

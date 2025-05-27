@@ -96,7 +96,7 @@ public class BikeDAO {
 
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new DataAccessException("Erreur lors de l'insertion du vélo");
+            throw new DataAccessException("Erreur lors de l'insertion du vélo",e);
         }
     }
 

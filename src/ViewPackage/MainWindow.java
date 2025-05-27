@@ -48,10 +48,10 @@ public class MainWindow extends JFrame {
         mainContainer.add(animationContainer);
         mainContainer.setVisible(true);
         controller = new Controller();
-//
+
         this.menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
-//        crudMember = new JMenu("Membre");
+
         researches = new JMenu("Recherche");
         JMenu businessTask = new JMenu("Tâche métier");
         JMenu CRUD = new JMenu("CRUD");
@@ -126,7 +126,7 @@ public class MainWindow extends JFrame {
         revalidate();
     }
 
-    // CRUD
+    // Menu
     private void setSearchMenu() {
         JMenuItem menuSearchBrandBike = new JMenuItem("Recherche vélos d'une certaine marque");
         JMenuItem menuSearchRentalDate = new JMenuItem("Recherche locations entre 2 dates");
