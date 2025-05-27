@@ -29,7 +29,8 @@ public class BikeDAO {
                 "s.station_number,s.name as station_name, s.street, s.street_number " +
                 "FROM bike b " +
                 "JOIN brand br ON b.brand_name = br.name " +
-                "JOIN station s ON b.station_id = s.station_number";
+                "JOIN station s ON b.station_id = s.station_number " +
+                "ORDER BY b.serial_number";
 
         try( PreparedStatement stmt = connection.prepareStatement(query) ){
             ResultSet rs = stmt.executeQuery();
