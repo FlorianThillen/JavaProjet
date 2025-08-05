@@ -4,8 +4,8 @@ USE velodb;
 -- Table Brand
 CREATE TABLE brand (
     name VARCHAR(50) NOT NULL,
-    PRIMARY KEY (name),
-    waranty_duration INT NOT NULL
+    waranty_duration INT NOT NULL,
+    PRIMARY KEY (name)
 );
 
 -- Table Localite
@@ -21,8 +21,8 @@ CREATE TABLE station (
     name VARCHAR(50) NOT NULL,
     street VARCHAR(50) NOT NULL,
     street_number INT NOT NULL,
-    postal_code INT,
-    local_name VARCHAR(50),
+    postal_code INT NOT NULL,
+    local_name VARCHAR(50) NOT NULL,
     PRIMARY KEY (station_number),
     FOREIGN KEY (postal_code, local_name) REFERENCES localite(postal_code, name)
 );
@@ -32,10 +32,10 @@ CREATE TABLE bike (
     serial_number INT NOT NULL,
     is_electric BOOLEAN NOT NULL,
     buying_date DATE NOT NULL,
-    battery_level FLOAT,
-    nb_kilometer INT,
-    station_id INT,
-    brand_name VARCHAR(50),
+    battery_level FLOAT NOT NULL,
+    nb_kilometer INT NOT NULL,
+    station_id INT NOT NULL,
+    brand_name VARCHAR(50) NOT NULL,
     PRIMARY KEY (serial_number),
     FOREIGN KEY (brand_name) REFERENCES brand(name),
     FOREIGN KEY (station_id) REFERENCES station(station_number)
@@ -58,12 +58,12 @@ CREATE TABLE member (
     last_name VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL,
     phone_number INT NOT NULL,
-    got_discount BOOLEAN,
+    got_discount BOOLEAN NOT NULL,
     street VARCHAR(50) NOT NULL,
     street_number INT NOT NULL,
-    sub_id INT,
-    postal_code INT,
-    name VARCHAR(50),
+    sub_id INT NOT NULL,
+    postal_code INT NOT NULL,
+    name VARCHAR(50) NOT NULL,
     PRIMARY KEY (national_number),
     FOREIGN KEY (sub_id) REFERENCES subscription(card_number),
     FOREIGN KEY (postal_code, name) REFERENCES localite(postal_code, name)
@@ -75,9 +75,9 @@ CREATE TABLE rental (
     start_date DATE NOT NULL,
     return_date DATE NOT NULL,
     comment TEXT,
-    had_issue BOOLEAN,
-    bike_id INT,
-    sub_id INT,
+    had_issue BOOLEAN NOT NULL,
+    bike_id INT NOT NULL,
+    sub_id INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (bike_id) REFERENCES bike(serial_number),
     FOREIGN KEY (sub_id) REFERENCES subscription(card_number)
@@ -94,8 +94,8 @@ CREATE TABLE repair (
     id INT NOT NULL AUTO_INCREMENT,
     cost DECIMAL(18, 2) NOT NULL,
     date DATE NOT NULL,
-    libelle VARCHAR(50),
-    serial_number INT,
+    libelle VARCHAR(50) NOT NULL,
+    serial_number INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (serial_number) REFERENCES bike(serial_number),
     FOREIGN KEY (libelle) REFERENCES repair_status(libelle)
