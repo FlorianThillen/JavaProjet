@@ -27,7 +27,15 @@ public class AvgRepairCostPanel extends JPanel{
 
         // mid
         String[] columns = {"Marque", "Coût moyen (€)"};
-        DefaultTableModel model = new DefaultTableModel(columns, 0);
+        DefaultTableModel model = new DefaultTableModel(columns, 0) {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                return switch (columnIndex) {
+                    case 1 -> Float.class;
+                    default -> String.class;
+                };
+            }
+        };
         resultTable = new JTable(model);
         add(new JScrollPane(resultTable), BorderLayout.CENTER);
 
@@ -53,7 +61,7 @@ public class AvgRepairCostPanel extends JPanel{
             for (BrandRepairCostModel stat : stats){
                 model.addRow(new Object[]{
                         stat.getBrandName(),
-                        String.format("%.2f",stat.getAverageCost()),
+                        stat.getAverageCost(),
                         });
             }
         }catch (DataAccessException e){

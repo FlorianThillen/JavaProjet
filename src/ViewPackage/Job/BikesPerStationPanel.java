@@ -40,7 +40,14 @@ public class BikesPerStationPanel extends JPanel{
 
         // mid
         String[] columns = {"Station", "Nombre de vélos", "Statut"};
-        DefaultTableModel model = new DefaultTableModel(columns, 0);
+        DefaultTableModel model = new DefaultTableModel(columns, 0) {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 1) return Integer.class; // pour considerer les val de la colonne comme des int
+                return String.class;
+            }
+        };
+
         resultTable = new JTable(model);
         add(new JScrollPane(resultTable), BorderLayout.CENTER);
 

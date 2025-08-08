@@ -30,7 +30,7 @@ public class SingletonConnection {
                     char[] passwordChars = passwordField.getPassword();
                     String password = new String(passwordChars);
 
-                    uniqueConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/velodb",
+                    uniqueConnection = DriverManager.getConnection("jdbc:mysql://localhost:3307/velodb",
                             username,
                             password);
                 } else {

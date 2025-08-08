@@ -2,6 +2,7 @@ package ViewPackage.Search;
 
 import ControllerPackage.Controller;
 import ModelsPackage.RentalDateSearchModel;
+import ModelsPackage.RentalSearchTableModel;
 import ViewPackage.WelcomePanel;
 
 import java.awt.*;
@@ -41,9 +42,8 @@ public class SearchRentalDatePanel extends JPanel{
 
         add(filterPanel, BorderLayout.NORTH);
 
-        String[] columns = {"ID Location", "Date début", "Numéro série", "Date achat", "Marque", "Garantie (mois)", "Station"};
-        DefaultTableModel model = new DefaultTableModel(columns, 0);
-        resultTable = new JTable(model);
+        resultTable = new JTable();
+
         JScrollPane scrollPane = new JScrollPane(resultTable);
         add(scrollPane, BorderLayout.CENTER);
 
@@ -57,27 +57,14 @@ public class SearchRentalDatePanel extends JPanel{
         searchButton.addActionListener(e -> {
             Date start = new Date(((java.util.Date) spinnerStart.getValue()).getTime());
             Date end = new Date(((java.util.Date) spinnerEnd.getValue()).getTime());
-            model.setRowCount(0);
+
             try {
                 List<RentalDateSearchModel> results = controller.getRentalsBetweenDates(start, end);
-
-                for (RentalDateSearchModel r : results) {
-                    model.addRow(new Object[]{
-                            r.getRentalId(),
-                            r.getStartDate(),
-                            r.getBikesSerialNumber(),
-                            r.getBikeBuyingDate(),
-                            r.getBrandName(),
-                            r.getWarrantyDuration(),
-                            r.getStationName()
-                    });
-                }
+                resultTable.setModel(new RentalSearchTableModel(results));
 
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Erreur : " + ex.getMessage());
             }
-
-            resultTable.setModel(model);
         });
     }
 }

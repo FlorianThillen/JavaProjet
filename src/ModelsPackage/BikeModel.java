@@ -20,7 +20,14 @@ public class BikeModel {
         setBrand(brand);
         setStation(station);
     }
-
+    public BikeModel(boolean isElectric, Date buyingDate, int batteryLevel, int nbKilometers, BrandModel brand,StationModel station) {
+        setElectric(isElectric);
+        setBuyingDate(buyingDate);
+        setBatteryLevel(batteryLevel);
+        setNbKilometers(nbKilometers);
+        setBrand(brand);
+        setStation(station);
+    }
     public BikeModel() {
 
     }

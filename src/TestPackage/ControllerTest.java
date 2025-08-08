@@ -53,7 +53,7 @@ class ControllerTest {
     @org.junit.jupiter.api.Test
     void updateBike() {
         assertThrows(IllegalArgumentException.class, ()->{
-            controller.updateBike(new BikeModel(), -34);
+            controller.updateBike(new BikeModel());
         });
         assertThrows(IllegalArgumentException.class, ()->{
             controller.updateBike(new BikeModel(
@@ -64,10 +64,10 @@ class ControllerTest {
                     200,
                     null,
                     null
-            ), 64432);
+            ));
         });
         assertThrows(IllegalArgumentException.class, ()->{
-            controller.updateBike(null, 10298);
+            controller.updateBike(null);
         });
     }
 }

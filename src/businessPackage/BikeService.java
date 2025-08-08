@@ -24,7 +24,7 @@ public class BikeService {
         bikeDAO.deleteBySerialNumber(serialNumber);
     }
 
-    public void updateBike(BikeModel bike, int originalSerialNumber) throws DataAccessException {
-        bikeDAO.update(bike, originalSerialNumber);
+    public void updateBike(BikeModel bike) throws DataAccessException {
+        bikeDAO.update(bike);
     }
 }

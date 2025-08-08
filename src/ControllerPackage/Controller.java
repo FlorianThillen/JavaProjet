@@ -65,15 +65,11 @@ public class Controller {
     public void deleteBike(int serialNumber) throws DataAccessException {
         bikeService.deleteBike(serialNumber);
     }
-    public void updateBike(BikeModel bikeModel, int originalSerialNumber) throws DataAccessException, IllegalArgumentException {
-        if (originalSerialNumber < 1)
-            throw new IllegalArgumentException("originalSerialNumber should be positive.");
+    public void updateBike(BikeModel bikeModel) throws DataAccessException, IllegalArgumentException {
         if (bikeModel == null)
             throw new IllegalArgumentException("bikeModel is null.");
-        else if (bikeModel.getSerialNumber() == originalSerialNumber)
-            throw new IllegalArgumentException("Both serial number are identical.");
 
-        bikeService.updateBike(bikeModel,originalSerialNumber);
+        bikeService.updateBike(bikeModel);
     }
 
     // ====

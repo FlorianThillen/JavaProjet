@@ -73,27 +73,27 @@ public class BikeDAO {
 
     // ================ operation CRUD - Create ================
     public void insert(BikeModel bikeModel) throws DataAccessException {
-        String query = "INSERT INTO bike (serial_number,is_electric,buying_date,battery_level,nb_kilometer,station_id,brand_name ) " +
-                "VALUES (?,?,?,?,?,?,?)";
+        String query = "INSERT INTO bike (is_electric,buying_date,battery_level,nb_kilometer,station_id,brand_name ) " +
+                "VALUES (?,?,?,?,?,?)";
 
         try (PreparedStatement stmt = connection.prepareStatement(query)){
-            stmt.setInt(1, bikeModel.getSerialNumber());
-            stmt.setBoolean(2, bikeModel.isElectric());
-            stmt.setDate(3, bikeModel.getBuyingDate());
+            //stmt.setInt(1, bikeModel.getSerialNumber());
+            stmt.setBoolean(1, bikeModel.isElectric());
+            stmt.setDate(2, bikeModel.getBuyingDate());
 
             if (bikeModel.getBatteryLevel() > 0){
-                stmt.setInt(4, bikeModel.getBatteryLevel());
+                stmt.setInt(3, bikeModel.getBatteryLevel());
+            } else {
+                stmt.setNull(3, Types.INTEGER);
+            }
+            if (bikeModel.getNbKilometers() > 0){
+                stmt.setInt(4, bikeModel.getNbKilometers());
             } else {
                 stmt.setNull(4, Types.INTEGER);
             }
-            if (bikeModel.getNbKilometers() > 0){
-                stmt.setInt(5, bikeModel.getNbKilometers());
-            } else {
-                stmt.setNull(5, Types.INTEGER);
-            }
 
-            stmt.setInt(6,bikeModel.getStation().getStationNumber());
-            stmt.setString(7,bikeModel.getBrand().getName());
+            stmt.setInt(5,bikeModel.getStation().getStationNumber());
+            stmt.setString(6,bikeModel.getBrand().getName());
 
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -103,31 +103,32 @@ public class BikeDAO {
 
     // ================ operation CRUD - Update ================
 
-    public void update(BikeModel bikeModel, int originalSerialNumber)throws DataAccessException {
+    public void update(BikeModel bikeModel)throws DataAccessException {
         String query ="UPDATE bike " +
-                "SET serial_number = ?, is_electric = ?, buying_date = ?, battery_level = ?, nb_kilometer = ?,station_id = ?,brand_name = ? " +
+                "SET is_electric = ?, buying_date = ?, battery_level = ?, nb_kilometer = ?,station_id = ?,brand_name = ? " +
                 "WHERE serial_number = ?";
         try(PreparedStatement stmt = connection.prepareStatement(query)){
-            stmt.setInt(1,bikeModel.getSerialNumber());
-            stmt.setBoolean(2,bikeModel.isElectric());
-            stmt.setDate(3,bikeModel.getBuyingDate());
+            //stmt.setInt(1,bikeModel.getSerialNumber());
+            stmt.setBoolean(1,bikeModel.isElectric());
+            stmt.setDate(2,bikeModel.getBuyingDate());
 
             if (bikeModel.getBatteryLevel() > 0) {
-                stmt.setInt(4, bikeModel.getBatteryLevel());
+                stmt.setInt(3, bikeModel.getBatteryLevel());
+            } else {
+                stmt.setNull(3, Types.INTEGER);
+            }
+
+            if (bikeModel.getNbKilometers() > 0) {
+                stmt.setInt(4, bikeModel.getNbKilometers());
             } else {
                 stmt.setNull(4, Types.INTEGER);
             }
 
-            if (bikeModel.getNbKilometers() > 0) {
-                stmt.setInt(5, bikeModel.getNbKilometers());
-            } else {
-                stmt.setNull(5, Types.INTEGER);
-            }
+            stmt.setInt(5,bikeModel.getStation().getStationNumber());
+            stmt.setString(6,bikeModel.getBrand().getName());
+            stmt.setInt(7,bikeModel.getSerialNumber());
 
-            stmt.setInt(6,bikeModel.getStation().getStationNumber());
-            stmt.setString(7,bikeModel.getBrand().getName());
-
-            stmt.setInt(8,originalSerialNumber); // dans le cas où on change l id
+            //stmt.setInt(7,originalSerialNumber); // dans le cas où on change l id
 
             stmt.executeUpdate();
 

@@ -3,6 +3,7 @@ package ViewPackage.CRUD;
 import ControllerPackage.Controller;
 import ExceptionsPackage.DataAccessException;
 import ModelsPackage.BikeModel;
+import ModelsPackage.BikeTableModel;
 import ModelsPackage.BrandModel;
 import ModelsPackage.StationModel;
 import ViewPackage.WelcomePanel;
@@ -11,6 +12,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BikeAdminPanel extends JPanel {
@@ -18,7 +20,7 @@ public class BikeAdminPanel extends JPanel {
     private final Container container;
 
     private JTable bikeTable;
-    private DefaultTableModel tableModel;
+    private BikeTableModel tableModel;
 
     private JTextField serialField;
     private JCheckBox electricCheck;
@@ -27,7 +29,6 @@ public class BikeAdminPanel extends JPanel {
     private JTextField kmField;
     private JComboBox<BrandModel> brandBox;
     private JComboBox<StationModel> stationBox;
-    private Integer serialBeforeEdit = null;
 
 
     public BikeAdminPanel(Container container,Controller controller) {
@@ -108,19 +109,20 @@ public class BikeAdminPanel extends JPanel {
             container.revalidate();
             container.repaint();
         });
+        serialField.setEditable(false);
 
         String[] columns = {"Numéro", "Électrique", "Date achat", "Batterie", "KM", "Marque", "Station"};
-        tableModel = new DefaultTableModel(columns, 0);
+        tableModel = new BikeTableModel(new ArrayList<>());
         bikeTable = new JTable(tableModel);
 
         bikeTable.getSelectionModel().addListSelectionListener(e -> {
             int row = bikeTable.getSelectedRow();
             if(row >= 0){
-                serialField.setText(tableModel.getValueAt(row, 0).toString());
-                electricCheck.setSelected("Oui".equals(tableModel.getValueAt(row, 1)));
+                serialField.setText(String.valueOf((int) tableModel.getValueAt(row, 0)));
+                electricCheck.setSelected((Boolean) tableModel.getValueAt(row, 1)); 
                 dateSpinner.setValue(Date.valueOf(tableModel.getValueAt(row, 2).toString()));
-                batteryField.setText(tableModel.getValueAt(row, 3).toString());
-                kmField.setText(tableModel.getValueAt(row, 4).toString());
+                batteryField.setText(String.valueOf((int) tableModel.getValueAt(row, 3)));
+                kmField.setText(String.valueOf((int) tableModel.getValueAt(row, 4)));
 
                 // Sélection de la bonne marque dans la comboBox
                 String brandName = tableModel.getValueAt(row, 5).toString();
@@ -138,8 +140,6 @@ public class BikeAdminPanel extends JPanel {
                         break;
                     }
                 }
-
-                serialBeforeEdit = Integer.parseInt(serialField.getText());
             }
         });
 
@@ -149,9 +149,7 @@ public class BikeAdminPanel extends JPanel {
     }
 
     private void handleInsert(){
-        String veloIdentique="";
         try {
-            int serial = Integer.parseInt(serialField.getText().trim());
             boolean isElectric = electricCheck.isSelected();
             Date buyingDate = new Date(((java.util.Date) dateSpinner.getValue()).getTime());
             Integer battery = batteryField.getText().isBlank() ? null : Integer.parseInt(batteryField.getText().trim());
@@ -164,14 +162,12 @@ public class BikeAdminPanel extends JPanel {
                 return;
             }
 
-            BikeModel bike = new BikeModel(serial, isElectric, buyingDate,
+            BikeModel bike = new BikeModel( isElectric, buyingDate,
                     battery != null ? battery : 0,
                     km != null ? km : 0,
                     brand, station);
 
-            veloIdentique=" ,vélo avec le même id ";
             controller.insertBike(bike);
-            veloIdentique="";
             JOptionPane.showMessageDialog(this, "Vélo ajouté avec succès !");
 
             loadBikeTable();
@@ -179,7 +175,7 @@ public class BikeAdminPanel extends JPanel {
             emptyForm();
 
         }catch (Exception ex){
-            JOptionPane.showMessageDialog(this,"Erreur lors de l'ajout : "+ex.getMessage()+veloIdentique);
+            JOptionPane.showMessageDialog(this,"Erreur lors de l'ajout : "+ex.getMessage());
         }
     }
     private void handleDelete(){
@@ -212,11 +208,6 @@ public class BikeAdminPanel extends JPanel {
     }
 
     private void handleEdit(){
-        if (serialBeforeEdit == null){
-            JOptionPane.showMessageDialog(this,"Veuillez sélectionner un vélo à modifier");
-            return;
-        }
-
         try{
             int serial = Integer.parseInt(serialField.getText().trim());
             boolean isElectric = electricCheck.isSelected();
@@ -234,10 +225,9 @@ public class BikeAdminPanel extends JPanel {
                     brand, station
             );
 
-            controller.updateBike(updatedBike, serialBeforeEdit);
+            controller.updateBike(updatedBike);
             JOptionPane.showMessageDialog(this, "Vélo mis à jour");
             loadBikeTable();
-            serialBeforeEdit = null;
 
         }catch (Exception ex){
             JOptionPane.showMessageDialog(this,"Erreur de modification : "+ ex.getMessage());
@@ -245,21 +235,9 @@ public class BikeAdminPanel extends JPanel {
     }
 
     private void loadBikeTable() {
-        tableModel.setRowCount(0);
-
         try {
             List<BikeModel> bikes = controller.getAllBikes();
-            for (BikeModel b : bikes) {
-                tableModel.addRow(new Object[]{
-                        b.getSerialNumber(),
-                        b.isElectric() ? "Oui" : "Non",
-                        b.getBuyingDate(),
-                        b.getBatteryLevel(),
-                        b.getNbKilometers(),
-                        b.getBrand().getName(),
-                        b.getStation().getName()
-                });
-            }
+            ((BikeTableModel) tableModel).setBikes(bikes);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
