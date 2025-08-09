@@ -73,7 +73,7 @@ CREATE TABLE member (
 CREATE TABLE rental (
     id INT NOT NULL,
     start_date DATE NOT NULL,
-    return_date DATE NOT NULL,
+    return_date DATE,
     comment TEXT,
     had_issue BOOLEAN NOT NULL,
     bike_id INT NOT NULL,
