@@ -23,17 +23,26 @@ public class ContentPanelBike extends ContentPanelState {
         comps.add(new JLabel(text));
 
         BikeModel[] bikes = controller.getBikesFromStation(station).toArray(BikeModel[]::new);
-        for(BikeModel bike: bikes)
-            comBox.addItem(bike);
+        if (bikes.length > 0) {
+            for(BikeModel bike: bikes)
+                comBox.addItem(bike);
 
-        comps.add(comBox);
+            comps.add(comBox);
+        } else {
+            comps.add(new JLabel("Aucun vélo disponible."));
+        }
         setInputComponents(comps);
     }
 
     @Override
     public ContentPanelState getNextState() throws DataAccessException {
-        ContentPanelRepair nextState = new ContentPanelRepair((BikeModel) comBox.getSelectedItem());
-        nextState.setPreviousState(this);
-        return nextState;
+        try {
+            ContentPanelRepair nextState = new ContentPanelRepair((BikeModel) comBox.getSelectedItem());
+            nextState.setPreviousState(this);
+            return nextState;
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(null, "Aucun vélo n'a été choisi!");
+            return null;
+        }
     }
 }
