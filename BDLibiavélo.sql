@@ -89,6 +89,16 @@ CREATE TABLE repair_status (
     PRIMARY KEY (libelle)
 );
 
+-- Table Mechanic
+CREATE TABLE mechanic (
+                          badge_id INT NOT NULL,
+                          first_name VARCHAR(50) NOT NULL,
+                          last_name VARCHAR(50) NOT NULL,
+                          email VARCHAR(50) NOT NULL,
+                          phone_number INT NOT NULL,
+                          PRIMARY KEY (badge_id)
+);
+
 -- Table Repair
 CREATE TABLE repair (
     id INT NOT NULL AUTO_INCREMENT,
@@ -101,16 +111,6 @@ CREATE TABLE repair (
     FOREIGN KEY (serial_number) REFERENCES bike(serial_number),
     FOREIGN KEY (libelle) REFERENCES repair_status(libelle),
     FOREIGN KEY (mechanic_id) REFERENCES mechanic(badge_id)
-);
-
--- Table Mechanic
-CREATE TABLE mechanic (
-    badge_id INT NOT NULL,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    email VARCHAR(50) NOT NULL,
-    phone_number INT NOT NULL,
-    PRIMARY KEY (badge_id)
 );
 
 INSERT INTO brand VALUES
@@ -376,6 +376,23 @@ INSERT INTO repair_status VALUES
 ('À faire'),
 ('Terminé');
 
+INSERT INTO mechanic VALUES
+                         (500, 'MechPrenom0',  'MechNom0', 'mech0@velo.com', 471785762),
+                         (501, 'MechPrenom1', 'MechNom1', 'mech1@velo.com', 447381364),
+                         (502, 'MechPrenom2', 'MechNom2', 'mech2@velo.com', 410689085),
+                         (503, 'MechPrenom3', 'MechNom3', 'mech3@velo.com', 497048870),
+                         (504, 'MechPrenom4', 'MechNom4', 'mech4@velo.com', 495907991),
+                         (505, 'MechPrenom5', 'MechNom5', 'mech5@velo.com', 438159026),
+                         (506, 'MechPrenom6', 'MechNom6', 'mech6@velo.com', 472423572),
+                         (507, 'MechPrenom7', 'MechNom7', 'mech7@velo.com', 424477341),
+                         (508, 'MechPrenom8', 'MechNom8', 'mech8@velo.com', 463415743),
+                         (509, 'MechPrenom9', 'MechNom9', 'mech9@velo.com', 463012669),
+                         (510, 'MechPrenom10', 'MechNom10', 'mech10@velo.com', 486581487),
+                         (511, 'MechPrenom11', 'MechNom11', 'mech11@velo.com', 448840235),
+                         (512, 'MechPrenom12', 'MechNom12', 'mech12@velo.com', 480842654),
+                         (513, 'MechPrenom13', 'MechNom13', 'mech13@velo.com', 428608372),
+                         (514, 'MechPrenom14', 'MechNom14', 'mech14@velo.com', 441737544);
+
 INSERT INTO repair VALUES
 (1, 91.17, '2024-11-14', 'Terminé', 14, 500),
 (2, 125.74, '2024-03-27', 'À faire', 36, 501),
@@ -427,20 +444,3 @@ INSERT INTO repair VALUES
 (48, 139.69, '2024-05-06', 'À faire', 5, 505),
 (49, 62.18, '2024-04-05', 'À faire', 6, 505),
 (50, 117.68, '2024-03-25', 'À faire', 21, 505);
-
-INSERT INTO mechanic VALUES
-(500, 'MechPrenom0',  'MechNom0', 'mech0@velo.com', 471785762),
-(501, 'MechPrenom1', 'MechNom1', 'mech1@velo.com', 447381364),
-(502, 'MechPrenom2', 'MechNom2', 'mech2@velo.com', 410689085),
-(503, 'MechPrenom3', 'MechNom3', 'mech3@velo.com', 497048870),
-(504, 'MechPrenom4', 'MechNom4', 'mech4@velo.com', 495907991),
-(505, 'MechPrenom5', 'MechNom5', 'mech5@velo.com', 438159026),
-(506, 'MechPrenom6', 'MechNom6', 'mech6@velo.com', 472423572),
-(507, 'MechPrenom7', 'MechNom7', 'mech7@velo.com', 424477341),
-(508, 'MechPrenom8', 'MechNom8', 'mech8@velo.com', 463415743),
-(509, 'MechPrenom9', 'MechNom9', 'mech9@velo.com', 463012669),
-(510, 'MechPrenom10', 'MechNom10', 'mech10@velo.com', 486581487),
-(511, 'MechPrenom11', 'MechNom11', 'mech11@velo.com', 448840235),
-(512, 'MechPrenom12', 'MechNom12', 'mech12@velo.com', 480842654),
-(513, 'MechPrenom13', 'MechNom13', 'mech13@velo.com', 428608372),
-(514, 'MechPrenom14', 'MechNom14', 'mech14@velo.com', 441737544);

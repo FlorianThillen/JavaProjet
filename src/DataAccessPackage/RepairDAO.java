@@ -19,7 +19,7 @@ public class RepairDAO {
                 "FROM repair r " +
                 "JOIN bike b ON r.serial_number = b.serial_number " +
                 "JOIN repair_status rs ON r.libelle = rs.libelle " +
-                "JOIN mechanic m ON r.id = m.repair_id " +
+                "JOIN mechanic m ON r.mechanic_id = m.badge_id " +
                 "WHERE rs.libelle = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
