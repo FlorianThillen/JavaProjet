@@ -65,8 +65,8 @@ public class RepairDAO {
         Connection connection = SingletonConnection.getInstance();
 
         String query = """
-                INSERT INTO repair (cost, date, libelle, serial_number)
-                VALUES (?,?,?,?);
+                INSERT INTO repair (cost, date, libelle, serial_number, mechanic_id)
+                VALUES (?,?,?,?,?);
                 """;
 
         try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -74,6 +74,7 @@ public class RepairDAO {
             stmt.setDate(2, repair.getDate());
             stmt.setString(3, repair.getStatus().getStatus());
             stmt.setInt(4, repair.getBike().getSerialNumber());
+            stmt.setInt(5, repair.getMechanic().getBadgeId());
 
             stmt.executeUpdate();
         } catch (SQLException e) {
