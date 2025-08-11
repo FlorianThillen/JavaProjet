@@ -1,3 +1,4 @@
+DROP DATABASE velodb;
 CREATE DATABASE IF NOT EXISTS velodb;
 USE velodb;
 
