@@ -16,7 +16,7 @@ public class ContentPanelRepair extends ContentPanelState {
     private final JComboBox<MechanicModel> mechanicsComBox = new JComboBox<>();
     private final JComboBox<RepairStatusModel> statusComBox = new JComboBox<>();
     private final BikeModel bike;
-    private final JTextField costField = new JTextField();
+    private final JSpinner costField = new JSpinner(new SpinnerNumberModel(10., 0., 99999., .1));
 
     public ContentPanelRepair(BikeModel bike) throws DataAccessException {
         ArrayList<JComponent> comps = new ArrayList<>();
@@ -51,7 +51,7 @@ public class ContentPanelRepair extends ContentPanelState {
     }
 
     private float getCost() {
-        return Float.parseFloat(costField.getText());
+        return Float.parseFloat(costField.getValue().toString());
     }
 
     @Override
@@ -70,7 +70,7 @@ public class ContentPanelRepair extends ContentPanelState {
             ContentPanelState nextState = new ContentPanelSuccess();
             nextState.setPreviousState(this);
             return nextState;
-        } catch (NumberFormatException e) {
+        } catch (IllegalArgumentException e) {
 
             JOptionPane.showMessageDialog(
                     null,

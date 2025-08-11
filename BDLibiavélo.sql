@@ -96,9 +96,11 @@ CREATE TABLE repair (
     date DATE NOT NULL,
     libelle VARCHAR(50) NOT NULL,
     serial_number INT NOT NULL,
+    mechanic_id INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (serial_number) REFERENCES bike(serial_number),
-    FOREIGN KEY (libelle) REFERENCES repair_status(libelle)
+    FOREIGN KEY (libelle) REFERENCES repair_status(libelle),
+    FOREIGN KEY (mechanic_id) REFERENCES mechanic(badge_id)
 );
 
 -- Table Mechanic
@@ -108,9 +110,7 @@ CREATE TABLE mechanic (
     last_name VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL,
     phone_number INT NOT NULL,
-    repair_id INT,
-    PRIMARY KEY (badge_id),
-    FOREIGN KEY (repair_id) REFERENCES repair(id)
+    PRIMARY KEY (badge_id)
 );
 
 INSERT INTO brand VALUES
