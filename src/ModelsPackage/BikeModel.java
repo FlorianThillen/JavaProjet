@@ -56,7 +56,7 @@ public class BikeModel {
     }
     public void setBatteryLevel(int batteryLevel) {
         if (batteryLevel < 0) throw new IllegalArgumentException("batteryLevel can't be lower than 0.");
-        if (batteryLevel > 100) throw new IllegalArgumentException("batteryLevel can't be higher than 100.");
+        if (batteryLevel > 999999999) throw new IllegalArgumentException("batteryLevel can't be higher than 999999999.");
         this.batteryLevel = batteryLevel;
     }
     public int getNbKilometers() {
@@ -64,6 +64,7 @@ public class BikeModel {
     }
     public void setNbKilometers(int nbKilometers) {
         if (nbKilometers < 0) throw new IllegalArgumentException("nbKilometers should be minimum 0.");
+        if (nbKilometers > 999999999) throw new IllegalArgumentException("nbKilometers can't be higher than 999999999.");
         this.nbKilometers = nbKilometers;
     }
     public BrandModel getBrand() {

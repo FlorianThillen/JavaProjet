@@ -25,8 +25,8 @@ public class BikeAdminPanel extends JPanel {
     private JTextField serialField;
     private JCheckBox electricCheck;
     private JSpinner dateSpinner;
-    private JTextField batteryField;
-    private JTextField kmField;
+    private JSpinner batteryField;
+    private JSpinner kmField;
     private JComboBox<BrandModel> brandBox;
     private JComboBox<StationModel> stationBox;
 
@@ -49,8 +49,8 @@ public class BikeAdminPanel extends JPanel {
         electricCheck = new JCheckBox();
         dateSpinner = new JSpinner(new SpinnerDateModel());
         dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "yyyy-MM-dd"));
-        batteryField = new JTextField();
-        kmField = new JTextField();
+        batteryField = new JSpinner(new SpinnerNumberModel(0, 0, 999999999, 20));
+        kmField = new JSpinner(new SpinnerNumberModel(0, 0, 999999999, 50));
 
         brandBox = new JComboBox<>();
         stationBox = new JComboBox<>();
@@ -121,8 +121,9 @@ public class BikeAdminPanel extends JPanel {
                 serialField.setText(String.valueOf((int) tableModel.getValueAt(row, 0)));
                 electricCheck.setSelected((Boolean) tableModel.getValueAt(row, 1)); 
                 dateSpinner.setValue(Date.valueOf(tableModel.getValueAt(row, 2).toString()));
-                batteryField.setText(String.valueOf((int) tableModel.getValueAt(row, 3)));
-                kmField.setText(String.valueOf((int) tableModel.getValueAt(row, 4)));
+                batteryField.setValue((Integer) tableModel.getValueAt(row, 3));
+                kmField.setValue((Integer) tableModel.getValueAt(row, 4));
+
 
                 // Sélection de la bonne marque dans la comboBox
                 String brandName = tableModel.getValueAt(row, 5).toString();
@@ -152,8 +153,9 @@ public class BikeAdminPanel extends JPanel {
         try {
             boolean isElectric = electricCheck.isSelected();
             Date buyingDate = new Date(((java.util.Date) dateSpinner.getValue()).getTime());
-            Integer battery = batteryField.getText().isBlank() ? null : Integer.parseInt(batteryField.getText().trim());
-            Integer km = kmField.getText().isBlank() ? null : Integer.parseInt(kmField.getText().trim());
+            Integer battery = ((Integer) batteryField.getValue()) == 0 ? null : (Integer) batteryField.getValue();
+            Integer km = ((Integer) kmField.getValue()) == 0 ? null : (Integer) kmField.getValue();
+
 
             BrandModel brand = (BrandModel) brandBox.getSelectedItem();
             StationModel station = (StationModel) stationBox.getSelectedItem();
@@ -212,8 +214,8 @@ public class BikeAdminPanel extends JPanel {
             int serial = Integer.parseInt(serialField.getText().trim());
             boolean isElectric = electricCheck.isSelected();
             Date buyingDate = new Date(((java.util.Date) dateSpinner.getValue()).getTime());
-            Integer battery = batteryField.getText().isBlank() ? null : Integer.parseInt(batteryField.getText().trim());
-            Integer km = kmField.getText().isBlank() ? null : Integer.parseInt(kmField.getText().trim());
+            Integer battery = ((Integer) batteryField.getValue()) == 0 ? null : (Integer) batteryField.getValue();
+            Integer km = ((Integer) kmField.getValue()) == 0 ? null : (Integer) kmField.getValue();
 
             BrandModel brand = (BrandModel) brandBox.getSelectedItem();
             StationModel station = (StationModel) stationBox.getSelectedItem();
@@ -247,8 +249,8 @@ public class BikeAdminPanel extends JPanel {
         serialField.setText("");
         electricCheck.setSelected(false);
         dateSpinner.setValue(new java.util.Date());
-        batteryField.setText("");
-        kmField.setText("");
+        batteryField.setValue(0);
+        kmField.setValue(0);
         brandBox.setSelectedIndex(0);
         stationBox.setSelectedIndex(0);
     }
