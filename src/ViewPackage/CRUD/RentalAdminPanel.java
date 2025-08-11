@@ -9,16 +9,11 @@ import ModelsPackage.SubscriptionModel;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
-import javax.swing.text.AbstractDocument;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DocumentFilter;
 import java.awt.*;
+import java.time.Instant;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.List;
 
@@ -26,9 +21,11 @@ public class RentalAdminPanel extends JPanel {
 
     private final JTextField idField = new JTextField(10);
 
-    // Dates en champs texte (format YYYY-MM-DD)
-    private final JTextField startDateField = new JTextField(10);
-    private final JTextField returnDateField = new JTextField(10);
+    // Dates avec JSpinner (format yyyy-MM-dd)
+    private final JSpinner startDateSpinner = new JSpinner(
+            new SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_MONTH));
+    private final JSpinner returnDateSpinner = new JSpinner(
+            new SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_MONTH));
     private final JCheckBox noReturnDateCheck = new JCheckBox("Pas encore de date de retour");
 
     // Commentaire
@@ -50,7 +47,6 @@ public class RentalAdminPanel extends JPanel {
     private final JTable rentalTable = new JTable(tableModel);
 
     private Border defaultBorder;
-    private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ISO_LOCAL_DATE;
 
     public RentalAdminPanel(RentalService rentalService) {
         this.rentalService = rentalService;
@@ -69,39 +65,36 @@ public class RentalAdminPanel extends JPanel {
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         defaultBorder = idField.getBorder();
 
-        // ID numérique uniquement
-        installNumericFilter(idField);
-
-        startDateField.setToolTipText("Format attendu : YYYY-MM-DD");
-        returnDateField.setToolTipText("Format attendu : YYYY-MM-DD (facultatif)");
+        startDateSpinner.setEditor(new JSpinner.DateEditor(startDateSpinner, "yyyy-MM-dd"));
+        returnDateSpinner.setEditor(new JSpinner.DateEditor(returnDateSpinner, "yyyy-MM-dd"));
 
         // Formulaire
         JPanel formPanel = new JPanel(new GridLayout(0, 2, 5, 5));
         formPanel.setBorder(BorderFactory.createTitledBorder("Formulaire de Location"));
 
-        formPanel.add(new JLabel(htmlReq("ID")));
+        formPanel.add(new JLabel("ID *"));
         formPanel.add(idField);
 
-        formPanel.add(new JLabel(htmlReq("Date début (YYYY-MM-DD)")));
-        formPanel.add(startDateField);
+        formPanel.add(new JLabel("Date début *"));
+        formPanel.add(startDateSpinner);
 
-        formPanel.add(new JLabel("Date retour (YYYY-MM-DD)"));
+        formPanel.add(new JLabel("Date retour"));
         JPanel returnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
-        returnPanel.add(returnDateField);
+        returnPanel.add(returnDateSpinner);
         returnPanel.add(noReturnDateCheck);
         formPanel.add(returnPanel);
 
         formPanel.add(new JLabel("Commentaire"));
         formPanel.add(commentField);
 
-        formPanel.add(new JLabel(htmlReq("ID Vélo")));
+        formPanel.add(new JLabel("ID Vélo *"));
         formPanel.add(bikeCombo);
 
-        formPanel.add(new JLabel(htmlReq("ID Abonnement")));
+        formPanel.add(new JLabel("ID Abonnement *"));
         formPanel.add(subCombo);
 
         formPanel.add(hadIssueCheck);
-        formPanel.add(new JLabel("<html><span style='color:#c00'>*</span> Champ obligatoire</html>"));
+        formPanel.add(new JLabel("* Champ obligatoire"));
 
         // Boutons
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
@@ -114,17 +107,9 @@ public class RentalAdminPanel extends JPanel {
         rentalTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         rentalTable.setAutoCreateRowSorter(true);
 
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        centerRenderer.setVerticalAlignment(SwingConstants.CENTER);
-        for (int i = 0; i < rentalTable.getColumnCount(); i++) {
-            if (!tableModel.getColumnClass(i).equals(Boolean.class)) {
-                rentalTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-            }
-        }
         TableRowSorter<RentalTableModel> sorter = new TableRowSorter<>(tableModel);
         sorter.setComparator(1, Comparator.nullsLast(Comparator.naturalOrder())); // start
-        sorter.setComparator(2, Comparator.nullsLast(Comparator.naturalOrder())); // return (nullable)
+        sorter.setComparator(2, Comparator.nullsLast(Comparator.naturalOrder())); // return
         rentalTable.setRowSorter(sorter);
 
         JScrollPane tableScrollPane = new JScrollPane(rentalTable);
@@ -143,7 +128,7 @@ public class RentalAdminPanel extends JPanel {
         // Checkbox “pas de date de retour”
         noReturnDateCheck.addActionListener(e -> {
             boolean disabled = noReturnDateCheck.isSelected();
-            returnDateField.setEnabled(!disabled);
+            returnDateSpinner.setEnabled(!disabled);
         });
         noReturnDateCheck.setSelected(false);
     }
@@ -172,20 +157,12 @@ public class RentalAdminPanel extends JPanel {
 
     private void clearErrors() {
         resetField(idField);
-        resetField(startDateField);
-        resetField(returnDateField);
         resetField(commentField);
     }
 
     private void resetField(JTextField field) {
         field.setBorder(defaultBorder);
-        if (field == startDateField) {
-            field.setToolTipText("Format attendu : YYYY-MM-DD");
-        } else if (field == returnDateField) {
-            field.setToolTipText("Format attendu : YYYY-MM-DD (facultatif)");
-        } else {
-            field.setToolTipText(null);
-        }
+        field.setToolTipText(null);
     }
 
     private void markError(JTextField field, String tooltip) {
@@ -202,39 +179,16 @@ public class RentalAdminPanel extends JPanel {
         }
     }
 
-    private LocalDate parseDateRequired(String text, JTextField field, String label) {
-        try {
-            return LocalDate.parse(text.trim(), DATE_FMT);
-        } catch (DateTimeParseException e) {
-            markError(field, label + " invalide (format attendu YYYY-MM-DD)");
-            return null;
-        }
+    private LocalDate spinnerToLocalDate(JSpinner spinner) {
+        Date d = (Date) spinner.getValue();
+        return Instant.ofEpochMilli(d.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
-    private LocalDate parseDateOptional(String text, JTextField field, String label) {
-        try {
-            return LocalDate.parse(text.trim(), DATE_FMT);
-        } catch (DateTimeParseException e) {
-            markError(field, label + " invalide (format attendu YYYY-MM-DD)");
-            return null;
-        }
-    }
-
-    private void installNumericFilter(JTextField field) {
-        ((AbstractDocument) field.getDocument()).setDocumentFilter(new DocumentFilter() {
-            @Override public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
-                    throws BadLocationException {
-                if (string != null && string.chars().allMatch(Character::isDigit)) {
-                    super.insertString(fb, offset, string, attr);
-                }
-            }
-            @Override public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
-                    throws BadLocationException {
-                if (text != null && text.chars().allMatch(Character::isDigit)) {
-                    super.replace(fb, offset, length, text, attrs);
-                }
-            }
-        });
+    private void setSpinnerFromLocalDate(JSpinner spinner, LocalDate date) {
+        Date d = (date == null)
+                ? new Date()
+                : Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        spinner.setValue(d);
     }
 
     private RentalModel validateAndBuildModel() {
@@ -244,35 +198,28 @@ public class RentalAdminPanel extends JPanel {
         Integer id = parsePositiveInt(idField.getText());
         if (id == null) {
             markError(idField, "ID invalide (entier > 0)");
-            errors.add("• ID : doit être un entier strictement positif.");
+            errors.add("ID : doit être un entier strictement positif.");
         }
 
-        // Dates (retour facultative)
-        LocalDate startDate = parseDateRequired(startDateField.getText(), startDateField, "Date début");
+        LocalDate startDate = spinnerToLocalDate(startDateSpinner);
         if (startDate == null) {
-            errors.add("• Date début : invalide (format attendu YYYY-MM-DD).");
+            errors.add("Date début : invalide.");
         }
 
         LocalDate returnDate = null;
         if (!noReturnDateCheck.isSelected()) {
-            String retText = returnDateField.getText().trim();
-            if (!retText.isEmpty()) {
-                returnDate = parseDateOptional(retText, returnDateField, "Date retour");
-                if (startDate != null && returnDate != null && returnDate.isBefore(startDate)) {
-                    markError(returnDateField, "Retour ≥ début");
-                    errors.add("• Date retour : doit être postérieure ou égale à la date de début.");
-                }
+            returnDate = spinnerToLocalDate(returnDateSpinner);
+            if (startDate != null && returnDate != null && returnDate.isBefore(startDate)) {
+                errors.add("Date retour : doit être postérieure ou égale à la date de début.");
             }
         }
 
-        // Commentaire (facultatif)
         String comment = commentField.getText();
         if (comment != null && !comment.isEmpty() && comment.length() > 255) {
             markError(commentField, "Commentaire trop long (max 255)");
             errors.add("• Commentaire : 255 caractères maximum.");
         }
 
-        // Combos (FK)
         Integer bikeId = (Integer) bikeCombo.getSelectedItem();
         Integer subId  = (Integer) subCombo.getSelectedItem();
         if (bikeId == null) errors.add("• Sélectionnez un ID Vélo.");
@@ -316,16 +263,16 @@ public class RentalAdminPanel extends JPanel {
             RentalModel r = tableModel.getRentalAt(modelRow);
 
             idField.setText(String.valueOf(r.getRentalId()));
-            startDateField.setText(String.valueOf(r.getStartDate()));
+            setSpinnerFromLocalDate(startDateSpinner, r.getStartDate());
 
             if (r.getReturnDate() == null) {
                 noReturnDateCheck.setSelected(true);
-                returnDateField.setEnabled(false);
-                returnDateField.setText("");
+                returnDateSpinner.setEnabled(false);
+                setSpinnerFromLocalDate(returnDateSpinner, LocalDate.now());
             } else {
                 noReturnDateCheck.setSelected(false);
-                returnDateField.setEnabled(true);
-                returnDateField.setText(String.valueOf(r.getReturnDate()));
+                returnDateSpinner.setEnabled(true);
+                setSpinnerFromLocalDate(returnDateSpinner, r.getReturnDate());
             }
 
             commentField.setText(r.getComment() == null ? "" : r.getComment());
@@ -355,12 +302,9 @@ public class RentalAdminPanel extends JPanel {
             rentalService.insertRental(rental);
             loadRentals();
             clearForm();
-            JOptionPane.showMessageDialog(
-                    this,
-                    "✅ Location ajoutée avec succès (ID = " + rental.getRentalId() + ")",
-                    "Succès",
-                    JOptionPane.INFORMATION_MESSAGE
-            );
+            JOptionPane.showMessageDialog(this,
+                    "Location ajoutée avec succès (ID = " + rental.getRentalId() + ")",
+                    "Succès", JOptionPane.INFORMATION_MESSAGE);
         } catch (DataAccessException e) {
             showError(e.getMessage());
         }
@@ -373,12 +317,9 @@ public class RentalAdminPanel extends JPanel {
             rentalService.updateRental(rental);
             loadRentals();
             clearForm();
-            JOptionPane.showMessageDialog(
-                    this,
-                    "✅ Location modifiée avec succès (ID = " + rental.getRentalId() + ")",
-                    "Succès",
-                    JOptionPane.INFORMATION_MESSAGE
-            );
+            JOptionPane.showMessageDialog(this,
+                    "Location modifiée avec succès (ID = " + rental.getRentalId() + ")",
+                    "Succès", JOptionPane.INFORMATION_MESSAGE);
         } catch (DataAccessException e) {
             showError(e.getMessage());
         }
@@ -390,14 +331,11 @@ public class RentalAdminPanel extends JPanel {
             rentalService.deleteRental(id);
             loadRentals();
             clearForm();
-            JOptionPane.showMessageDialog(
-                    this,
-                    "🗑️ Location supprimée avec succès (ID = " + id + ")",
-                    "Succès",
-                    JOptionPane.INFORMATION_MESSAGE
-            );
+            JOptionPane.showMessageDialog(this,
+                    "Location supprimée avec succès (ID = " + id + ")",
+                    "Succès", JOptionPane.INFORMATION_MESSAGE);
         } catch (NumberFormatException ex) {
-            showError("• ID : doit être un entier strictement positif.");
+            showError("ID : doit être un entier strictement positif.");
         } catch (DataAccessException e) {
             showError(e.getMessage());
         }
@@ -405,10 +343,10 @@ public class RentalAdminPanel extends JPanel {
 
     private void clearForm() {
         idField.setText("");
-        startDateField.setText("");
+        startDateSpinner.setValue(new Date());
         noReturnDateCheck.setSelected(false);
-        returnDateField.setEnabled(true);
-        returnDateField.setText("");
+        returnDateSpinner.setEnabled(true);
+        returnDateSpinner.setValue(new Date());
         commentField.setText("");
         hadIssueCheck.setSelected(false);
         rentalTable.clearSelection();
@@ -461,9 +399,5 @@ public class RentalAdminPanel extends JPanel {
                 default: return null;
             }
         }
-    }
-
-    private static String htmlReq(String label) {
-        return "<html>" + label + " <span style='color:#c00'>*</span></html>";
     }
 }
