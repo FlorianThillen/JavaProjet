@@ -55,4 +55,13 @@ public class BrandBikesModel extends AbstractTableModel {
             default -> null;
         };
     }
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        return switch (columnIndex) {
+            case 0, 4, 5 -> Integer.class;
+            case 1 -> Boolean.class;
+            default -> String.class;
+        };
+    }
 }
